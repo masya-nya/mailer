@@ -1,0 +1,5 @@
+.base-mail-types {
+	& >:not(:last-child) {
+		margin: 0 0 2px 0;
+	}
+}

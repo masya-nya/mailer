@@ -1,0 +1,15 @@
+.spam-action {
+	display: flex;
+	align-items: center;
+	gap: 5px;
+	position: relative;
+	cursor: pointer;
+	padding: 5px 7px;
+	border-radius: var(--yamailer-border-radius-larger);
+	&:hover {
+		background-color: var(--yamailer-grey-lighter-color);
+	}
+	&__text {
+		white-space: nowrap;
+	}
+}

@@ -1,0 +1,11 @@
+.marks-module__empty {
+	display: flex;
+		&-add {
+			margin: 0 0 0 7px;
+			cursor: pointer;
+			&:hover {
+				text-decoration: underline;
+				color: var(--yamailer-font-darker-color);
+			}
+		}
+}

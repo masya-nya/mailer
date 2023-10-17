@@ -1,0 +1,22 @@
+.unread-mail-checked {
+	height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	&__svg {
+		cursor: default;
+		transition: var(--yamailer-transition-base);
+		&--unactive:not(.unread-mail-checked__svg--active) {
+			fill: var(--yamailer-border-base-color);
+			&:hover {
+				fill: var(--yamailer-font-base-color);
+			}
+		}
+		&--active {
+			fill: var(--yamailer-yellow-base-color);
+		}
+		&--loading {
+			cursor: progress;
+		}
+	}
+}

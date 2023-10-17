@@ -1,0 +1,27 @@
+.template-content {
+	flex-grow: 1;
+	height: 100%;
+	padding: 10px;
+	display: flex;
+	flex-direction: column;
+	gap: 7px;
+	&__row {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+		position: relative;
+		z-index: 3;
+	}
+	&__left {
+		flex: 0 0 calc(50% - 5px);
+		display: flex;
+		align-items: flex-end;
+		gap: 4px;
+	}
+	&__right {
+		flex: 0 0 calc(50% - 5px);
+		display: flex;
+		align-items: flex-end;
+		gap: 4px;
+	}
+}

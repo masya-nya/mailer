@@ -1,0 +1,17 @@
+.mark {
+	padding: 0 5px;
+	border-radius: var(--yamailer-border-radius-larger);
+	display: inline-block;
+	cursor: pointer;
+	font-size: 14px;
+	&:hover {
+		opacity: .95;
+	}
+	&__text {
+		font-weight: 300;
+		text-overflow: clip;
+		line-height: 24px;
+		height: 24px;
+		white-space: nowrap;
+	}
+}

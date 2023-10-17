@@ -1,0 +1,34 @@
+.emails-navigator {
+	&__item {
+		display: flex;
+		align-items: center;
+		height: 100%;
+		cursor: pointer;
+		padding: 0 0 0 10px;
+		transition: var(--yamailer-transition-base);
+		&:hover:not(.emails-navigator__item--active) {
+			border-radius: var(--yamailer-border-radius-larger);
+			background-color: var(--yamailer-grey-darker-color);
+			& .emails-navigator__inner {
+				border-color: transparent;
+			}
+		}
+		&--active {
+			border-radius: var(--yamailer-border-radius-larger);
+			background-color: var(--yamailer-font-base-color);
+			& .emails-navigator__inner {
+				border-color: transparent;
+				color: var(--yamailer-yellow-base-color);
+			}
+		}
+	}
+	&__inner {
+		line-height: 20px;
+		border-right: var(--yamailer-border-base);
+		padding: 0 10px 0 5px;
+		transition: var(--yamailer-transition-base);
+		max-width: 250px;
+		text-overflow: ellipsis;
+		overflow: hidden;
+	}
+}

@@ -1,0 +1,25 @@
+.button-yandex {
+	background-color: var(--yamailer-yellow-base-color);
+	color: var(--yamailer-black-color);
+	min-width: 100px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 16px;
+	padding: 10px 30px;
+	font-weight: 500;
+	cursor: pointer;
+	border-radius: var(--yamailer-border-radius-base);
+	transition: var(--yamailer-transition-base);
+	&:disabled {
+        filter: opacity(50%);
+        cursor: not-allowed;
+    }
+	&:hover {
+		background-color: var(--yamailer-yellow-darker-color);
+	}
+	&:active {
+		position: relative;
+		transform: scale(var(--yamailer-active-scale));
+	}
+}

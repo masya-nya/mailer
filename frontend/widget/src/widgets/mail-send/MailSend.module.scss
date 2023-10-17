@@ -1,0 +1,39 @@
+.mail-send {
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
+	gap: 10px 0;
+	margin: 20px;
+	padding: 20px;
+	border-radius: var(--yamailer-border-radius-larger);
+	box-shadow: var(--yamailer-shadow-base);
+	&__inputs {
+		display: flex;
+		flex-direction: column;
+		gap: 5px;
+	}
+	&__btns {
+		padding: 0 10px;
+		display: flex;
+		align-items: center;
+		gap: 10px;
+	}
+	&__references {
+		display: flex;
+		flex-wrap: wrap;
+		padding: 10px;
+		gap: 10px;
+	}
+	&__files {
+		display: flex;
+		flex-wrap: wrap;
+		padding: 10px;
+		gap: 10px;
+	}
+	&__files-size {
+		white-space: nowrap;
+		&--danger {
+			color: var(--yamailer-red-base-color);
+		}
+	}
+}

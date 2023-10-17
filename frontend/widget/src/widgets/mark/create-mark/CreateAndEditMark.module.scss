@@ -1,0 +1,28 @@
+.create-mark {
+	width: 320px;
+	display: flex;
+	flex-direction: column;
+	&>:not(:last-child) {
+		margin: 0 0 15px 0;
+	}
+	&__inner {
+		margin: 0 7px 0 0;
+	}
+	&__named {
+		display: flex;
+	    align-items: center;
+	}
+	&__template {
+		display: flex;
+		align-items: center;
+		justify-content: flex-start;
+	}
+	&__btns {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		&>:not(:last-child) {
+			margin: 0 10px 0 0;
+		}
+	}
+}

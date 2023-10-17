@@ -1,0 +1,33 @@
+.user-rights {
+	display: flex;
+	flex-direction: column;
+	row-gap: 10px;
+	margin: 10px 0 0 0;
+	height: 100%;
+	&__heading {
+		flex: 0 0 70px;
+		height: 70px;
+		display: flex;
+		justify-content: space-between;
+	}
+	&__table {
+		flex-grow: 1;
+		height: calc(100% - 70px);
+	}
+	&__title {
+		color: var(--yamailer-font-darker-color);
+		font-weight: 500;
+		font-size: 22px;
+		line-height: 30px;
+	}
+	&__subtitle {
+		border-left: 2px solid var(--yamailer-font-base-color);
+		line-height: 26px;
+		margin: 5px 0 0 15px;
+		text-indent: 5px;
+		white-space: nowrap;
+	}
+	&__btns {
+		padding: 0 7px 0 0;
+	}
+}

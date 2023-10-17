@@ -1,0 +1,7 @@
+.folder-change-body {
+	display: flex;
+	flex-direction: column;
+	&__search {
+		margin: 15px 15px 5px 15px;
+	}
+}

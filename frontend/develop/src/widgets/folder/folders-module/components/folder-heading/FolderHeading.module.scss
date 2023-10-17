@@ -1,0 +1,29 @@
+.folder-heading {
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+	padding: 3px;
+	&__arrow {
+		margin: 0 0 -3px 0;
+	}
+	&__left {
+		display: flex;
+		align-items: center;
+	}
+	&__name {
+		line-height: 20px;
+		white-space: nowrap;
+		overflow: hidden;
+    	text-overflow: ellipsis;
+		min-width: fit-content;
+		margin: 0 0 0 3px;
+		cursor: pointer;
+		&:hover {
+			font-weight: 500;
+		}
+	}
+	&__amount {
+		display: flex;
+		margin: 0 0 0 3px;
+	}
+}

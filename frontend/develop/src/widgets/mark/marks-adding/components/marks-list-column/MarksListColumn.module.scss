@@ -1,0 +1,33 @@
+.marks-list-column {
+	display: flex;
+	flex-direction: column;
+	max-height: 200px;
+    overflow: auto;
+	margin: 0 2px 0 0;
+	scrollbar-width: thin;
+	scrollbar-color:  var(--yamailer-border-base-color);
+	&__line {
+		width: 100%;
+		min-height: 1px;
+		height: 1px;
+		display: block;
+		margin: 5px 0;
+		background-color: var(--yamailer-border-base-color);
+	}
+	&__empty {
+		text-align: center;
+		font-weight: 500;
+		line-height: 2em;
+	}
+	&::-webkit-scrollbar {
+		width: 5px;
+		height: 5px;
+	}
+	&::-webkit-scrollbar-track {
+		background: transparent;
+	}
+	&::-webkit-scrollbar-thumb {
+		border-radius: 3px;
+		background: var(--yamailer-border-base-color);
+	}
+}

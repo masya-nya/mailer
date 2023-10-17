@@ -1,0 +1,1 @@
+export { UserRights } from './user-rights';

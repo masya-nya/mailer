@@ -1,0 +1,9 @@
+.mailmodule {
+	background-color: var(--yamailer-white-color);
+	flex-grow: 1;
+    height: calc(100% - 50px);
+	box-shadow: var(--yamailer-shadow-base);
+	border-radius: 3px 3px var(--yamailer-border-radius-larger) var(--yamailer-border-radius-larger);
+	position: relative;
+	display: flex;
+}

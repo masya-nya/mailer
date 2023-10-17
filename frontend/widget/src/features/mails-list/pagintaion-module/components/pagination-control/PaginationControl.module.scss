@@ -1,0 +1,21 @@
+.pagination-control {
+	display: flex;
+	align-items: center;
+	gap: 5px;
+	&__arrow {
+		width: 24px;
+		height: 24px;
+		border-radius: 50%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		cursor: pointer;
+		&:hover {
+			background-color: var(--yamailer-grey-darker-color);
+		}
+	}
+	&--inactive {
+		pointer-events: none;
+		opacity: .5;
+	}
+}

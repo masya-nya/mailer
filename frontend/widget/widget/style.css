@@ -1,0 +1,75 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+    --yamailer-black-color: #000;
+	--yamailer-white-color: #FFF;
+	--yamailer-orange-base-color: #FF8A1F;
+	--yamailer-orange-lighter-color: #FE9F47;
+	--yamailer-orange-darker-color: #DF791A;
+	--yamailer-orange-shadow-color: 255, 138, 31;
+	--yamailer-green-base-color: #24BC8C;
+	--yamailer-blue-base-color: #4D85E6;
+	--yamailer-blue-darker-color: #4077D6;
+	--yamailer-blue-lighter-color: #4C8BF7;
+	--yamailer-blue-shadow-color: 56, 105, 190;
+	--yamailer-yellow-base-color: #FFDB4D;
+	--yamailer-yellow-darker-color: #FFD42C;
+	--yamailer-mailru-color: #168de2;
+	--yamailer-google-color: #EA4335;
+	--yamailer-yandex-color: #FC3F1D;
+	--yamailer-mail-checked-color: #fff6d4;
+	--yamailer-important-active-color: #ffeeee;
+	--yamailer-red-base-color: #E20000;
+	--yamailer-red-darker-color: #CA0000;
+	--yamailer-red-lighter-color: #E30606;
+	--yamailer-red-shadow-color: 227, 6, 6;
+	--yamailer-red-hover-color: rgba(226, 0, 0, .8);
+	--yamailer-red-lighter-color-shadow: rgba(226, 0, 0, .1);
+	--yamailer-grey-lighter-color: #EFEFEF;
+	--yamailer-grey-darker-color: #DFDFDF;
+	--yamailer-font-base-color: #555;
+	--yamailer-font-darker-color: #333;
+	--yamailer-font-lighter-color: #ABABAB;
+	--yamailer-background-base-color: #F3F3F3;
+	--yamailer-background-darker-color: #FAFAFA;
+	--yamailer-background-lighter-color: #FCFCFC;
+	--yamailer-active-scale: .97;
+	--yamailer-border-base-color: #CCC;
+	--yamailer-border-radius-larger: 10px;
+	--yamailer-border-radius-base: 8px;
+	--yamailer-border-radius-less: 5px;
+	--yamailer-border-base: 1px solid var(--yamailer-border-base-color);
+	--yamailer-transition-base: all .1s ease;
+	--yamailer-shadow-base: 0 0 10px 0px rgba(0, 0, 0, 0.15);
+	--yamailer-bg-shadow-base: rgba(0, 0, 0, 0.3);
+}
+
+#reon-yamailer-root[data-is-open='true'] * {
+    box-sizing: border-box;
+    user-select: none;
+}
+
+#reon-yamailer-root[data-is-open='true'] {
+    position: fixed;
+    z-index: 100;
+    width: calc(100vw - 65px);
+    height: 100vh;
+    line-height: 1em;
+    background-color: #fff;
+    scroll-behavior: smooth;
+    font-family: 'Inter', sans-serif;
+    color: var(--yamailer-font-base-color);
+}
+
+#reon-yamailer-open .reon-yamailer-open__link {
+    text-decoration: none;
+    color: inherit;
+}
+#reon-yamailer-open .reon-yamailer-open__pre {
+    color: var(--yamailer-yandex-color);
+}
+
+
+body.reon-yamailer-scroll-lock {
+    overflow: hidden;
+}

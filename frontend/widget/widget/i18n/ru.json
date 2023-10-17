@@ -1,0 +1,19 @@
+{
+    "widget":{
+        "name":"«Yamailer",
+        "short_description":"«Yamailer",
+        "description":"«Yamailer",
+        "tour_description":"«Yamailer"
+    },
+    "settings":{
+        "client_name":"Ваше имя",
+        "phone_number":"Номер телефона",
+        "contacts_use":"Включить отображение групп полей контактов",
+        "companie_use":"Включить отображение групп полей компаний",
+        "terms_of_use": "Пользовательское соглашение",        
+        "phone_field_id": "ID поля телефон",
+        "search_use": "Включить поиск у списков и мультисписков",
+        "show_entity_block_everywhere": "Включить отображение карточки контакта/компании в группах полей карточки сделка",
+        "access_for_users": "Права пользователей"
+    }
+}

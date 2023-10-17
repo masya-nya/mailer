@@ -1,0 +1,63 @@
+@mixin sub-info {
+    color: var(--yamailer-font-lighter-color);
+    font-size: 13px;
+}
+
+.mail-view {
+
+    &__action-menu {
+        padding: 10px 10px 10px 20px;
+        flex: 0 0 51px;
+        position: relative;
+        z-index: 2;
+        border-bottom: var(--yamailer-border-base);
+    }
+
+    &__content {
+        padding: 20px;
+        overflow-y: auto;
+        height: calc(100% - 52px);
+        scrollbar-width: thin;
+        scrollbar-color:  var(--yamailer-border-base-color);
+        &::-webkit-scrollbar {
+            width: 5px;
+            height: 5px;
+        }
+        &::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        &::-webkit-scrollbar-thumb {
+            border-radius: 3px;
+            background: var(--yamailer-border-base-color);
+        }
+    }
+
+    &__subject {
+        font-size: 20px;
+        font-weight: 400;
+        color: var(--yamailer-black-color);
+        margin-bottom: 15px;
+        line-height: 1.3em;
+        display: flex;
+        align-items: center;
+        column-gap: 10px;
+
+        & div:first-child {
+            margin-right: -8px;
+        }
+    }
+
+    &__mail-header {
+        margin-bottom: 20px;
+		align-items: center;
+		column-gap: 10px;
+    }
+
+    &__mail-body {
+        font-family: sans-serif;
+        margin-bottom: 20px;
+    }
+    &__reply {
+        margin: 10px 0 0 0;
+    }
+}

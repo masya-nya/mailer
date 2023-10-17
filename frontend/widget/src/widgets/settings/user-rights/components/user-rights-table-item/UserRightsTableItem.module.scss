@@ -1,0 +1,25 @@
+.user-rights-table-item {
+	min-width: fit-content;
+	display: flex;
+	align-items: center;
+	gap: 20px;
+	font-size: 18px;
+	border-radius: var(--yamailer-border-radius-base);
+	background-color: var(--yamailer-white-color);
+	padding: 5px 15px;
+	box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.05);
+	margin: 0 3px 0 0;
+	&:hover {
+		background-color: var(--yamailer-background-lighter-color);
+	}
+	&__manager {
+		min-width: 400px;
+		width: 400px;
+		line-height: 40px;
+		margin: 0 20px 0 0;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+	
+}

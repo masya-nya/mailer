@@ -1,0 +1,1 @@
+export const MAX_MARK_LENGTH = 12;

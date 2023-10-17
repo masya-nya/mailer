@@ -1,0 +1,19 @@
+.sidebar__item {
+	border-bottom: var(--yamailer-border-base);
+	&-inner {
+		display: block;
+		font-size: 14px;
+		padding: 14px 0;
+		text-decoration: none;
+		cursor: pointer;
+		text-align: center;
+		transition: var(--yamailer-transition-base);
+		&:hover {
+			color: var(--yamailer-blue-base-color);
+		}
+	}
+	&--active {
+		font-weight: 700;
+		color: var(--yamailer-blue-base-color);
+	}
+}

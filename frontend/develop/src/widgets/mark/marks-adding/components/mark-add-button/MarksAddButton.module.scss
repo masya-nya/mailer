@@ -1,0 +1,13 @@
+.marks-add-button {
+	padding: 7px;
+	font-size: 14px;
+	text-align: center;
+	border-top: var(--yamailer-border-base);
+	cursor: pointer;
+	&:hover {
+		background-color: var(--yamailer-grey-lighter-color);
+	}
+	&:hover .marks-add-button__inner {
+		text-decoration: underline;
+	}
+}

@@ -1,0 +1,31 @@
+.date-filter-module {
+	display: flex;
+	align-items: center;
+	gap: 15px;
+	padding: 0 10px;
+	font-size: 16px;
+	background-color: var(--yamailer-background-darker-color);
+	border-radius: var(--yamailer-border-radius-less);
+	&__body {
+		display: flex;
+		align-items: center;
+		gap: 15px;
+	}
+	&__from-to {
+		display: flex;
+		align-items: center;
+		gap: 5px;
+	}
+	&__clear {
+		cursor: pointer;
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+	&__toggle {
+		cursor: pointer;
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+}

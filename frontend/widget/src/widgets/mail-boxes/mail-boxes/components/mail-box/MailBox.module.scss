@@ -1,0 +1,26 @@
+.mail-type {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 5px 10px 5px 7px;
+	border-radius: var(--yamailer-border-radius-less);
+	cursor: pointer;
+	transition: var(--yamailer-transition-base);
+	color: var(--yamailer-font-base-color);
+	&:hover {
+		background-color: var(--yamailer-grey-lighter-color);
+		color: var(--yamailer-font-darker-color);
+	}
+	&--active {
+		background-color: var(--yamailer-grey-lighter-color);
+		color: var(--yamailer-font-darker-color);
+	}
+	&__left {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+	&__svg {
+		margin: 0 7px 0 0;
+	}
+}

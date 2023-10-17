@@ -1,0 +1,44 @@
+@mixin sub-info {
+    color: var(--yamailer-font-lighter-color);
+    font-size: 13px;
+}
+
+.mail-header {
+	display: flex;
+
+    &__sender-avatar {
+        align-self: flex-start;
+    }
+
+    &__content {
+        display: flex;
+        flex-direction: column;
+        row-gap: 2px;
+    }
+
+    &__send-info {
+        display: flex;
+        align-items: center;
+        column-gap: 8px;
+    }
+
+    &__mail-receivers {
+        padding: 0px 5px 5px 0px;
+        width: fit-content;
+    }
+}
+
+.send-info {
+    &__sender-name {
+        color: var(--yamailer-font-darker-color);
+        font-size: 16px;
+    }
+
+    &__sender-address {
+        @include sub-info;
+    }
+
+    &__send-date {
+        @include sub-info;
+    }
+}

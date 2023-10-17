@@ -1,0 +1,15 @@
+.button-back {
+    display: inline-block;
+    cursor: pointer; 
+    height: 30px;
+    padding: 5px 7px;
+    border-radius: var(--yamailer-border-radius-larger);
+    line-height: 20px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+
+    &:hover {
+        background-color: var(--yamailer-grey-lighter-color);
+    }
+}

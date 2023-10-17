@@ -1,0 +1,14 @@
+.context-menu-wrapper {
+	position: fixed;
+	background-color: var(--yamailer-white-color);
+	border-radius: var(--yamailer-border-radius-base);
+	box-shadow: var(--yamailer-shadow-base);
+	padding: 7px;
+	z-index: 1012;
+	border: none;
+	outline: none;
+	& * {
+		box-sizing: border-box;
+		font-family: 'Inter', sans-serif;
+	}
+}

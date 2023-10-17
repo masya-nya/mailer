@@ -1,0 +1,19 @@
+.app {
+	display: flex;
+	&__logo {
+		padding: 20px 0;
+		border-bottom: var(--yamailer-border-base);
+	}
+	&__sidebar {
+		width: 200px;
+		flex: 0 0 200px;
+		border-right: var(--yamailer-border-base);
+	}
+	&__content {
+		height: 100vh;
+		flex-grow: 1;
+		background: var(--yamailer-background-darker-color);
+		padding: 10px 15px;
+		overflow: hidden;
+	}
+}

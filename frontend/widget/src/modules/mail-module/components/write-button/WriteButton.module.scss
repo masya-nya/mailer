@@ -1,0 +1,26 @@
+.write-button {
+	background-color: var(--yamailer-yellow-base-color);
+	color: var(--yamailer-black-color);
+	min-width: 100px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 10px 0;
+	cursor: pointer;
+	border-radius: var(--yamailer-border-radius-base);
+	transition: var(--yamailer-transition-base);
+	&:hover {
+		background-color: var(--yamailer-yellow-darker-color);
+	}
+	&:active {
+		position: relative;
+		transform: scale(var(--yamailer-active-scale));
+	}
+	&__container {
+		display: flex;
+		align-items: center;
+		& >:not(:last-child) {
+			margin: 0 3px 0 0;
+		}
+	}
+}

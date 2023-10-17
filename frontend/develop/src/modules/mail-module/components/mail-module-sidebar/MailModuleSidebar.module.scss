@@ -1,0 +1,21 @@
+.mailmodule__sidebar {
+	background-color: var(--yamailer-background-darker-color);
+	height: 100%;
+	width: 300px;
+	flex: 0 0 300px;
+	border-radius: 10px 0 0 10px;
+	padding: 15px;
+}
+.mailmodule-sidebar {
+	& >:not(:last-child) {
+		margin: 0 0 10px 0;
+	}
+	&__write-refresh {
+		display: flex;
+		justify-content: space-between;
+	}
+	&__write {
+		flex: 1 1 auto;
+		margin: 0 15px 0 0;
+	}
+}

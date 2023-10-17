@@ -1,0 +1,16 @@
+.shadow-loader-wrapper {
+	position: absolute;
+	z-index: 9;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: var(--yamailer-white-color);
+	border-radius: 3px 3px var(--yamailer-border-radius-larger) var(--yamailer-border-radius-larger);
+	&__translucent {
+		background-color: rgba(0, 0, 0, .2);
+	}
+}

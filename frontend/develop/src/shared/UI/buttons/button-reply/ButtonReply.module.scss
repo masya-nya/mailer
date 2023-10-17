@@ -1,0 +1,15 @@
+.button-reply {
+	display: block;
+    cursor: pointer;
+    padding: 0px 8px;
+	height: 39px;
+	line-height: 39px;
+    border-radius: var(--yamailer-border-radius-larger);
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+
+    &:hover {
+        background-color: var(--yamailer-grey-lighter-color);
+    }
+}

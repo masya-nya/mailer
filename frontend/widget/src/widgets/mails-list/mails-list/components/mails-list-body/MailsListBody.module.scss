@@ -1,0 +1,18 @@
+.mails-list-body {
+	height: calc(100% - 80px);
+	padding: 0 2px 0 0;
+    overflow-y: auto;
+	scrollbar-width: thin;
+	scrollbar-color:  var(--yamailer-border-base-color);
+	&::-webkit-scrollbar {
+		width: 5px;
+		height: 5px;
+	}
+	&::-webkit-scrollbar-track {
+		background: transparent;
+	}
+	&::-webkit-scrollbar-thumb {
+		border-radius: 3px;
+		background: var(--yamailer-border-base-color);
+	}
+}

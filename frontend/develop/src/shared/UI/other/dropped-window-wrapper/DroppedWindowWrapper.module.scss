@@ -1,0 +1,7 @@
+.dropped-window-wrapper {
+	position: fixed;
+	background-color: var(--yamailer-white-color);
+	border-radius: var(--yamailer-border-radius-base);
+	box-shadow: var(--yamailer-shadow-base);
+	z-index: 12;
+}

@@ -1,0 +1,21 @@
+.input {
+    border: var(--yamailer-border-base);
+    border-radius: 4px;
+    font-size: 15px;
+    height: 38px;
+    padding: 8px 9px 7px 9px;
+    box-sizing: border-box;
+    color: var(--yamailer-font-base-color);
+    background: var(--yamailer-white-color);
+    &:focus {
+        outline: 2px solid var(--yamailer-blue-lighter-color);
+        border-color: transparent;
+        &::placeholder {
+            color: transparent;
+        }
+    }
+    &--warning:not(:focus) {
+        border-color: var(--yamailer-red-base-color);
+        color: var(--yamailer-red-base-color);
+    }
+}

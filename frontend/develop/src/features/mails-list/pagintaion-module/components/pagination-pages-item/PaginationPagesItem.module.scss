@@ -1,0 +1,15 @@
+.pagination-pages-item {
+	font-size: 16px;
+	line-height: 1;
+	cursor: pointer;
+	position: relative;
+	color: var(--yamailer-font-lighter-color);
+	&:hover {
+		color: var(--yamailer-font-darker-color);
+	}
+	&--active {
+		color: var(--yamailer-font-darker-color);
+		pointer-events: none;
+		transform: scale(1.05);
+	}
+}

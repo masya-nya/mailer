@@ -1,0 +1,16 @@
+.folders-list-column-item {
+	display: flex;
+	align-items: center;
+	padding: 7px 17px;
+	gap: 5px;
+    cursor: pointer;
+    font-size: 14px;
+	&:hover {
+		background-color: var(--yamailer-grey-lighter-color);
+	}
+	&__inner {
+		overflow: hidden;
+		text-overflow: ellipsis;
+		line-height: 1.2em;
+	}
+}

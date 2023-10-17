@@ -1,0 +1,31 @@
+.loader-circle-container {
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 100%;
+}
+
+.loader-circle {
+	width: 60px;
+	height: 60px;
+	background: var(--yamailer-font-darker-color);
+	border-radius: 50%;
+	position: relative;
+	animation: skLinRotate 1s ease-in-out infinite alternate;
+}
+
+.loader-circle:after {
+	content: "";
+	position: absolute;
+	inset: 5px;
+	border-radius: 50%;
+	border: 5px solid transparent;
+	border-top-color: var(--yamailer-yellow-base-color);
+}
+
+@keyframes skLinRotate {
+	95%, 100% {
+		transform: rotate(840deg)
+	}
+}

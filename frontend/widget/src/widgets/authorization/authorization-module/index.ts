@@ -1,0 +1,1 @@
+export { AuthorizationModule } from './AuthorizationModule';

@@ -1,0 +1,31 @@
+.loader {
+	width: 10px;
+	height: 10px;
+	border-radius: 50%;
+	background-color: var(--yamailer-yellow-base-color);
+	box-shadow: 32px 0 var(--yamailer-yellow-base-color), -32px 0 var(--yamailer-yellow-base-color);
+	position: relative;
+	animation: flash 0.5s ease-out infinite alternate;
+}
+.loader-container {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+}
+
+@keyframes flash {
+	0% {
+		background-color: var(--yamailer-font-base-color);
+		box-shadow: 32px 0 var(--yamailer-font-base-color), -32px 0 var(--yamailer-yellow-base-color);
+	}
+
+	50% {
+		background-color: var(--yamailer-yellow-base-color);
+		box-shadow: 32px 0 var(--yamailer-font-base-color), -32px 0 var(--yamailer-font-base-color);
+	}
+
+	100% {
+		background-color: var(--yamailer-font-base-color);
+		box-shadow: 32px 0 var(--yamailer-yellow-base-color), -32px 0 var(--yamailer-font-base-color);
+	}
+}

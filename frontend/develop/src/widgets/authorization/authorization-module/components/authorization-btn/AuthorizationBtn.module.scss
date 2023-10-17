@@ -1,0 +1,36 @@
+.authtorization-btn {
+	display: flex;
+	align-items: center;
+	height: 40px;
+	font-size: 16px;
+	text-decoration: none;
+	background-color: var(--yamailer-background-darker-color);
+	border-radius: var(--yamailer-border-radius-larger);
+	box-shadow: 0 0 3px 1px rgba(0, 0, 0, 0.15);
+	color: var(--yamailer-font-base-color);
+	transition: var(--yamailer-transition-base);
+	&:hover {
+		color: var(--yamailer-font-darker-color);
+		box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.15);
+	}
+	&[mail-type="mailru"] .authtorization-btn__icon {
+		background-color: var(--yamailer-mailru-color);
+	}
+	&[mail-type="google"] .authtorization-btn__icon {
+		background-color: var(--yamailer-google-color);
+	}
+	&[mail-type="yandex"] .authtorization-btn__icon {
+		background-color: var(--yamailer-yandex-color);
+	}
+	&__icon {
+		width: 50px;
+		height: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		border-radius: var(--yamailer-border-radius-larger) 0 0 var(--yamailer-border-radius-larger);
+	}
+	&__title {
+		padding: 0 0 0 15px;
+	}
+}

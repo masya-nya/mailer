@@ -1,0 +1,16 @@
+.emails-navigator {
+	display: flex;
+	align-items: center;
+	margin: 0 0 5px 0;
+	padding: 0 10px;
+	flex: 0 0 40px;
+	gap: 7px;
+	border-radius: var(--yamailer-border-radius-larger) var(--yamailer-border-radius-larger) 3px 3px;
+	box-shadow: var(--yamailer-shadow-base);
+	background-color: var(--yamailer-white-color);
+	overflow: auto;
+    max-width: 100%;
+	&::-webkit-scrollbar {
+		display: none;
+	}
+}

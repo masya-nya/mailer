@@ -1,0 +1,17 @@
+.sidebar__exit-btn {
+	border-bottom: var(--yamailer-border-base);
+	&-inner {
+		color: var(--yamailer-red-base-color);
+		display: block;
+		font-size: 14px;
+		padding: 14px 0;
+		text-align: center;
+		text-decoration: none;
+		cursor: pointer;
+		transition: var(--yamailer-transition-base);
+		&:hover {
+			background: var(--yamailer-red-hover-color);
+			color: var(--yamailer-background-darker-color);
+		}
+	}
+}

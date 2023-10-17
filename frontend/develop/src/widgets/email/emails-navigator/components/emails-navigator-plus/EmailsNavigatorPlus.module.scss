@@ -1,0 +1,13 @@
+.emails-navigator-plus {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+	width: 25px;
+	height: 25px;
+	border-radius: 50%;
+	transition: var(--yamailer-transition-base);
+	&:hover {
+		background-color: var(--yamailer-grey-darker-color);
+	}
+}

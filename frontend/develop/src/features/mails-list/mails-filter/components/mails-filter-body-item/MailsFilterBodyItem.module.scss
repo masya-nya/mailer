@@ -1,0 +1,16 @@
+.mails-filter-body-item {
+	cursor: pointer;
+	display: grid;
+	grid-template-columns: 30px 1fr 30px;
+	align-items: center;
+	padding: 5px;
+	height: 40px;
+	&:hover {
+		background-color: var(--yamailer-grey-lighter-color);
+	}
+	&__icon {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+}

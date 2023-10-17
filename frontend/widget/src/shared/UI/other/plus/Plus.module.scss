@@ -1,0 +1,9 @@
+.plus {
+	font-size: 26px;
+	margin: -4px 0 0 0;
+	cursor: pointer;
+	color: inherit;
+	&:hover {
+		color: var(--yamailer-font-darker-color);
+	}
+}

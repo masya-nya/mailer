@@ -1,0 +1,67 @@
+.button {
+    box-sizing: border-box;
+    position: relative;
+    display: inline-block;
+    max-height: 38px;
+    padding: 10px;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 14px;
+    white-space: nowrap;
+    vertical-align: middle;
+    text-decoration: none;
+    border-radius: var(--yamailer-border-radius-less);
+    cursor: pointer;
+    &:disabled {
+        filter: opacity(50%);
+        cursor: not-allowed;
+    }
+    &__primary {
+        color: var(--yamailer-font-base-color);
+        background: var(--yamailer-background-lighter-color);
+        border: 1px solid var(--yamailer-border-base-color);
+        cursor: pointer;
+        &:not(:disabled):hover {
+            background: var(--yamailer-background-darker-color);
+        }
+        &:not(:disabled):active {
+            top: 1px;
+        }
+    }
+    &__accent {
+        color: var(--yamailer-white-color);
+        background: var(--yamailer-blue-base-color);
+        border: 1px solid var(--yamailer-blue-darker-color);
+        cursor: pointer;
+        &:not(:disabled):hover {
+            background: var(--yamailer-blue-lighter-color);
+        }
+        &:not(:disabled):active {
+            top: 1px;
+        }
+    }
+    &__danger {
+        color: #f5f5f5;
+        background: #ff7779;
+        border: 1px solid #fe6668;
+        cursor: pointer;
+        &:not(:disabled):hover {
+            background: #fe6668;
+        }
+        &:not(:disabled):active {
+            top: 1px;
+        }
+    }
+    &__warning {
+        color: #fff;
+        background: #ffce6b;
+        border: 1px solid #ffca5f;
+        cursor: pointer;
+        &:not(:disabled):hover {
+            background: #ffca5f;
+        }
+        &:not(:disabled):active {
+            top: 1px;
+        }
+    }
+}

@@ -1,0 +1,7 @@
+.marks-list-column-item {
+	padding: 5px 17px;
+	cursor: pointer;
+	&:hover {
+		background-color: var(--yamailer-grey-lighter-color);
+	}
+}

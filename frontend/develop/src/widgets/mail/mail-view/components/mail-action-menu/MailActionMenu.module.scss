@@ -1,0 +1,17 @@
+.action-menu {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+
+    &__back-btn {
+        min-width: fit-content;
+    }
+
+    &__vertical-line {
+        height: 31px;
+        width: 1px;
+        min-width: 1px;
+        background-color: var(--yamailer-font-lighter-color);
+        border: 0;
+    }
+}

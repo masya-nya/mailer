@@ -1,0 +1,18 @@
+.folders-wrapper {
+	overflow: auto;
+    max-width: 100%;
+	max-height: 250px;
+	scrollbar-width: thin;
+	scrollbar-color:  var(--yamailer-border-base-color);
+	&::-webkit-scrollbar {
+		width: 5px;
+		height: 5px;
+	}
+	&::-webkit-scrollbar-track {
+		background: transparent;
+	}
+	&::-webkit-scrollbar-thumb {
+		border-radius: 3px;
+		background: var(--yamailer-border-base-color);
+	}
+}

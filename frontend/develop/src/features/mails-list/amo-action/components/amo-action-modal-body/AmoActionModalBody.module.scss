@@ -1,0 +1,15 @@
+.amo-action-modal-body {
+	display: flex;
+	flex-direction: column;
+	gap: 7px;
+	&__date {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+		padding: 5px;
+	}
+	&__btns {
+		display: flex;
+		justify-content: space-between;
+	}
+}

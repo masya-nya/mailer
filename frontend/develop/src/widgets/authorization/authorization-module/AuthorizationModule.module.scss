@@ -1,0 +1,25 @@
+.authorization {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 100%;
+	width: 100%;
+	&__body {
+		background-color: var(--yamailer-white-color);
+		box-shadow: var(--yamailer-shadow-base);
+		border-radius: var(--yamailer-border-radius-larger);
+		padding: 30px;
+		width: 350px;
+	}
+	&__header {
+		font-size: 16px;
+		margin: 0 0 20px 0;
+	}
+	&__btns {
+		display: flex;
+		flex-direction: column;
+		& >:not(:last-child) {
+			margin: 0 0 15px 0;
+		}
+	}
+}

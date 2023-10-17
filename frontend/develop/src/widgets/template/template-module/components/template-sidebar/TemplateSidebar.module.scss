@@ -1,0 +1,10 @@
+.template-sidebar {
+	flex: 0 0 300px;
+	width: 300px;
+	padding: 10px;
+	height: 100%;
+	border-right: 1px solid var(--yamailer-border-base-color);
+	&__list {
+		margin: 15px 0;
+	}
+}

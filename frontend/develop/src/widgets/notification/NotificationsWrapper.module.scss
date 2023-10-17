@@ -1,0 +1,18 @@
+.notifications-wrapper {
+	position: fixed;
+	right: -300px;
+	top: 0;
+	width: 600px;
+	padding: 10px 0;
+	max-width: 100%;
+	z-index: 1030;
+	& * {
+		box-sizing: border-box;
+	}
+	&::-webkit-scrollbar {
+		display: none;
+	}
+	& >:not(:last-child) {
+		margin: 0 0 5px 0;
+	}
+}

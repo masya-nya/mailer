@@ -1,0 +1,14 @@
+.color-pick {
+	width: 20px;
+	height: 20px;
+	margin: 2px 1px;
+	cursor: pointer;
+	position: relative;
+	&:hover {
+		transform: scale(1.05);
+		box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.8);
+	}
+	&:active {
+		transform: scale(.95);
+	}
+}

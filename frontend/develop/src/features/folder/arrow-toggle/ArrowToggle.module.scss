@@ -1,0 +1,12 @@
+.arrow-toggle {
+	width: 19px;
+	height: 19px;
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transition: var(--yamailer-transition-base);
+	&:hover {
+		background-color: var(--yamailer-border-base-color);
+	}
+}

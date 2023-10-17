@@ -1,0 +1,50 @@
+.attachment {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	flex: 0 0 90px;
+	row-gap: 2px;
+	width: 90px;
+	border-radius: var(--yamailer-border-radius-larger);
+	padding: 5px;
+	color: var(--yamailer-font-base-color);
+	transition: var(--yamailer-transition-base);
+	&:hover {
+		background-color: var(--yamailer-grey-lighter-color);
+		color: var(--yamailer-font-darker-color);
+	}
+	&__name {
+		font-size: 13px;
+		max-width: 100%;
+		overflow: hidden;
+		&-inner {
+			overflow: hidden;
+			text-overflow: ellipsis;
+			display: block;
+			width: 100%;
+			white-space: nowrap;
+		}
+	}
+	&__icon {
+		position: relative;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-grow: 1;
+    	width: 100%;
+	}
+	&__img {
+		max-width: 100%;
+		padding: 10px;
+		width: 100%;
+	}
+	&__extension {
+		position: absolute;
+		overflow: hidden;
+		line-height: 1.1em;
+		max-width: 45px;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+		margin: 10px 0 0 0;
+	}
+}

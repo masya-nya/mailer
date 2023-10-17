@@ -1,0 +1,23 @@
+.input-transparent {
+    border: 1px solid transparent;
+    border-radius: 3px;
+    font-size: 15px;
+    height: 36px;
+    padding: 8px 9px 7px 9px;
+    box-sizing: border-box;
+    color: var(--yamailer-font-darker-color);
+    background: transparent;
+	&::placeholder {
+		color: var(--yamailer-font-lighter-color);
+	}
+    &:focus {
+		outline: none;
+        &::placeholder {
+            color: transparent;
+        }
+    }
+    &--warning:not(:focus) {
+        border-color: var(--yamailer-red-base-color);
+        color: var(--yamailer-red-base-color);
+    }
+}

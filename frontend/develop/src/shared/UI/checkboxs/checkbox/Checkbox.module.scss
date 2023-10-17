@@ -1,0 +1,27 @@
+.checkbox {
+	position: relative;
+	display: inline-flex;
+	cursor: pointer;
+	&__input {
+		clip: rect(0 0 0 0);
+		clip-path: inset(50%);
+		height: 1px;
+		overflow: hidden;
+		position: absolute;
+		white-space: nowrap;
+		width: 1px;
+	}
+
+	&__target {
+		display: inline-block;
+		height: 20px;
+		width: 20px;
+		background: #fff;
+		border: 2px #ddd solid;
+		border-radius: 5px;
+
+		&--active {
+			border-color: var(--yamailer-font-base-color);
+		}
+	}
+}

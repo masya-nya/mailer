@@ -1,0 +1,23 @@
+.refresh-button {
+	background-color: var(--yamailer-yellow-base-color);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 10px 11px;
+	cursor: pointer;
+	border-radius: var(--yamailer-border-radius-base);
+	display: inline-block;
+	transition: var(--yamailer-transition-base);
+	&:hover {
+		background-color: var(--yamailer-yellow-darker-color);
+	}
+	&:active {
+		position: relative;
+		transform: scale(var(--yamailer-active-scale));
+	}
+	&__container {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+}
