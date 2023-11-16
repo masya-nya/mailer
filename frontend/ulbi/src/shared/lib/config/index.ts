@@ -1,0 +1,1 @@
+export { AppRoutes, RoutePaths, routeConfig } from './router-config/routerConfig';

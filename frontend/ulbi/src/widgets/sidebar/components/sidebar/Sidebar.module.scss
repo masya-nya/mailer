@@ -1,0 +1,8 @@
+.sidebar {
+	height: calc(100vh - var(--navbar-height));
+	width: var(--sidebar-width);
+	position: relative;
+	border-right: 1px solid var(--color-border);
+	resize: both;
+	overflow: auto;
+}

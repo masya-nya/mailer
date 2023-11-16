@@ -1,0 +1,1 @@
+export { AboutPageAsync } from './components/AboutPage.async';
