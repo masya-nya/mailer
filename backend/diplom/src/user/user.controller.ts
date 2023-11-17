@@ -8,12 +8,17 @@ export class UserController {
 	constructor(private userService: UserService){}
 
 	@Post()
-	create(@Body() createUserDto: CreateUserDTO ) {
-		return this.userService.createUser(createUserDto);
+	create(@Body() createUserDTO: CreateUserDTO ) {
+		return this.userService.createUser(createUserDTO);
 	}
 
 	@Get(':email')
 	getUser(@Param('email') email: string) {
-		return this.userService.getUser(email);
+		return this.userService.getUserByEmail(email);
+	}
+
+	@Get()
+	getUsers() {
+		return this.userService.getAllUsers();
 	}
 }
