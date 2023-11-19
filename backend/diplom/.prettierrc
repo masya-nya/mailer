@@ -4,5 +4,6 @@
 	"singleQuote": true,
 	"useTabs": true,
 	"insertSpaceBeforeFunctionParenthesis": true,
-	"arrowParens": "avoid"
+	"arrowParens": "avoid",
+	"tabWidth": 4
 }

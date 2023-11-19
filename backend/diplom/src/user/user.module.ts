@@ -13,6 +13,6 @@ import { UserRepository } from './user.repository';
 			{ name: User.name, schema: UserSchema }
 		]),
 	],
-	exports: [UserRepository]
+	exports: [UserService]
 })
 export class UserModule {}

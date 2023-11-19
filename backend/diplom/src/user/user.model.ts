@@ -14,7 +14,9 @@ export class User {
 	
 	@Prop({ type: Boolean, required: false, default: false })
 	banned: boolean;
-
+	
+	@Prop({ type: Boolean, required: false, default: false })
+	isActivate: boolean;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
