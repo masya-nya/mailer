@@ -1,9 +1,10 @@
 import { Controller, Post, Body, Patch, Get, Param } from '@nestjs/common';
 import { CreateAccountDTO } from './DTO/create-account.dto';
 import { AccountService } from './account.service';
-import { AddUserDTO } from './DTO/add-user.dto';
+import { AddUserDTORequest } from './DTO/add-user.dto';
 import { AccountDocument, PopulatedAccount } from './account.model';
 import { ENDPOINTS } from 'src/core/consts/endpoint';
+import { Types } from 'mongoose';
 
 @Controller(ENDPOINTS.ACCOUNT.BASE)
 export class AccountController {
@@ -17,8 +18,9 @@ export class AccountController {
 	}
 
 	@Patch(ENDPOINTS.ACCOUNT.ADD_USER)
-	addUser(@Body() addUserDTO: AddUserDTO): Promise<AccountDocument> {
-		return this.accountService.addUser(addUserDTO);
+	addUser(@Body() addUserDTO: AddUserDTORequest): Promise<AccountDocument> {
+		const accountObjectId = new Types.ObjectId(addUserDTO.accountId);
+		return this.accountService.addUser({...addUserDTO, accountId: accountObjectId});
 	}
 
 	@Get(`:${ENDPOINTS.ACCOUNT.QUERIES.ACCOUNT_ID}`)

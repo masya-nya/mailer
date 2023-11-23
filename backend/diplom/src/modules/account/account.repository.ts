@@ -61,7 +61,7 @@ export class AccountRepository {
 	}
 
 	async findByIdAndAddUser(
-		accountId: string,
+		accountId: Types.ObjectId,
 		userID: Types.ObjectId
 	): Promise<AccountDocument> {
 		try {

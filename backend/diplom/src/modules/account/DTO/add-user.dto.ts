@@ -1,11 +1,18 @@
 import { IsMongoId, IsEmail, IsNotEmpty } from 'class-validator';
+import { Types } from 'mongoose';
 
-export class AddUserDTO {
-	@IsNotEmpty({ message: 'Need accountId' })
-	@IsMongoId({ message: 'Incorrect id' })
+export class AddUserDTORequest {
+	@IsNotEmpty({ message: 'Не должно быть пустым' })
+	@IsMongoId({ message: 'Неверный id' })
 	readonly accountId: string;
 
-	@IsNotEmpty({ message: 'Need userEmail' })
-	@IsEmail()
+	@IsNotEmpty({ message: 'Не должно быть пустым' })
+	@IsEmail({}, { message: 'Должен быть email' })
+	readonly userEmail: string;
+}
+
+export class AddUserDTO {
+	readonly accountId: Types.ObjectId;
+
 	readonly userEmail: string;
 }

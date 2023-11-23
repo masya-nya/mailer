@@ -4,6 +4,7 @@ import { UserRepository } from './user.repository';
 import { PopulatedUser, UserDocument } from './user.model';
 import { AddAccountDTO } from './DTO/add-account.dto';
 import { AccountService } from './../account/account.service';
+import { Types } from 'mongoose';
 
 @Injectable()
 export class UserService {
@@ -19,8 +20,9 @@ export class UserService {
 
 	
 	async addAccount(addAccountDTO: AddAccountDTO): Promise<UserDocument> {
+		const accountObjectId = new Types.ObjectId(addAccountDTO.accountId);
 		const account = await this.accountService.getAccountById(
-			addAccountDTO.accountId
+			accountObjectId
 		);
 		if (!account) {
 			throw new HttpException(

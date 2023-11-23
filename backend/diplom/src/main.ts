@@ -1,9 +1,15 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app/app.module';
+import { ValidationPipe } from './core/pipes/validation.pipe';
 
-async function start() {
-  const PORT = process.env.PORT || 3000;
-  const app = await NestFactory.create(AppModule);
-  await app.listen(PORT, () => console.log(`Application started on PORT - ${PORT}`));
+async function start():Promise<void> {
+	const PORT = process.env.PORT || 3000;
+	const app = await NestFactory.create(AppModule);
+
+	app.useGlobalPipes(new ValidationPipe);
+	
+	await app.listen(PORT, () =>
+		console.log(`Application started on PORT - ${PORT}`)
+	);
 }
 start();

@@ -17,6 +17,9 @@ export class Account {
 
 	@Prop({ type: String, required: true })
 	owner: string;
+	
+	@Prop({ type: String, required: true })
+	name: string;
 
 	@Prop({ type: String })
 	code: string;
