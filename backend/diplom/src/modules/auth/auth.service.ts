@@ -14,7 +14,7 @@ export class AuthService {
 		private tokenService: TokenService
 	) {}
 
-	async registration({ email, password }: CreateUserDTO):Promise<GenerateTokensT> {
+	async registration({ email, password }: CreateUserDTO):Promise<GenerateTokensT & { user: UserDocument }> {
 		const candidate = await this.userService.getUserByEmail(email);
 		if (candidate) {
 			throw new HttpException(
@@ -24,7 +24,12 @@ export class AuthService {
 		}
 		const hashPassword = await bcrypt.hash(password, PASSWORD_HASH_SALT);
 		const user = await this.userService.createUser({ email, password: hashPassword });
-		return this.tokenService.generateTokens({ email: user.email, password: user.password });
+		const tokens = await this.tokenService.generateTokens({ email: user.email, password: user.password });
+		await this.tokenService.saveToken({ userId: user._id, refreshToken: tokens.refreshToken });
+		return {
+			...tokens,
+			user: user
+		};
 	}
 
 	async login(userDTO: CreateUserDTO):Promise<GenerateTokensT> {
