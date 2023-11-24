@@ -1,11 +1,12 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { PASSWORD_HASH_SALT } from './auth.config';
-import * as bcrypt from 'bcrypt';
 import { TokenService } from '../token/token.service';
 import { CreateUserDTO } from '../user/DTO/create-user.dto';
 import { UserService } from '../user/user.service';
 import { UserDocument } from '../user/user.model';
 import { GenerateTokensT } from '../token/types/generate-tokens.type';
+import { UserRDO } from '../user/RDO/user.rdo';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class AuthService {
@@ -14,7 +15,10 @@ export class AuthService {
 		private tokenService: TokenService
 	) {}
 
-	async registration({ email, password }: CreateUserDTO):Promise<GenerateTokensT & { user: UserDocument }> {
+	async registration({
+		email,
+		password,
+	}: CreateUserDTO): Promise<GenerateTokensT & { user: UserRDO }> {
 		const candidate = await this.userService.getUserByEmail(email);
 		if (candidate) {
 			throw new HttpException(
@@ -23,21 +27,52 @@ export class AuthService {
 			);
 		}
 		const hashPassword = await bcrypt.hash(password, PASSWORD_HASH_SALT);
-		const user = await this.userService.createUser({ email, password: hashPassword });
-		const tokens = await this.tokenService.generateTokens({ email: user.email, password: user.password });
-		await this.tokenService.saveToken({ userId: user._id, refreshToken: tokens.refreshToken });
+		const user = await this.userService.createUser({
+			email,
+			password: hashPassword,
+		});
+		const userRDO = new UserRDO(user);
+		const tokens = await this.tokenService.generateTokens({
+			email: user.email,
+			password: user.password,
+		});
+		await this.tokenService.saveToken({
+			userId: user._id,
+			refreshToken: tokens.refreshToken,
+		});
 		return {
 			...tokens,
-			user: user
+			user: { ...userRDO },
 		};
 	}
 
-	async login(userDTO: CreateUserDTO):Promise<GenerateTokensT> {
+	async login(
+		userDTO: CreateUserDTO
+	): Promise<GenerateTokensT & { user: UserRDO }> {
 		const user = await this.validateUser(userDTO);
-		return this.tokenService.generateTokens({ email: user.email, password: user.password });
+		const userRDO = new UserRDO(user);
+		const tokens = await this.tokenService.generateTokens({
+			email: user.email,
+			password: user.password,
+		});
+		await this.tokenService.saveToken({
+			userId: user._id,
+			refreshToken: tokens.refreshToken,
+		});
+		return {
+			...tokens,
+			user: { ...userRDO },
+		};
 	}
 
-	async validateUser({ email, password }: CreateUserDTO):Promise<UserDocument> {
+	async logout(refreshToken: string): Promise<void> {
+		await this.tokenService.removeToken(refreshToken);
+	}
+
+	async validateUser({
+		email,
+		password,
+	}: CreateUserDTO): Promise<UserDocument> {
 		const user = await this.userService.getUserByEmail(email);
 		if (!user) {
 			throw new HttpException(
@@ -52,7 +87,7 @@ export class AuthService {
 				HttpStatus.UNAUTHORIZED
 			);
 		}
-		
+
 		return user;
 	}
 }

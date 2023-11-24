@@ -54,7 +54,7 @@ export class UserRepository {
 		}
 	}
 
-	async findByEmailAndUpdate(
+	async findByEmailAndAddAccount(
 		email: string,
 		accountId: Types.ObjectId
 	): Promise<UserDocument> {

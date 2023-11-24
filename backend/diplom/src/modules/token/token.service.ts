@@ -39,4 +39,8 @@ export class TokenService {
 		return token;
 	}
 
+	async removeToken(refreshToken: string):Promise<boolean> {
+		const isDelete = await this.tokenRepository.removeToken(refreshToken);
+		return isDelete;
+	}
 }

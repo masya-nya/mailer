@@ -15,6 +15,6 @@ import { AccountModule } from '../account/account.module';
 		]),
 		forwardRef(() => AccountModule)
 	],
-	exports: [UserService]
+	exports: [UserService, UserRepository]
 })
 export class UserModule {}
