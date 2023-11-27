@@ -76,7 +76,7 @@ export class AuthService {
 		const user = await this.userService.getUserByEmail(email);
 		if (!user) {
 			throw new HttpException(
-				'Некорректный email',
+				'Пользователя с таким email не существует',
 				HttpStatus.UNAUTHORIZED
 			);
 		}
