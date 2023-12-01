@@ -39,8 +39,31 @@ export class TokenService {
 		return token;
 	}
 
+	async findByToken(refreshToken: string):Promise<TokenDocument> {
+		const token = await this.tokenRepository.findByToken(refreshToken);
+		return token;
+	}
+
 	async removeToken(refreshToken: string):Promise<boolean> {
 		const isDelete = await this.tokenRepository.removeToken(refreshToken);
 		return isDelete;
+	}
+
+	async validateAccessToken(accessToken: string):Promise<JwtCreateDTO> {
+		try {
+			const payload = this.jwtService.verify(accessToken, { secret: process.env.ACCESS_TOKEN_KEY });
+			return payload;
+		} catch(e) {
+			return null;
+		}
+	}
+
+	async validateRefreshToken(refreshToken: string):Promise<JwtCreateDTO> {
+		try {
+			const payload = this.jwtService.verify(refreshToken, { secret: process.env.REFRESH_TOKEN_KEY });
+			return payload;
+		} catch(e) {
+			return null;
+		}
 	}
 }

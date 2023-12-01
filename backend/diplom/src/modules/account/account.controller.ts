@@ -30,6 +30,6 @@ export class AccountController {
 	getAccount(
 		@Param(ENDPOINTS.ACCOUNT.QUERIES.ACCOUNT_ID) accountId: string
 	): Promise<PopulatedAccount> {
-		return this.accountService.getAccount(accountId);
+		return this.accountService.getAccountWithPopulate(accountId);
 	}
 }

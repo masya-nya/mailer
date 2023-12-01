@@ -10,7 +10,7 @@ export type PopulationAccount = {
 	accounts: Account[]
 }
 
-export type PopulatedUser = PopulatedModel<User, PopulationAccount>
+export type PopulatedUser = PopulatedModel<UserDocument, PopulationAccount>
 
 @Schema()
 export class User {

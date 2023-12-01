@@ -36,7 +36,20 @@ export class TokenRepository {
 
 	async findByUserId(userId: Types.ObjectId):Promise<TokenDocument> {
 		try {
-			return this.tokenRepository.findOne({ userId });;
+			const token = await this.tokenRepository.findOne({ userId });
+			return token;
+		} catch (error) {
+			throw new HttpException(
+				`${error.message} in UserRepository`,
+				HttpStatus.INTERNAL_SERVER_ERROR
+			);
+		}
+	}
+
+	async findByToken(refreshToken: string):Promise<TokenDocument> {
+		try {
+			const token = await this.tokenRepository.findOne({ refreshToken });;
+			return token;
 		} catch (error) {
 			throw new HttpException(
 				`${error.message} in UserRepository`,

@@ -4,7 +4,8 @@ export const ENDPOINTS = {
 		BASE: 'auth',
 		REGISTRATION: 'registration',
 		LOGIN: 'login',
-		LOGOUT: 'logout'
+		LOGOUT: 'logout',
+		REFRESH: 'refresh'
 	},
 	ACCOUNT: {
 		BASE: 'account',

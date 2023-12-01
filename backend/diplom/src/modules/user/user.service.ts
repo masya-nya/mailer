@@ -1,10 +1,12 @@
-import { HttpException, HttpStatus, Inject, Injectable, forwardRef } from '@nestjs/common';
+import { Inject, Injectable, forwardRef } from '@nestjs/common';
 import { CreateUserDTO } from './DTO/create-user.dto';
 import { UserRepository } from './user.repository';
-import { PopulatedUser, UserDocument } from './user.model';
+import { UserDocument } from './user.model';
 import { AddAccountDTO } from './DTO/add-account.dto';
 import { AccountService } from './../account/account.service';
 import { AccountRepository } from '../account/account.repository';
+import { UserRDO } from './RDO/user.rdo';
+import { ApiError } from 'src/core/exceptions/api-error.exception';
 
 @Injectable()
 export class UserService {
@@ -16,41 +18,40 @@ export class UserService {
 	) {}
 
 	async createUser(createUserDTO: CreateUserDTO): Promise<UserDocument> {
-		return this.userRepository.createUser(createUserDTO);
+		const userDB = this.userRepository.findByEmail(createUserDTO.email);
+		if (userDB) {
+			throw ApiError.BadRequest('Такой пользователь уже существует');
+		}
+		const user = await this.userRepository.createUser(createUserDTO);
+		
+		return user;
 	}
 
 	
-	async addAccount({ accountId, email }: AddAccountDTO): Promise<UserDocument> {
+	async addAccount({ accountId, email }: AddAccountDTO): Promise<UserRDO> {
 		const account = await this.accountService.getAccountById(
 			accountId
 		);
 		if (!account) {
-			throw new HttpException(
-				'Ошибка добавления, такого аккаунта не существует',
-				HttpStatus.BAD_REQUEST
-			);
+			throw ApiError.BadRequest('Ошибка добавления, такого аккаунта не существует');
 		}
-		const user = await this.userRepository.findByEmailAndAddAccount(
+		const userBD = await this.userRepository.findByEmailAndAddAccount(
 			email,
 			account._id
 		);
-		await this.accountRepository.findByIdAndAddUser(account._id, user._id);
-		return user;
+		await this.accountRepository.findByIdAndAddUser(account._id, userBD._id);
+		const user = new UserRDO(userBD);
+		return {...user};
 	}
 
 	async getUserByEmail(email: string): Promise<UserDocument> {
 		return this.userRepository.findByEmail(email);
 	}
 	
-	async getUserByEmailWidthPopulate(email: string): Promise<PopulatedUser> {
-		try {
-			return this.userRepository.findByEmailWithPopulate(email);
-		} catch(e) {
-			throw new HttpException(
-				`${e.message}/UserService`,
-				HttpStatus.INTERNAL_SERVER_ERROR
-			);
-		}
+	async getUserByEmailWithPopulate(email: string): Promise<UserRDO> {
+		const userDocument = await this.userRepository.findByEmailWithPopulate(email);
+		const user = new UserRDO(userDocument);
+		return {...user};
 	}
 
 	async getAllUsers(): Promise<UserDocument[]> {

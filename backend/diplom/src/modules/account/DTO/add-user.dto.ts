@@ -10,9 +10,3 @@ export class AddUserDTO {
 	@IsEmail({}, { message: 'Должен быть email' })
 	readonly userEmail: string;
 }
-
-// export class AddUserDTO {
-// 	readonly accountId: Types.ObjectId;
-
-// 	readonly userEmail: string;
-// }

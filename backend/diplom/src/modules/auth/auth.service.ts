@@ -31,7 +31,6 @@ export class AuthService {
 			email,
 			password: hashPassword,
 		});
-		const userRDO = new UserRDO(user);
 		const tokens = await this.tokenService.generateTokens({
 			email: user.email,
 			password: user.password,
@@ -40,6 +39,7 @@ export class AuthService {
 			userId: user._id,
 			refreshToken: tokens.refreshToken,
 		});
+		const userRDO = new UserRDO(user);
 		return {
 			...tokens,
 			user: { ...userRDO },
@@ -65,8 +65,43 @@ export class AuthService {
 		};
 	}
 
-	async logout(refreshToken: string): Promise<void> {
+	async logout(
+		refreshToken: string
+	): Promise<void> {
 		await this.tokenService.removeToken(refreshToken);
+	}
+
+	async refresh(
+		refreshToken: string
+	): Promise<GenerateTokensT & { user: UserRDO }> {
+		if (!refreshToken) {
+			throw new HttpException(
+				'Невалидный токен',
+				HttpStatus.UNAUTHORIZED
+			);
+		}
+		const jwtPayload = await this.tokenService.validateRefreshToken(refreshToken);
+		const tokenFromDB = await this.tokenService.findByToken(refreshToken);
+		if (!jwtPayload || !tokenFromDB) {
+			throw new HttpException(
+				'Ошибка авторизации',
+				HttpStatus.UNAUTHORIZED
+			);
+		}
+		const user = await this.userService.getUserByEmail(jwtPayload.email);
+		const userRDO = new UserRDO(user);
+		const tokens = await this.tokenService.generateTokens({
+			email: user.email,
+			password: user.password,
+		});
+		await this.tokenService.saveToken({
+			userId: user._id,
+			refreshToken: tokens.refreshToken,
+		});
+		return {
+			...tokens,
+			user: { ...userRDO },
+		};
 	}
 
 	async validateUser({

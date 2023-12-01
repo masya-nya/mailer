@@ -60,7 +60,7 @@ export class AccountService {
 		return account;
 	}
 
-	async getAccount(accountId: string): Promise<PopulatedAccount> {
+	async getAccountWithPopulate(accountId: string): Promise<PopulatedAccount> {
 		const account =
 			await this.accountRepository.findByIdWithPopulateUsers(accountId);
 		if (!account) {

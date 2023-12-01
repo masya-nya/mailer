@@ -1,4 +1,4 @@
-import { Body, Controller, Post, Req, Res, HttpStatus } from '@nestjs/common';
+import { Body, Controller, Post, Req, Res, HttpStatus, Get } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { CreateUserDTO } from '../user/DTO/create-user.dto';
 import { GenerateTokensT } from '../token/types/generate-tokens.type';
@@ -49,5 +49,21 @@ export class AuthController {
 		await this.authService.logout(refreshToken);
 		res.clearCookie(TOKENS_NAMES.REFRESH);
 		return res.status(HttpStatus.OK).json({ message: 'OK' });
+	}
+
+	@Get(ENDPOINTS.AUTH.REFRESH)
+	async refreshToken(
+		@Req() req: Request,
+		@Res() res: Response
+	):Promise<Response<GenerateTokensT>> {
+		const { refreshToken } = req.cookies;
+		const tokens = await this.authService.refresh(refreshToken);
+		res.cookie(TOKENS_NAMES.REFRESH, tokens.refreshToken, {
+			maxAge: TokensExpires.REFRESH.milliseconds,
+			httpOnly: true,
+			secure: true,
+		});
+		return res.send(tokens);
+
 	}
 }

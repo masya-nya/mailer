@@ -49,7 +49,7 @@ export class AccountRepository {
 		try {
 			const account = this.accountRepository
 				.findById(accountId)
-				.populate<PopulationUser>('users')
+				.populate<PopulationUser>('users', { email: 1 })
 				.exec();
 			return account;
 		} catch (error) {
