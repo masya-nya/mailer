@@ -1,10 +1,4 @@
-import {
-	HttpException,
-	HttpStatus,
-	Inject,
-	Injectable,
-	forwardRef,
-} from '@nestjs/common';
+import { Inject, Injectable, forwardRef } from '@nestjs/common';
 import { AccountRepository } from './account.repository';
 import { CreateAccountDTO } from './DTO/create-account.dto';
 import { AddUserDTO } from './DTO/add-user.dto';
@@ -12,6 +6,8 @@ import { UserService } from '../user/user.service';
 import { AccountDocument, PopulatedAccount } from './account.model';
 import { Types } from 'mongoose';
 import { UserRepository } from '../user/user.repository';
+import { ApiError } from 'src/core/exceptions/api-error.exception';
+import { MAX_ACCOUNTS_FOR_ONE_OWNER } from './config';
 
 @Injectable()
 export class AccountService {
@@ -25,7 +21,22 @@ export class AccountService {
 	async createAccount(
 		createAccountDTO: CreateAccountDTO
 	): Promise<AccountDocument> {
-		return this.accountRepository.createAccount(createAccountDTO);
+		const owner = await this.userService.getUserByEmail(createAccountDTO.owner);
+		if (!owner) {
+			throw ApiError.BadRequest('Такого пользователя не существует');
+		}
+
+		const sameLoginAccount = await this.accountRepository.findAllByLogin(createAccountDTO.login);
+		if (sameLoginAccount) {
+			throw ApiError.BadRequest('Аккаунт с таким логином уже создан');
+		}
+
+		const ownerAccounts = await this.accountRepository.findAllByOwnerEmail(createAccountDTO.owner);
+		if (ownerAccounts.length >= MAX_ACCOUNTS_FOR_ONE_OWNER) {
+			throw ApiError.BadRequest('Лимит аккаунтов превышен');
+		}
+		const newAccount = await this.accountRepository.createAccount(createAccountDTO);
+		return newAccount;
 	}
 
 	async addUser(addUserDTO: AddUserDTO): Promise<AccountDocument> {
@@ -33,10 +44,7 @@ export class AccountService {
 			addUserDTO.userEmail
 		);
 		if (!user) {
-			throw new HttpException(
-				'Ошибка добавления, такого пользователя не существует',
-				HttpStatus.BAD_REQUEST
-			);
+			throw ApiError.BadRequest('Такого пользователя не существует');
 		}
 		const account = await this.accountRepository.findByIdAndAddUser(
 			addUserDTO.accountId,
@@ -52,10 +60,7 @@ export class AccountService {
 	async getAccountById(accountId: Types.ObjectId): Promise<AccountDocument> {
 		const account = await this.accountRepository.findById(accountId);
 		if (!account) {
-			throw new HttpException(
-				'Такого пользователя не существует',
-				HttpStatus.BAD_REQUEST
-			);
+			throw ApiError.BadRequest('Такого аккаунта не существует');
 		}
 		return account;
 	}
@@ -64,10 +69,7 @@ export class AccountService {
 		const account =
 			await this.accountRepository.findByIdWithPopulateUsers(accountId);
 		if (!account) {
-			throw new HttpException(
-				'Такого пользователя не существует',
-				HttpStatus.BAD_REQUEST
-			);
+			throw ApiError.BadRequest('Такого аккаунта не существует');
 		}
 		return account;
 	}

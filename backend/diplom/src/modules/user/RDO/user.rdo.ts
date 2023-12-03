@@ -21,3 +21,9 @@ export class UserRDO {
 		this.accounts = userDTO.accounts;
 	}
 }
+
+export const UserRDOForPopulate = {
+	email: 1,
+	isActivate: 1,
+	banned: 1,
+};

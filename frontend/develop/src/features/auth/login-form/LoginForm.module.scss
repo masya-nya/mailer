@@ -1,0 +1,27 @@
+.login-form {
+	display: flex;
+	flex-direction: column;
+	gap: 30px;
+	width: 400px;
+	padding: 50px 40px;
+	border-radius: 30px;
+	background-color: var(--color-bg-focused);
+	box-shadow: var(--color-shadow-base) 0px 0px 24px;
+	&__inputs {
+		display: flex;
+		flex-direction: column;
+		gap: 15px;
+	}
+	&__input {
+		width: 100%;
+	}
+	&__submit {
+		width: calc(100% - 20px);
+		margin: 0 10px;
+	}
+	&__btns {
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+	}
+}

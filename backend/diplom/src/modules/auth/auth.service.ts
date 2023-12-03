@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { PASSWORD_HASH_SALT } from './auth.config';
 import { TokenService } from '../token/token.service';
 import { CreateUserDTO } from '../user/DTO/create-user.dto';
@@ -7,6 +7,7 @@ import { UserDocument } from '../user/user.model';
 import { GenerateTokensT } from '../token/types/generate-tokens.type';
 import { UserRDO } from '../user/RDO/user.rdo';
 import * as bcrypt from 'bcrypt';
+import { ApiError } from 'src/core/exceptions/api-error.exception';
 
 @Injectable()
 export class AuthService {
@@ -21,9 +22,8 @@ export class AuthService {
 	}: CreateUserDTO): Promise<GenerateTokensT & { user: UserRDO }> {
 		const candidate = await this.userService.getUserByEmail(email);
 		if (candidate) {
-			throw new HttpException(
-				'Пользователь с таким email уже существует',
-				HttpStatus.BAD_REQUEST
+			throw ApiError.BadRequest(
+				'Пользователь с таким email уже существует'
 			);
 		}
 		const hashPassword = await bcrypt.hash(password, PASSWORD_HASH_SALT);
@@ -65,9 +65,7 @@ export class AuthService {
 		};
 	}
 
-	async logout(
-		refreshToken: string
-	): Promise<void> {
+	async logout(refreshToken: string): Promise<void> {
 		await this.tokenService.removeToken(refreshToken);
 	}
 
@@ -75,18 +73,13 @@ export class AuthService {
 		refreshToken: string
 	): Promise<GenerateTokensT & { user: UserRDO }> {
 		if (!refreshToken) {
-			throw new HttpException(
-				'Невалидный токен',
-				HttpStatus.UNAUTHORIZED
-			);
+			throw ApiError.Unauthorized();
 		}
-		const jwtPayload = await this.tokenService.validateRefreshToken(refreshToken);
+		const jwtPayload =
+			await this.tokenService.validateRefreshToken(refreshToken);
 		const tokenFromDB = await this.tokenService.findByToken(refreshToken);
 		if (!jwtPayload || !tokenFromDB) {
-			throw new HttpException(
-				'Ошибка авторизации',
-				HttpStatus.UNAUTHORIZED
-			);
+			throw ApiError.Unauthorized();
 		}
 		const user = await this.userService.getUserByEmail(jwtPayload.email);
 		const userRDO = new UserRDO(user);
@@ -110,17 +103,13 @@ export class AuthService {
 	}: CreateUserDTO): Promise<UserDocument> {
 		const user = await this.userService.getUserByEmail(email);
 		if (!user) {
-			throw new HttpException(
-				'Пользователя с таким email не существует',
-				HttpStatus.UNAUTHORIZED
+			throw ApiError.BadRequest(
+				'Пользователя с таким email не существует'
 			);
 		}
 		const passwordEquals = await bcrypt.compare(password, user.password);
 		if (!passwordEquals) {
-			throw new HttpException(
-				'Некорректный пароль',
-				HttpStatus.UNAUTHORIZED
-			);
+			throw ApiError.Unauthorized();
 		}
 
 		return user;

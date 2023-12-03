@@ -1,0 +1,1 @@
+export const MAX_ACCOUNTS_FOR_ONE_OWNER = 2;

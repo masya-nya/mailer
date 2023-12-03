@@ -10,7 +10,7 @@ export type PopulationUser = {
 	users: User[]
 }
 
-export type PopulatedAccount = PopulatedModel<Account, PopulationUser>
+export type PopulatedAccount = PopulatedModel<AccountDocument, PopulationUser>
 
 @Schema()
 export class Account {
@@ -18,6 +18,9 @@ export class Account {
 	@Prop({ type: String, required: true })
 	owner: string;
 	
+	@Prop({ type: String, required: true })
+	login: string;
+
 	@Prop({ type: String, required: true })
 	name: string;
 

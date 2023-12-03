@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import {
 	Account,
@@ -8,12 +8,16 @@ import {
 } from './account.model';
 import { Model, Types } from 'mongoose';
 import { CreateAccountDTO } from './DTO/create-account.dto';
+import { ApiError } from 'src/core/exceptions/api-error.exception';
+import { UserRDOForPopulate } from '../user/RDO/user.rdo';
 
 @Injectable()
 export class AccountRepository {
+	readonly className = 'AccountRepository';
+
 	constructor(
 		@InjectModel(Account.name)
-		private accountRepository: Model<AccountDocument>
+		private accountModel: Model<AccountDocument>
 	) {}
 
 	async createAccount(
@@ -21,25 +25,37 @@ export class AccountRepository {
 	): Promise<AccountDocument> {
 		try {
 			const account =
-				await this.accountRepository.create(createAccountDTO);
+				await this.accountModel.create(createAccountDTO);
 			return account;
 		} catch (error) {
-			throw new HttpException(
-				`${error.message} in UserRepository`,
-				HttpStatus.INTERNAL_SERVER_ERROR
-			);
+			throw ApiError.InternalServerError(error.message, this.className);
 		}
 	}
 
 	async findById(accountId: Types.ObjectId): Promise<AccountDocument> {
 		try {
-			const account = this.accountRepository.findById(accountId);
+			const account = await this.accountModel.findById(accountId);
 			return account;
 		} catch (error) {
-			throw new HttpException(
-				`${error.message} in UserRepository`,
-				HttpStatus.INTERNAL_SERVER_ERROR
-			);
+			throw ApiError.InternalServerError(error.message, this.className);
+		}
+	}
+
+	async findAllByLogin(login: string): Promise<AccountDocument> {
+		try {
+			const account = await this.accountModel.findOne({ login });
+			return account;
+		} catch (error) {
+			throw ApiError.InternalServerError(error.message, this.className);
+		}
+	}
+
+	async findAllByOwnerEmail(owner: string): Promise<AccountDocument[]> {
+		try {
+			const account = await this.accountModel.find({ owner });
+			return account;
+		} catch (error) {
+			throw ApiError.InternalServerError(error.message, this.className);
 		}
 	}
 
@@ -47,16 +63,13 @@ export class AccountRepository {
 		accountId: string
 	): Promise<PopulatedAccount> {
 		try {
-			const account = this.accountRepository
+			const account = await this.accountModel
 				.findById(accountId)
-				.populate<PopulationUser>('users', { email: 1 })
+				.populate<PopulationUser>('users', UserRDOForPopulate)
 				.exec();
 			return account;
 		} catch (error) {
-			throw new HttpException(
-				`${error.message} in UserRepository`,
-				HttpStatus.INTERNAL_SERVER_ERROR
-			);
+			throw ApiError.InternalServerError(error.message, this.className);
 		}
 	}
 
@@ -65,17 +78,14 @@ export class AccountRepository {
 		userID: Types.ObjectId
 	): Promise<AccountDocument> {
 		try {
-			const account = await this.accountRepository.findByIdAndUpdate(
+			const account = await this.accountModel.findByIdAndUpdate(
 				accountId,
 				{ $addToSet: { users: userID } },
 				{ new: true }
 			);
 			return account;
 		} catch (error) {
-			throw new HttpException(
-				`${error.message} in UserRepository`,
-				HttpStatus.INTERNAL_SERVER_ERROR
-			);
+			throw ApiError.InternalServerError(error.message, this.className);
 		}
 	}
 }
