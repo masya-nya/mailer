@@ -9,15 +9,15 @@ const { AUTH: { BASE, LOGIN, LOGOUT, REGISTRATION } } = ENDPOINTS;
 export class AuthService {
 
 	static async registration(registrationDTO: RegistrationDTO): Promise<AxiosResponse<AuthResponseI>> {
-		return $api.post(`${BASE}/${REGISTRATION}`, registrationDTO);
+		return $api.post(`/${BASE}/${REGISTRATION}`, registrationDTO);
 	}
 
 	static async login(loginDTO: LoginDTO): Promise<AxiosResponse<AuthResponseI>> {
-		return $api.post(`${BASE}/${LOGIN}`, loginDTO);
+		return $api.post(`/${BASE}/${LOGIN}`, loginDTO);
 	}
 
 	static async logout(): Promise<void> {
-		return $api.post(`${BASE}/${LOGOUT}`);
+		return $api.post(`/${BASE}/${LOGOUT}`);
 	}
 
 }

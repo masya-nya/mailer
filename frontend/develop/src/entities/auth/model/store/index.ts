@@ -3,13 +3,21 @@ import { LoginDTO } from '../DTO/login.dto';
 import { AuthService } from '../../api';
 import { ACCESS_TOKEN_LS_KEY } from '../../lib/config';
 import { RegistrationDTO } from '../DTO/registration.dto';
+import axios from 'axios';
+import { AuthResponseI } from '../schemas/login.schema';
+import { API_URL } from 'src/app/lib/config';
 
 
 export default class AuthStore {
 	private _isAuth:boolean = false;
+	private _isAuthInProgress:boolean = false;
 
 	constructor() {
 		makeAutoObservable(this);
+	}
+
+	get isAuthInProgress():boolean {
+		return this._isAuthInProgress;
 	}
 
 	get isAuth():boolean {
@@ -20,37 +28,68 @@ export default class AuthStore {
 		this._isAuth = value;
 	}
 
-	async login(loginDTO: LoginDTO):Promise<void> {
+	async login(loginDTO: LoginDTO):Promise<boolean> {
+		this._isAuthInProgress = true;
 		try {
 			const { data: response } = await AuthService.login(loginDTO);
 			const { accessToken } = response;
 			console.log(response);
 			localStorage.setItem(ACCESS_TOKEN_LS_KEY, accessToken);
-			this.isAuth = true;
+			this._isAuth = true;
+			return true;
 		} catch(e) {
 			console.log(e);
+			return false;
+		} finally {
+			this._isAuthInProgress = false;
 		}
 	}
 
-	async registration(registrationDTO: RegistrationDTO):Promise<void> {
+	async registration(registrationDTO: RegistrationDTO):Promise<boolean> {
+		this._isAuthInProgress = true;
 		try {
 			const { data: response } = await AuthService.registration(registrationDTO);
 			const { accessToken } = response;
 			console.log(response);
 			localStorage.setItem(ACCESS_TOKEN_LS_KEY, accessToken);
-			this.isAuth = true;
+			this._isAuth = true;
+			return true;
 		} catch(e) {
 			console.log(e);
+			return false;
+		} finally {
+			this._isAuthInProgress = false;
 		}
 	}
 
-	async logout():Promise<void> {
+	async logout():Promise<boolean> {
+		this._isAuthInProgress = true;
 		try {
 			await AuthService.logout();
 			localStorage.removeItem(ACCESS_TOKEN_LS_KEY);
-			this.isAuth = false;
+			this._isAuth = false;
+			return true;
 		} catch(e) {
 			console.log(e);
+			return false;
+		} finally {
+			this._isAuthInProgress = false;
+		}
+	}
+
+	async checkAuth():Promise<boolean> {
+		this._isAuthInProgress = true;
+		try {
+			const { data } = await axios.get<AuthResponseI>(`${API_URL}/auth/refresh`, { withCredentials: true });
+			console.log('checkAuth', data);
+			localStorage.setItem(ACCESS_TOKEN_LS_KEY, data.accessToken);
+			this._isAuth = true;
+			return true;
+		} catch(e) {
+			console.log(e);
+			return false;
+		} finally {
+			this._isAuthInProgress = false;
 		}
 	}
 

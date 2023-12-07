@@ -72,25 +72,35 @@ export class AuthService {
 	async refresh(
 		refreshToken: string
 	): Promise<GenerateTokensT & { user: UserRDO }> {
+		console.log(1);
 		if (!refreshToken) {
 			throw ApiError.Unauthorized();
 		}
+		console.log(2);
 		const jwtPayload =
 			await this.tokenService.validateRefreshToken(refreshToken);
+		console.log(3);
 		const tokenFromDB = await this.tokenService.findByToken(refreshToken);
+		console.log(jwtPayload);
+		console.log(tokenFromDB);
 		if (!jwtPayload || !tokenFromDB) {
 			throw ApiError.Unauthorized();
 		}
+		console.log(5);
 		const user = await this.userService.getUserByEmail(jwtPayload.email);
+		console.log(6);
 		const userRDO = new UserRDO(user);
+		console.log(7);
 		const tokens = await this.tokenService.generateTokens({
 			email: user.email,
 			password: user.password,
 		});
+		console.log(8);
 		await this.tokenService.saveToken({
 			userId: user._id,
 			refreshToken: tokens.refreshToken,
 		});
+		console.log(9);
 		return {
 			...tokens,
 			user: { ...userRDO },

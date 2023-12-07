@@ -10,12 +10,12 @@ export class TokenRepository {
 	readonly className = 'TokenRepository';
 
 	constructor(
-		@InjectModel(Token.name) private tokenRepository: Model<TokenDocument>
+		@InjectModel(Token.name) private tokenModel: Model<TokenDocument>
 	) {}
 
 	async saveToken(addTokenDTO: AddTokenDTO): Promise<TokenDocument> {
 		try {
-			return this.tokenRepository.create(addTokenDTO);
+			return await this.tokenModel.create(addTokenDTO);
 		} catch (error) {
 			throw ApiError.InternalServerError(error.message, this.className);
 		}
@@ -24,7 +24,7 @@ export class TokenRepository {
 	async removeToken(refreshToken: string): Promise<boolean> {
 		try {
 			const { acknowledged: isDelete } =
-				await this.tokenRepository.deleteOne({ refreshToken });
+				await this.tokenModel.deleteOne({ refreshToken });
 			return isDelete;
 		} catch (error) {
 			throw ApiError.InternalServerError(error.message, this.className);
@@ -33,7 +33,7 @@ export class TokenRepository {
 
 	async findByUserId(userId: Types.ObjectId): Promise<TokenDocument> {
 		try {
-			const token = await this.tokenRepository.findOne({ userId });
+			const token = await this.tokenModel.findOne({ userId });
 			return token;
 		} catch (error) {
 			throw ApiError.InternalServerError(error.message, this.className);
@@ -42,7 +42,7 @@ export class TokenRepository {
 
 	async findByToken(refreshToken: string): Promise<TokenDocument> {
 		try {
-			const token = await this.tokenRepository.findOne({ refreshToken });
+			const token = await this.tokenModel.findOne({ refreshToken });
 			return token;
 		} catch (error) {
 			throw ApiError.InternalServerError(error.message, this.className);

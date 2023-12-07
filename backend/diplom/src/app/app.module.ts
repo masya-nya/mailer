@@ -20,6 +20,7 @@ import { AppService } from './app.service';
 		UserModule,
 		AuthModule,
 		TokenModule
+
 	],
 })
 export class AppModule {}

@@ -33,7 +33,7 @@ export class TokenService {
 		const tokenData = await this.tokenRepository.findByUserId(userId);
 		if (tokenData) {
 			tokenData.refreshToken = refreshToken;
-			return tokenData.save();
+			return await tokenData.save();
 		}
 		const token = await this.tokenRepository.saveToken({ refreshToken, userId });
 		return token;

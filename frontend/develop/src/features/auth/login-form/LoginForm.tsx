@@ -4,20 +4,25 @@ import { Button, Input } from 'antd';
 import { useTextInput } from 'src/shared/lib/hooks';
 import cn from 'classnames';
 import { AuthContext } from 'src/entities/auth';
+import { useNavigate } from 'react-router-dom';
+import { observer } from 'mobx-react-lite';
 
-export const LoginForm: React.FC = () => {
+export const LoginForm: React.FC = observer(() => {
 	const [email, setEmailHandler] = useTextInput('');
 	const [password, setPasswordHandler] = useTextInput('');
+	const navigate = useNavigate();
 	const { store } = useContext(AuthContext);
 
 
-	const login = (e: FormEvent<HTMLFormElement>): void => {
+	const login = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
 		e.preventDefault();
-		store.login({ email, password });
+		const status = await store.login({ email, password });
+		status && navigate('/');
 	};
 
-	const registration = ():void => {
-		store.registration({ email, password });
+	const registration = async ():Promise<void> => {
+		const status = await store.registration({ email, password });
+		status && navigate('/');
 	};
 
 	return (
@@ -38,6 +43,7 @@ export const LoginForm: React.FC = () => {
 						cl['login-form__password'],
 						cl['login-form__input']
 					)}
+					type='password'
 					placeholder="Пароль"
 					value={password}
 					onChange={setPasswordHandler}
@@ -66,4 +72,4 @@ export const LoginForm: React.FC = () => {
 			</div>
 		</form>
 	);
-};
+});
