@@ -1,7 +1,6 @@
 import { Body, Controller, Get, Param, Post, Patch } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDTO } from './DTO/create-user.dto';
-import { UserDocument } from './user.model';
 import { ENDPOINTS } from 'src/core/consts/endpoint';
 import { AddAccountDTO } from './DTO/add-account.dto';
 import { Types } from 'mongoose';
@@ -36,7 +35,7 @@ export class UserController {
 	}
 
 	@Get()
-	getUsers(): Promise<UserDocument[]> {
+	getUsers(): Promise<UserRDO[]> {
 		return this.userService.getAllUsers();
 	}
 }

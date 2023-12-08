@@ -6,7 +6,6 @@ import { HomePage } from '../../pages/home-page/HomePage';
 import { AboutPage } from '../../pages/about-page/AboutPage';
 import { observer } from 'mobx-react-lite';
 import AuthGuard from './routes/AuthGuard';
-import NotAuthGuard from './routes/NotAuthGuard';
 
 interface AppRouterProps {
 	className?: string
@@ -17,8 +16,8 @@ export const AppRouter:FC<AppRouterProps> = observer(() => {
 	return (
 		<Routes>
 			<Route path='/' element={<Layout />}>
-				<Route index element={<NotAuthGuard><HomePage /></NotAuthGuard>} />
-				<Route path='/about-page' element={<NotAuthGuard><AboutPage /></NotAuthGuard>} />
+				<Route index element={<HomePage />} />
+				<Route path='/about-page' element={<AboutPage />} />
 			</Route>
 			<Route path='/login' element={<AuthGuard><LoginPage /></AuthGuard>} />
 		</Routes>

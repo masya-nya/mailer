@@ -35,12 +35,12 @@ export class UserService {
 		if (!account) {
 			throw ApiError.BadRequest('Ошибка добавления, такого аккаунта не существует');
 		}
-		const userBD = await this.userRepository.findByEmailAndAddAccount(
+		const userDB = await this.userRepository.findByEmailAndAddAccount(
 			email,
 			account._id
 		);
-		await this.accountRepository.findByIdAndAddUser(account._id, userBD._id);
-		const user = new UserRDO(userBD);
+		await this.accountRepository.findByIdAndAddUser(account._id, userDB._id);
+		const user = new UserRDO(userDB);
 		return {...user};
 	}
 
@@ -54,7 +54,12 @@ export class UserService {
 		return {...user};
 	}
 
-	async getAllUsers(): Promise<UserDocument[]> {
-		return this.userRepository.findAllUsers();
+	async getAllUsers(): Promise<UserRDO[]> {
+		const usersDB = await this.userRepository.findAllUsers();
+		const users = usersDB.map(userDB => {
+			const user = new UserRDO(userDB);
+			return { ...user };
+		});
+		return users;
 	}
 }

@@ -57,9 +57,7 @@ export class AuthController {
 		@Res() res: Response
 	):Promise<Response<GenerateTokensT>> {
 		const { refreshToken } = req.cookies;
-		console.log('refreshToken', refreshToken);
 		const tokens = await this.authService.refresh(refreshToken);
-		console.log('tokens', tokens);
 		res.cookie(TOKENS_NAMES.REFRESH, tokens.refreshToken, {
 			maxAge: TokensExpires.REFRESH.milliseconds,
 			httpOnly: true,

@@ -6,6 +6,7 @@ import cn from 'classnames';
 import { AuthContext } from 'src/entities/auth';
 import { useNavigate } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
+import { Test } from '../test/Test';
 
 export const LoginForm: React.FC = observer(() => {
 	const [email, setEmailHandler] = useTextInput('');
@@ -69,6 +70,7 @@ export const LoginForm: React.FC = observer(() => {
 				>
 					Регистрация
 				</Button>
+				<Test />
 			</div>
 		</form>
 	);

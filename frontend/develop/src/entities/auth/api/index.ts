@@ -4,7 +4,8 @@ import { AuthResponseI } from '../model/schemas/login.schema';
 import ENDPOINTS from 'src/app/lib/consts/endpoints';
 import { LoginDTO } from '../model/DTO/login.dto';
 import { RegistrationDTO } from '../model/DTO/registration.dto';
-const { AUTH: { BASE, LOGIN, LOGOUT, REGISTRATION } } = ENDPOINTS;
+import { UserI } from 'src/entities/user/model/schemas/user.schema';
+const { AUTH: { BASE, LOGIN, LOGOUT, REGISTRATION }, USER: { BASE: USER_BASE } } = ENDPOINTS;
 
 export class AuthService {
 
@@ -18,6 +19,10 @@ export class AuthService {
 
 	static async logout(): Promise<void> {
 		return $api.post(`/${BASE}/${LOGOUT}`);
+	}
+
+	static async getUsers(): Promise<AxiosResponse<UserI[]>> {
+		return $api.get(`${USER_BASE}`);
 	}
 
 }

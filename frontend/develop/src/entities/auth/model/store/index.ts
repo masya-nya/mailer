@@ -6,6 +6,7 @@ import { RegistrationDTO } from '../DTO/registration.dto';
 import axios from 'axios';
 import { AuthResponseI } from '../schemas/login.schema';
 import { API_URL } from 'src/app/lib/config';
+import { UserI } from 'src/entities/user/model/schemas/user.schema';
 
 
 export default class AuthStore {
@@ -91,6 +92,12 @@ export default class AuthStore {
 		} finally {
 			this._isAuthInProgress = false;
 		}
+	}
+
+	async getUsers(): Promise<UserI[]> {
+		const { data } = await AuthService.getUsers();
+		console.log('Users', data);
+		return data;
 	}
 
 }

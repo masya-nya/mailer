@@ -7,8 +7,6 @@ import { ValidationException } from '../exceptions/validation.exception';
 export class ValidationPipe implements PipeTransform {
 
 	async transform(value: any, metadata: ArgumentMetadata):Promise<any>{
-		console.log(value);
-		console.log(metadata);
 		if (metadata.type === 'param') {
 			return value;
 		}

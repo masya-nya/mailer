@@ -24,7 +24,7 @@ module.exports = {
 		'linebreak-style': ['error', 'windows'],
 		'indent': ['error', 'tab', { 'SwitchCase': 1, 'ignoredNodes': ['PropertyDefinition'] }],
 		'quotes': [2, 'single', { allowTemplateLiterals: true, avoidEscape: true }],
-		'max-len': [1, { code: 140 }],
+		'max-len': [1, { code: 200 }],
 		'lines-between-class-members': ['error', 'always'],
 		'no-multiple-empty-lines': ['error', { 'max': 2, 'maxEOF': 0 }],
 	},
