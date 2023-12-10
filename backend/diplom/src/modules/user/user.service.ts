@@ -1,12 +1,13 @@
 import { Inject, Injectable, forwardRef } from '@nestjs/common';
 import { CreateUserDTO } from './DTO/create-user.dto';
 import { UserRepository } from './user.repository';
-import { UserDocument } from './user.model';
+import { PopulatedUser, UserDocument } from './user.model';
 import { AddAccountDTO } from './DTO/add-account.dto';
 import { AccountService } from './../account/account.service';
 import { AccountRepository } from '../account/account.repository';
 import { UserRDO } from './RDO/user.rdo';
 import { ApiError } from 'src/core/exceptions/api-error.exception';
+import { Logger } from 'src/core/logger/Logger';
 
 @Injectable()
 export class UserService {
@@ -14,25 +15,29 @@ export class UserService {
 		@Inject(forwardRef(() => AccountService))
 		private readonly accountService: AccountService,
 		private readonly accountRepository: AccountRepository,
-		private readonly userRepository: UserRepository
+		private readonly userRepository: UserRepository,
+		private readonly logger: Logger
 	) {}
 
 	async createUser(createUserDTO: CreateUserDTO): Promise<UserDocument> {
 		const userDB = await this.userRepository.findByEmail(createUserDTO.email);
 		if (userDB) {
+			this.logger.error(`Попытка создания пользователя с уже существующим email (${createUserDTO.email})`);
 			throw ApiError.BadRequest('Такой пользователь уже существует');
 		}
 		const user = await this.userRepository.createUser(createUserDTO);
+		this.logger.log(`Пользователь создан (${user.email})`);
 		
 		return user;
 	}
 
 	
 	async addAccount({ accountId, email }: AddAccountDTO): Promise<UserRDO> {
-		const account = await this.accountService.getAccountById(
+		const account = await this.accountService.findAccountById(
 			accountId
 		);
 		if (!account) {
+			this.logger.error(`Попытка добавления несуществующего аккаунта пользователю (${accountId})`);
 			throw ApiError.BadRequest('Ошибка добавления, такого аккаунта не существует');
 		}
 		const userDB = await this.userRepository.findByEmailAndAddAccount(
@@ -41,17 +46,18 @@ export class UserService {
 		);
 		await this.accountRepository.findByIdAndAddUser(account._id, userDB._id);
 		const user = new UserRDO(userDB);
+		this.logger.log(`Аккаунт ${account.login} добавлен пользователю (${user.email})`);
 		return {...user};
 	}
 
-	async getUserByEmail(email: string): Promise<UserDocument> {
-		return this.userRepository.findByEmail(email);
+	async findUserByEmail(email: string): Promise<UserDocument> {
+		const user = await this.userRepository.findByEmail(email);
+		return user;
 	}
 	
-	async getUserByEmailWithPopulate(email: string): Promise<UserRDO> {
-		const userDocument = await this.userRepository.findByEmailWithPopulate(email);
-		const user = new UserRDO(userDocument);
-		return {...user};
+	async findUserByEmailWithPopulate(email: string): Promise<PopulatedUser> {
+		const user = await this.userRepository.findByEmailWithPopulate(email);
+		return user;
 	}
 
 	async getAllUsers(): Promise<UserRDO[]> {

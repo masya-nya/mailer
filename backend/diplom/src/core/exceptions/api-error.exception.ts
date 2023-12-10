@@ -19,10 +19,10 @@ export class ApiError extends HttpException {
 		);
 	}
 
-	static InternalServerError(message:string, place: string):ApiError {
+	static InternalServerError(message:string):ApiError {
 		return new ApiError(
 			HttpStatus.BAD_REQUEST,
-			`${message} in ${place}`
+			message
 		);
 	}
 }

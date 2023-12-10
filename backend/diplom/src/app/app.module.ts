@@ -7,6 +7,8 @@ import { TokenModule } from 'src/modules/token/token.module';
 import { UserModule } from 'src/modules/user/user.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { RoleModule } from 'src/modules/role/role.module';
+import { AccountUserModule } from 'src/modules/account-user/account-user.module';
 
 @Module({
 	controllers: [AppController],
@@ -19,7 +21,9 @@ import { AppService } from './app.service';
 		AccountModule,
 		UserModule,
 		AuthModule,
-		TokenModule
+		TokenModule,
+		RoleModule,
+		AccountUserModule
 
 	],
 })

@@ -10,14 +10,15 @@ import { Model, Types } from 'mongoose';
 import { CreateAccountDTO } from './DTO/create-account.dto';
 import { ApiError } from 'src/core/exceptions/api-error.exception';
 import { UserRDOForPopulate } from '../user/RDO/user.rdo';
+import { Logger } from 'src/core/logger/Logger';
 
 @Injectable()
 export class AccountRepository {
-	readonly className = 'AccountRepository';
+	readonly serviceName = 'AccountRepository';
 
 	constructor(
-		@InjectModel(Account.name)
-		private accountModel: Model<AccountDocument>
+		@InjectModel(Account.name) private accountModel: Model<AccountDocument>,
+		private readonly logger: Logger
 	) {}
 
 	async createAccount(
@@ -28,7 +29,8 @@ export class AccountRepository {
 				await this.accountModel.create(createAccountDTO);
 			return account;
 		} catch (error) {
-			throw ApiError.InternalServerError(error.message, this.className);
+			this.logger.error(`Ошибка сервера в ${this.serviceName}`);
+			throw ApiError.InternalServerError(error.message);
 		}
 	}
 
@@ -37,7 +39,8 @@ export class AccountRepository {
 			const account = await this.accountModel.findById(accountId);
 			return account;
 		} catch (error) {
-			throw ApiError.InternalServerError(error.message, this.className);
+			this.logger.error(`Ошибка сервера в ${this.serviceName}`);
+			throw ApiError.InternalServerError(error.message);
 		}
 	}
 
@@ -46,7 +49,8 @@ export class AccountRepository {
 			const account = await this.accountModel.findOne({ login });
 			return account;
 		} catch (error) {
-			throw ApiError.InternalServerError(error.message, this.className);
+			this.logger.error(`Ошибка сервера в ${this.serviceName}`);
+			throw ApiError.InternalServerError(error.message);
 		}
 	}
 
@@ -55,7 +59,8 @@ export class AccountRepository {
 			const account = await this.accountModel.find({ owner });
 			return account;
 		} catch (error) {
-			throw ApiError.InternalServerError(error.message, this.className);
+			this.logger.error(`Ошибка сервера в ${this.serviceName}`);
+			throw ApiError.InternalServerError(error.message);
 		}
 	}
 
@@ -69,7 +74,8 @@ export class AccountRepository {
 				.exec();
 			return account;
 		} catch (error) {
-			throw ApiError.InternalServerError(error.message, this.className);
+			this.logger.error(`Ошибка сервера в ${this.serviceName}`);
+			throw ApiError.InternalServerError(error.message);
 		}
 	}
 
@@ -85,7 +91,8 @@ export class AccountRepository {
 			);
 			return account;
 		} catch (error) {
-			throw ApiError.InternalServerError(error.message, this.className);
+			this.logger.error(`Ошибка сервера в ${this.serviceName}`);
+			throw ApiError.InternalServerError(error.message);
 		}
 	}
 }

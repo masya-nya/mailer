@@ -8,9 +8,10 @@ import { AccountModule } from '../account/account.module';
 import { AuthMiddleware } from 'src/core/middlewares/auth.middleware';
 import { ENDPOINTS } from 'src/core/consts/endpoint';
 import { TokenModule } from '../token/token.module';
+import { Logger } from 'src/core/logger/Logger';
 
 @Module({
-	providers: [UserService, UserRepository],
+	providers: [UserService, UserRepository, Logger],
 	controllers: [UserController],
 	imports: [
 		MongooseModule.forFeature([

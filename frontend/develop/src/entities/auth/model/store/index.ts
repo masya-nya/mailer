@@ -3,9 +3,6 @@ import { LoginDTO } from '../DTO/login.dto';
 import { AuthService } from '../../api';
 import { ACCESS_TOKEN_LS_KEY } from '../../lib/config';
 import { RegistrationDTO } from '../DTO/registration.dto';
-import axios from 'axios';
-import { AuthResponseI } from '../schemas/login.schema';
-import { API_URL } from 'src/app/lib/config';
 import { UserI } from 'src/entities/user/model/schemas/user.schema';
 
 
@@ -81,7 +78,7 @@ export default class AuthStore {
 	async checkAuth():Promise<boolean> {
 		this._isAuthInProgress = true;
 		try {
-			const { data } = await axios.get<AuthResponseI>(`${API_URL}/auth/refresh`, { withCredentials: true });
+			const { data } = await AuthService.refresh();
 			console.log('checkAuth', data);
 			localStorage.setItem(ACCESS_TOKEN_LS_KEY, data.accessToken);
 			this._isAuth = true;

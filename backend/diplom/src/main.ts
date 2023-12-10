@@ -3,10 +3,13 @@ import { AppModule } from './app/app.module';
 // import { ValidationPipe } from './core/pipes/validation.pipe';
 import { ValidationPipe } from '@nestjs/common';
 import * as cookieParser from 'cookie-parser';
+import { Logger } from './core/logger/Logger';
 
 async function start():Promise<void> {
 	const PORT = process.env.PORT || 3000;
-	const app = await NestFactory.create(AppModule);
+	const app = await NestFactory.create(AppModule, {
+		logger: new Logger()
+	});
 
 	app.enableCors({
 		credentials: true,

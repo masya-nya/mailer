@@ -4,9 +4,10 @@ import { JwtModule } from '@nestjs/jwt';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Token, TokenSchema } from './token.model';
 import { TokenRepository } from './token.repository';
+import { Logger } from 'src/core/logger/Logger';
 
 @Module({
-	providers: [TokenService, TokenRepository],
+	providers: [TokenService, TokenRepository, Logger],
 	imports: [
 		JwtModule.register({}),
 		MongooseModule.forFeature([

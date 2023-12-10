@@ -10,13 +10,15 @@ import { Model, Types } from 'mongoose';
 import { CreateUserDTO } from './DTO/create-user.dto';
 import { ApiError } from 'src/core/exceptions/api-error.exception';
 import { AccountRDOForPopulate } from '../account/RDO/account.rdo';
+import { Logger } from 'src/core/logger/Logger';
 
 @Injectable()
 export class UserRepository {
-	readonly className = 'UserRepository';
+	readonly serviceName = 'UserRepository';
 
 	constructor(
-		@InjectModel(User.name) private userModel: Model<UserDocument>
+		@InjectModel(User.name) private userModel: Model<UserDocument>,
+		private readonly logger: Logger
 	) {}
 
 	async createUser(createUserDTO: CreateUserDTO): Promise<UserDocument> {
@@ -24,7 +26,8 @@ export class UserRepository {
 			const createdUser = await this.userModel.create(createUserDTO);
 			return createdUser;
 		} catch (error) {
-			throw ApiError.InternalServerError(error.message, this.className);
+			this.logger.error(`Ошибка сервера в ${this.serviceName}`);
+			throw ApiError.InternalServerError(error.message);
 		}
 	}
 
@@ -33,7 +36,8 @@ export class UserRepository {
 			const user = await this.userModel.findOne({ email });
 			return user;
 		} catch (error) {
-			throw ApiError.InternalServerError(error.message, this.className);
+			this.logger.error(`Ошибка сервера в ${this.serviceName}`);
+			throw ApiError.InternalServerError(error.message);
 		}
 	}
 
@@ -45,7 +49,8 @@ export class UserRepository {
 				.exec();
 			return user;
 		} catch (error) {
-			throw ApiError.InternalServerError(error.message, this.className);
+			this.logger.error(`Ошибка сервера в ${this.serviceName}`);
+			throw ApiError.InternalServerError(error.message);
 		}
 	}
 
@@ -61,7 +66,8 @@ export class UserRepository {
 			);
 			return user;
 		} catch (error) {
-			throw ApiError.InternalServerError(error.message, this.className);
+			this.logger.error(`Ошибка сервера в ${this.serviceName}`);
+			throw ApiError.InternalServerError(error.message);
 		}
 	}
 
@@ -70,7 +76,8 @@ export class UserRepository {
 			const users = await this.userModel.find().lean();
 			return users;
 		} catch (error) {
-			throw ApiError.InternalServerError(error.message, this.className);
+			this.logger.error(`Ошибка сервера в ${this.serviceName}`);
+			throw ApiError.InternalServerError(error.message);
 		}
 	}
 }

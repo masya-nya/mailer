@@ -49,7 +49,7 @@ export class TokenService {
 		return isDelete;
 	}
 
-	async validateAccessToken(accessToken: string):Promise<JwtCreateDTO> {
+	async validateAccessToken(accessToken: string):Promise<JwtCreateDTO | null> {
 		try {
 			const payload = this.jwtService.verify(accessToken, { secret: process.env.ACCESS_TOKEN_KEY });
 			return payload;
@@ -58,7 +58,7 @@ export class TokenService {
 		}
 	}
 
-	async validateRefreshToken(refreshToken: string):Promise<JwtCreateDTO> {
+	async validateRefreshToken(refreshToken: string):Promise<JwtCreateDTO | null> {
 		try {
 			const payload = this.jwtService.verify(refreshToken, { secret: process.env.REFRESH_TOKEN_KEY });
 			return payload;
