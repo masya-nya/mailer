@@ -4,6 +4,7 @@ import { AuthService } from '../../api';
 import { ACCESS_TOKEN_LS_KEY } from '../../lib/config';
 import { RegistrationDTO } from '../DTO/registration.dto';
 import { UserI } from 'src/entities/user/model/schemas/user.schema';
+import { globalShadowLoaderStore } from 'src/shared/UI';
 
 
 export default class AuthStore {
@@ -27,7 +28,7 @@ export default class AuthStore {
 	}
 
 	async login(loginDTO: LoginDTO):Promise<boolean> {
-		this._isAuthInProgress = true;
+		globalShadowLoaderStore.isLoad = true;
 		try {
 			const { data: response } = await AuthService.login(loginDTO);
 			const { accessToken } = response;
@@ -37,14 +38,15 @@ export default class AuthStore {
 			return true;
 		} catch(e) {
 			console.log(e);
+			globalShadowLoaderStore.isLoad = false;
 			return false;
 		} finally {
-			this._isAuthInProgress = false;
+			globalShadowLoaderStore.isLoad = false;
 		}
 	}
 
 	async registration(registrationDTO: RegistrationDTO):Promise<boolean> {
-		this._isAuthInProgress = true;
+		globalShadowLoaderStore.isLoad = true;
 		try {
 			const { data: response } = await AuthService.registration(registrationDTO);
 			const { accessToken } = response;
@@ -54,14 +56,15 @@ export default class AuthStore {
 			return true;
 		} catch(e) {
 			console.log(e);
+			globalShadowLoaderStore.isLoad = false;
 			return false;
 		} finally {
-			this._isAuthInProgress = false;
+			globalShadowLoaderStore.isLoad = false;
 		}
 	}
 
 	async logout():Promise<boolean> {
-		this._isAuthInProgress = true;
+		globalShadowLoaderStore.isLoad = true;
 		try {
 			await AuthService.logout();
 			localStorage.removeItem(ACCESS_TOKEN_LS_KEY);
@@ -69,9 +72,10 @@ export default class AuthStore {
 			return true;
 		} catch(e) {
 			console.log(e);
+			globalShadowLoaderStore.isLoad = false;
 			return false;
 		} finally {
-			this._isAuthInProgress = false;
+			globalShadowLoaderStore.isLoad = false;
 		}
 	}
 

@@ -6,7 +6,8 @@ import cn from 'classnames';
 import { AuthContext } from 'src/entities/auth';
 import { useNavigate } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
-import { Test } from '../test/Test';
+import ROUTER_ROTES from 'src/app/router/config';
+const { LAYOUT: { BASE }, REGISTRATION} = ROUTER_ROTES;
 
 export const LoginForm: React.FC = observer(() => {
 	const [email, setEmailHandler] = useTextInput('');
@@ -14,16 +15,10 @@ export const LoginForm: React.FC = observer(() => {
 	const navigate = useNavigate();
 	const { store } = useContext(AuthContext);
 
-
 	const login = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
 		e.preventDefault();
 		const status = await store.login({ email, password });
-		status && navigate('/');
-	};
-
-	const registration = async ():Promise<void> => {
-		const status = await store.registration({ email, password });
-		status && navigate('/');
+		status && navigate(BASE);
 	};
 
 	return (
@@ -37,21 +32,27 @@ export const LoginForm: React.FC = observer(() => {
 					placeholder="Email"
 					value={email}
 					onChange={setEmailHandler}
-					size='large'
+					size="large"
 				/>
 				<Input
 					className={cn(
 						cl['login-form__password'],
 						cl['login-form__input']
 					)}
-					type='password'
+					type="password"
 					placeholder="Пароль"
 					value={password}
 					onChange={setPasswordHandler}
-					size='large'
+					size="large"
 				/>
 			</div>
 			<div className={cl['login-form__btns']}>
+				<span
+					onClick={() => navigate(REGISTRATION)}
+					className={cl['login-form__registration-link']}
+				>
+					Регистрация
+				</span>
 				<Button
 					className={cl['login-form__submit']}
 					type="primary"
@@ -61,16 +62,6 @@ export const LoginForm: React.FC = observer(() => {
 				>
 					Войти
 				</Button>
-				<Button
-					className={cl['login-form__submit']}
-					type="primary"
-					size="large"
-					shape="round"
-					onClick={registration}
-				>
-					Регистрация
-				</Button>
-				<Test />
 			</div>
 		</form>
 	);

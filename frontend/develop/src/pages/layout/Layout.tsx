@@ -5,6 +5,8 @@ import { Button } from 'antd';
 import { AuthContext } from 'src/entities/auth';
 import { Loader } from 'src/shared/UI';
 import { Test } from 'src/features/auth/test/Test';
+import ROUTER_ROTES from 'src/app/router/config';
+const { LAYOUT: { BASE, SETTINGS } } = ROUTER_ROTES;
 
 interface LayoutProps {
 	className?: string;
@@ -30,8 +32,8 @@ export const Layout: FC<LayoutProps> = observer(() => {
 	return (
 		<div>
 			<div>
-				<Link to={'/'}>Home</Link>
-				<Link to={'/about-page'}>About Page</Link>
+				<Link to={BASE}>Home</Link>
+				<Link to={SETTINGS}>Settings Page</Link>
 				<Button type="primary" onClick={logoutHandler}>Выход</Button>
 				<Test />
 			</div>

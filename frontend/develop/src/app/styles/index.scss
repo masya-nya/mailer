@@ -4,6 +4,7 @@
 @import './variables/global.scss';
 
 .app {
+	font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,'Noto Sans',sans-serif,'Apple Color Emoji','Segoe UI Emoji','Segoe UI Symbol','Noto Color Emoji';
 	font-size: var(--font-size-m);
 
 	background: var(--color-bg);

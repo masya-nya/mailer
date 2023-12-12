@@ -9,6 +9,7 @@ import { ThemeSvg } from 'src/shared/svg';
 import { AuthContext } from 'src/entities/auth';
 import { ACCESS_TOKEN_LS_KEY } from 'src/entities/auth/lib/config';
 import { observer } from 'mobx-react-lite';
+import { GlobalShadowLoader, GlobalShadowLoaderProvider } from 'src/shared/UI';
 
 
 
@@ -33,10 +34,13 @@ const App:FC = () => {
 
 	return (
 		<ConfigProvider theme={antdTheme}>
-			<div className={cn('app', theme)}>
-				<AppRouter />
-				<FloatButton icon={<ThemeSvg height='18px' width='18px' color='#000' />} onClick={toggleTheme} />
-			</div>
+			<GlobalShadowLoaderProvider>
+				<div className={cn('app', theme)}>
+					<AppRouter />
+					<FloatButton icon={<ThemeSvg height='18px' width='18px' color='#000' />} onClick={toggleTheme} />
+					<GlobalShadowLoader />
+				</div>
+			</GlobalShadowLoaderProvider>
 		</ConfigProvider>
 	);
 };

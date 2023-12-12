@@ -1,11 +1,11 @@
 import { CSSProperties, FC } from 'react';
 
-interface AboutPageProps {
+interface SettingsPageProps {
 	className?: string
 	style?: CSSProperties
 }
 
-export const AboutPage:FC<AboutPageProps> = () => {
+export const SettingsPage:FC<SettingsPageProps> = () => {
 	return (
 		<div>
 			AboutPage

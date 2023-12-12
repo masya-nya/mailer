@@ -21,10 +21,8 @@ export class AuthService {
 		private logger: Logger
 	) {}
 
-	async registration({
-		email,
-		password,
-	}: CreateUserDTO): Promise<GenerateTokensT & { user: UserRDO }> {
+	async registration(createUserDTO: CreateUserDTO): Promise<GenerateTokensT & { user: UserRDO }> {
+		const { email, name, password } = createUserDTO;
 		const candidate = await this.userService.findUserByEmail(email);
 		if (candidate) {
 			this.logger.error(
@@ -36,6 +34,7 @@ export class AuthService {
 		}
 		const hashPassword = await bcrypt.hash(password, PASSWORD_HASH_SALT);
 		const user = await this.userService.createUser({
+			name,
 			email,
 			password: hashPassword,
 		});
@@ -94,6 +93,8 @@ export class AuthService {
 		const jwtPayload = await this.tokenService.validateRefreshToken(refreshToken);
 		const tokenFromDB = await this.tokenService.findByToken(refreshToken);
 		if (!jwtPayload || !tokenFromDB) {
+			console.log(jwtPayload);
+			console.log(tokenFromDB);
 			this.logger.error(`${this.serviceName}: Ошибка обновления токенов`);
 			throw ApiError.Unauthorized();
 		}

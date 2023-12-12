@@ -1,6 +1,11 @@
 import { IsEmail, IsNotEmpty, IsString, Length } from 'class-validator';
 
 export class CreateUserDTO {
+
+	@IsNotEmpty({ message: 'Не должно быть пустым' })
+	@IsString()
+	readonly name: string;
+
 	@IsNotEmpty({ message: 'Не должно быть пустым' })
 	@IsString()
 	@IsEmail({}, { message: 'Должен быть email' })

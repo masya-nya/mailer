@@ -1,1 +1,1 @@
-export { Loader } from './loaders';
+export { Loader, GlobalShadowLoader, GlobalShadowLoaderContext, GlobalShadowLoaderProvider, globalShadowLoaderStore } from './loaders';
