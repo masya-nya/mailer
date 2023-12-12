@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument, Types } from 'mongoose';
-import { User } from '../user/user.model';
+import { User } from '../../user/models/user.model';
 import { PopulatedModel } from 'src/core/types/populated-model.type';
 import { APP_ENTITIES_SCHEMAS } from 'src/app/consts/schemas-entities.enum';
 

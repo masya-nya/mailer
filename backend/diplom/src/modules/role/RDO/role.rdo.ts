@@ -1,9 +1,9 @@
 import { Types } from 'mongoose';
-import { User } from 'src/modules/user/user.model';
+import { User } from 'src/modules/user/models/user.model';
 import { PopulatedRole, RoleDocument } from '../models/role.model';
 
 export class RoleRDO {
-	readonly id: string;
+	readonly _id: string;
 
 	readonly name: string;
 
@@ -14,7 +14,7 @@ export class RoleRDO {
 	readonly users: Types.ObjectId[] | User[];
 
 	constructor(roleDTO: RoleDocument | PopulatedRole) {
-		this.id = roleDTO._id.toString();
+		this._id = roleDTO._id.toString();
 		this.name = roleDTO.name;
 		this.accountId = roleDTO.accountId.toString();
 		this.rights = roleDTO.rights;

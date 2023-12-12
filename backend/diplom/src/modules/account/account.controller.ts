@@ -1,8 +1,8 @@
-import { Controller, Post, Body, Patch, Get, Param } from '@nestjs/common';
+import { Controller, Post, Body, Patch, Get, Param, HttpCode, HttpStatus } from '@nestjs/common';
 import { CreateAccountDTO } from './DTO/create-account.dto';
 import { AccountService } from './account.service';
 import { AddUserDTO } from './DTO/add-user.dto';
-import { AccountDocument, PopulatedAccount } from './account.model';
+import { AccountDocument, PopulatedAccount } from './models/account.model';
 import { ENDPOINTS } from 'src/core/consts/endpoint';
 import { Types } from 'mongoose';
 import { Logger } from 'src/core/logger/Logger';
@@ -16,6 +16,7 @@ export class AccountController {
 	) {}
 
 	@Post()
+	@HttpCode(HttpStatus.CREATED)
 	create(
 		@Body() createAccountDTO: CreateAccountDTO
 	): Promise<AccountDocument> {
@@ -24,6 +25,7 @@ export class AccountController {
 	}
 
 	@Patch(ENDPOINTS.ACCOUNT.ADD_USER)
+	@HttpCode(HttpStatus.CREATED)
 	addUser(@Body() addUserDTO: AddUserDTO): Promise<AccountDocument> {
 		this.logger.info('Запрос на добавление пользователя в аккаунт');
 		const accountObjectId = new Types.ObjectId(addUserDTO.accountId);
@@ -34,6 +36,7 @@ export class AccountController {
 	}
 
 	@Get(`:${ENDPOINTS.ACCOUNT.QUERIES.ACCOUNT_ID}`)
+	@HttpCode(HttpStatus.OK)
 	getAccount(
 		@Param(ENDPOINTS.ACCOUNT.QUERIES.ACCOUNT_ID) accountId: string
 	): Promise<PopulatedAccount> {

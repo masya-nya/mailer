@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Model, Types } from 'mongoose';
-import { Token, TokenDocument } from './token.model';
+import { Token, TokenDocument } from './models/token.model';
 import { InjectModel } from '@nestjs/mongoose';
 import { AddTokenDTO } from './DTO/add-token.dto';
 import { ApiError } from 'src/core/exceptions/api-error.exception';

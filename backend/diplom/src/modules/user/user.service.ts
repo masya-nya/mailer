@@ -1,7 +1,7 @@
 import { Inject, Injectable, forwardRef } from '@nestjs/common';
 import { CreateUserDTO } from './DTO/create-user.dto';
 import { UserRepository } from './user.repository';
-import { PopulatedUser, UserDocument } from './user.model';
+import { PopulatedUser, UserDocument } from './models/user.model';
 import { AddAccountDTO } from './DTO/add-account.dto';
 import { AccountService } from './../account/account.service';
 import { AccountRepository } from '../account/account.repository';

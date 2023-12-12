@@ -10,7 +10,7 @@ export class AppController {
 	) {}
 
 	@Get(ENDPOINTS.PING)
-	ping():Promise<number> {
+	ping():Promise<string> {
 		return this.appService.ping();
 	}
 }

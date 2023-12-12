@@ -2,7 +2,7 @@ import { Module, forwardRef, NestModule, MiddlewareConsumer } from '@nestjs/comm
 import { MongooseModule } from '@nestjs/mongoose';
 import { UserService } from './user.service';
 import { UserController } from './user.controller';
-import { User, UserSchema } from './user.model';
+import { User, UserSchema } from './models/user.model';
 import { UserRepository } from './user.repository';
 import { AccountModule } from '../account/account.module';
 import { AuthMiddleware } from 'src/core/middlewares/auth.middleware';

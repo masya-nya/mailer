@@ -3,7 +3,7 @@ import { AccountRepository } from './account.repository';
 import { CreateAccountDTO } from './DTO/create-account.dto';
 import { AddUserDTO } from './DTO/add-user.dto';
 import { UserService } from '../user/user.service';
-import { AccountDocument, PopulatedAccount } from './account.model';
+import { AccountDocument, PopulatedAccount } from './models/account.model';
 import { Types } from 'mongoose';
 import { UserRepository } from '../user/user.repository';
 import { ApiError } from 'src/core/exceptions/api-error.exception';

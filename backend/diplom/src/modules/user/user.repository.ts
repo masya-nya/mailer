@@ -5,7 +5,7 @@ import {
 	PopulationAccount,
 	User,
 	UserDocument,
-} from './user.model';
+} from './models/user.model';
 import { Model, Types } from 'mongoose';
 import { CreateUserDTO } from './DTO/create-user.dto';
 import { ApiError } from 'src/core/exceptions/api-error.exception';

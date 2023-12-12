@@ -16,7 +16,7 @@ async function start():Promise<void> {
 		origin: process.env.CLIENT_URL
 	});
 	app.use(cookieParser());
-	app.useGlobalPipes(new ValidationPipe());
+	app.useGlobalPipes(new ValidationPipe({ transform: true }));
 	
 	await app.listen(PORT, () =>
 		console.log(`Application started on PORT - ${PORT}`)

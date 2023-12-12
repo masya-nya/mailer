@@ -1,4 +1,5 @@
-import { IsMongoId, IsNotEmpty, IsString, Length } from 'class-validator';
+import { Transform } from 'class-transformer';
+import { IsNotEmpty, IsString, Length } from 'class-validator';
 import { Types } from 'mongoose';
 
 export class CreateRoleDTO {
@@ -7,8 +8,8 @@ export class CreateRoleDTO {
 	@Length(2, 20, { message: 'Должен быть не меньше 2 и не больше 20 символов' })
 	readonly name: string;
 
+	@Transform(({ value }) => new Types.ObjectId(value))
 	@IsNotEmpty({ message: 'Не должно быть пустым' })
-	@IsMongoId({ message: 'Неправильное id аккаунта' })
 	readonly accountId: Types.ObjectId;
 
 	@IsNotEmpty({ message: 'Не должно быть пустым' })

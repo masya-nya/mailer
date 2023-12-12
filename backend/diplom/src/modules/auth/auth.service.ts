@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { TokenService } from '../token/token.service';
 import { CreateUserDTO } from '../user/DTO/create-user.dto';
 import { UserService } from '../user/user.service';
-import { UserDocument } from '../user/user.model';
+import { UserDocument } from '../user/models/user.model';
 import { GenerateTokensT } from '../token/types/generate-tokens.type';
 import { UserRDO } from '../user/RDO/user.rdo';
 import * as bcrypt from 'bcrypt';

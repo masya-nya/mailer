@@ -1,6 +1,6 @@
-import { Account, AccountDocument } from 'src/modules/account/account.model';
+import { Account, AccountDocument } from 'src/modules/account/models/account.model';
 import { RoleDocument } from 'src/modules/role/models/role.model';
-import { PopulatedUser } from 'src/modules/user/user.model';
+import { PopulatedUser } from 'src/modules/user/models/user.model';
 
 export class AccountUserRDO {
 	userId: string;

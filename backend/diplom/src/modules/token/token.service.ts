@@ -4,7 +4,7 @@ import { GenerateTokensT } from './types/generate-tokens.type';
 import { JwtCreateDTO } from './DTO/jwt-create.dto';
 import { AddTokenDTO } from './DTO/add-token.dto';
 import { TokenRepository } from './token.repository';
-import { TokenDocument } from './token.model';
+import { TokenDocument } from './models/token.model';
 import { TokensExpires } from './config';
 
 @Injectable()

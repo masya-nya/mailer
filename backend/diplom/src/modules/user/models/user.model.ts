@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument, Types } from 'mongoose';
-import { Account } from '../account/account.model';
+import { Account } from '../../account/models/account.model';
 import { PopulatedModel } from 'src/core/types/populated-model.type';
 import { APP_ENTITIES_SCHEMAS } from 'src/app/consts/schemas-entities.enum';
 
@@ -14,6 +14,9 @@ export type PopulatedUser = PopulatedModel<UserDocument, PopulationAccount>
 
 @Schema()
 export class User {
+
+	@Prop({ type: String, required: true })
+	name: string;
 
 	@Prop({ type: String, required: true, unique: true })
 	email: string;
