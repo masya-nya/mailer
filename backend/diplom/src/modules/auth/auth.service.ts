@@ -10,6 +10,7 @@ import { ApiError } from 'src/core/exceptions/api-error.exception';
 import { Logger } from 'src/core/logger/Logger';
 import { PASSWORD_HASH_SALT } from './config';
 import { JwtCreateDTO } from '../token/DTO/jwt-create.dto';
+import { LoginDTO } from './DTO/login.dto';
 
 @Injectable()
 export class AuthService {
@@ -54,9 +55,9 @@ export class AuthService {
 	}
 
 	async login(
-		userDTO: CreateUserDTO
+		loginDTO: LoginDTO
 	): Promise<GenerateTokensT & { user: UserRDO }> {
-		const user = await this.validateUser(userDTO);
+		const user = await this.validateUser(loginDTO);
 		const userRDO = new UserRDO(user);
 		const tokens = await this.tokenService.generateTokens({
 			email: user.email,
@@ -114,10 +115,8 @@ export class AuthService {
 		};
 	}
 
-	async validateUser({
-		email,
-		password,
-	}: CreateUserDTO): Promise<UserDocument> {
+	async validateUser(loginDTO: LoginDTO): Promise<UserDocument> {
+		const { email, password } = loginDTO;
 		const user = await this.userService.findUserByEmail(email);
 		if (!user) {
 			this.logger.error(

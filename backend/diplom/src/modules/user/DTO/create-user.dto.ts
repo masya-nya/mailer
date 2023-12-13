@@ -1,18 +1,9 @@
-import { IsEmail, IsNotEmpty, IsString, Length } from 'class-validator';
+import { IsNotEmpty, IsString } from 'class-validator';
+import { LoginDTO } from 'src/modules/auth/DTO/login.dto';
 
-export class CreateUserDTO {
+export class CreateUserDTO extends LoginDTO {
 
 	@IsNotEmpty({ message: 'Не должно быть пустым' })
 	@IsString()
 	readonly name: string;
-
-	@IsNotEmpty({ message: 'Не должно быть пустым' })
-	@IsString()
-	@IsEmail({}, { message: 'Должен быть email' })
-	readonly email: string;
-	
-	@IsNotEmpty({ message: 'Не должно быть пустым' })
-	@IsString()
-	@Length(6, 20, { message: 'Должен быть не меньше 6 и не больше 20 символов' })
-	readonly password: string;
 }

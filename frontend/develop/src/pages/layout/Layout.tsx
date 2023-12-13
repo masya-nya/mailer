@@ -15,7 +15,6 @@ interface LayoutProps {
 
 export const Layout: FC<LayoutProps> = observer(() => {
 	const { store } = useContext(AuthContext);
-	console.log(store.isAuth);
 	
 	const logoutHandler = ():void => {
 		store.logout();

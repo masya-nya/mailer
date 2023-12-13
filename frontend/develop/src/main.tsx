@@ -2,16 +2,16 @@ import ReactDOM from 'react-dom/client';
 import App from './app/App.tsx';
 import { BrowserRouter } from 'react-router-dom';
 import { ThemeProvider } from './app/providers/theme-provider';
-import { AuthContext, contextValue } from './entities/auth/index.ts';
+import { AuthProvider } from './entities/auth';
 
 
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
 	<BrowserRouter>
 		<ThemeProvider>
-			<AuthContext.Provider value={contextValue}>
+			<AuthProvider>
 				<App />
-			</AuthContext.Provider>
+			</AuthProvider>
 		</ThemeProvider>
 	</BrowserRouter>
 );

@@ -7,7 +7,7 @@ import { UserI } from 'src/entities/user/model/schemas/user.schema';
 import { globalShadowLoaderStore } from 'src/shared/UI';
 
 
-export default class AuthStore {
+export class AuthStore {
 	private _isAuth:boolean = false;
 	private _isAuthInProgress:boolean = false;
 
@@ -83,7 +83,6 @@ export default class AuthStore {
 		this._isAuthInProgress = true;
 		try {
 			const { data } = await AuthService.refresh();
-			console.log('checkAuth', data);
 			localStorage.setItem(ACCESS_TOKEN_LS_KEY, data.accessToken);
 			this._isAuth = true;
 			return true;
@@ -102,3 +101,5 @@ export default class AuthStore {
 	}
 
 }
+
+export const authStore = new AuthStore();

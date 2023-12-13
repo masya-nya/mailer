@@ -21,7 +21,7 @@ export const Test = ({ ...props }: TestProps): React.JSX.Element => {
 			<Button type="primary" onClick={loadUsers}>Подгрузить пользователей</Button>
 			<div style={{ display: 'flex', flexDirection: 'column' }}>
 				{
-					users.map(user => <span key={user.id}>{user.email}, { user.id }</span>)
+					users.map(user => <span key={user._id}>{user.email}, { user._id }</span>)
 				}
 			</div>
 		</div>

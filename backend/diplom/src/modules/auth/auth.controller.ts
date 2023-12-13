@@ -19,6 +19,7 @@ import { TOKENS_NAMES } from './consts';
 import { Logger } from 'src/core/logger/Logger';
 import { ApiError } from 'src/core/exceptions/api-error.exception';
 import { TokenService } from '../token/token.service';
+import { LoginDTO } from './DTO/login.dto';
 
 @Controller(ENDPOINTS.AUTH.BASE)
 export class AuthController {
@@ -47,12 +48,12 @@ export class AuthController {
 	@Post(ENDPOINTS.AUTH.LOGIN)
 	@HttpCode(HttpStatus.OK)
 	async login(
-		@Body() registrationDTO: CreateUserDTO,
+		@Body() loginDTO: LoginDTO,
 		@Res() res: Response
 	): Promise<Response<GenerateTokensT & { user: UserRDO }>> {
 		this.logger.info('Запрос на login');
 		try {
-			const payload = await this.authService.login(registrationDTO);
+			const payload = await this.authService.login(loginDTO);
 			res.cookie(TOKENS_NAMES.REFRESH, payload.refreshToken, {
 				maxAge: TokensExpires.REFRESH.milliseconds,
 				httpOnly: true,

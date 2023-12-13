@@ -1,7 +1,7 @@
 import { AccountI } from 'src/entities/account/model/schemas/account.schema';
 
 export interface UserI {
-	id:string;
+	_id:string;
 
 	email:string;
 	

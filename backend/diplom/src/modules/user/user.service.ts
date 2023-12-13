@@ -20,9 +20,10 @@ export class UserService {
 	) {}
 
 	async createUser(createUserDTO: CreateUserDTO): Promise<UserDocument> {
-		const userDB = await this.userRepository.findByEmail(createUserDTO.email);
+		const { email } = createUserDTO;
+		const userDB = await this.userRepository.findByEmail(email);
 		if (userDB) {
-			this.logger.error(`Попытка создания пользователя с уже существующим email (${createUserDTO.email})`);
+			this.logger.error(`Попытка создания пользователя с уже существующим email (${email})`);
 			throw ApiError.BadRequest('Такой пользователь уже существует');
 		}
 		const user = await this.userRepository.createUser(createUserDTO);
@@ -32,7 +33,8 @@ export class UserService {
 	}
 
 	
-	async addAccount({ accountId, email }: AddAccountDTO): Promise<UserRDO> {
+	async addAccount(addAccountDTO: AddAccountDTO): Promise<UserRDO> {
+		const { accountId, email } = addAccountDTO;
 		const account = await this.accountService.findAccountById(
 			accountId
 		);

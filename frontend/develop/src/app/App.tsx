@@ -14,7 +14,6 @@ import { GlobalShadowLoader, GlobalShadowLoaderProvider } from 'src/shared/UI';
 
 
 const App:FC = () => {
-	console.log('App');
 	const { store } = useContext(AuthContext);
 	const { theme, toggleTheme } = useTheme();
 
@@ -23,12 +22,10 @@ const App:FC = () => {
 	}, [theme]);
 
 	useEffect(() => {
-		console.log('useEffect');
 		(async ():Promise<void> => {
 			if (localStorage.getItem(ACCESS_TOKEN_LS_KEY)) {
 				await store.checkAuth();
 			}
-			console.log('isAuth', store.isAuth);
 		})();
 	}, [store]);
 
