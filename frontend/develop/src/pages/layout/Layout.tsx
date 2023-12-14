@@ -6,7 +6,7 @@ import { AuthContext } from 'src/entities/auth';
 import { Loader } from 'src/shared/UI';
 import { Test } from 'src/features/auth/test/Test';
 import ROUTER_ROTES from 'src/app/router/config';
-const { LAYOUT: { BASE, SETTINGS } } = ROUTER_ROTES;
+const { LAYOUT: { BASE, SETTINGS, ACCOUNT } } = ROUTER_ROTES;
 
 interface LayoutProps {
 	className?: string;
@@ -33,6 +33,7 @@ export const Layout: FC<LayoutProps> = observer(() => {
 			<div>
 				<Link to={BASE}>Home</Link>
 				<Link to={SETTINGS}>Settings Page</Link>
+				<Link to={ACCOUNT}>Аккаунты</Link>
 				<Button type="primary" onClick={logoutHandler}>Выход</Button>
 				<Test />
 			</div>

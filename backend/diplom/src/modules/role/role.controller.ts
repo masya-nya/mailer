@@ -3,8 +3,10 @@ import { Logger } from 'src/core/logger/Logger';
 import { RoleService } from './role.service';
 import { CreateRoleDTO } from './DTO/create-role.dto';
 import { RoleRDO } from './RDO/role.rdo';
+import ENDPOINTS from 'src/core/consts/endpoint';
+const { ROLE: { BASE } } = ENDPOINTS;
 
-@Controller('role')
+@Controller(BASE)
 export class RoleController {
 
 	constructor(

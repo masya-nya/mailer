@@ -1,4 +1,4 @@
-export const ENDPOINTS = {
+const ENDPOINTS = {
 	PING: 'ping',
 	AUTH: {
 		BASE: 'auth',
@@ -20,5 +20,13 @@ export const ENDPOINTS = {
 		QUERIES: {
 			EMAIL: 'email'
 		}
+	},
+	ACCOUNT_USER: {
+		BASE: 'account-user'
+	},
+	ROLE: {
+		BASE: 'role'
 	}
 };
+
+export default ENDPOINTS;

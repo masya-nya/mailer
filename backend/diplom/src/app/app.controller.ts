@@ -1,6 +1,7 @@
 import { Controller, Get } from '@nestjs/common';
 import { AppService } from './app.service';
-import { ENDPOINTS } from 'src/core/consts/endpoint';
+import ENDPOINTS from 'src/core/consts/endpoint';
+const { PING } = ENDPOINTS;
 
 
 @Controller()
@@ -9,7 +10,7 @@ export class AppController {
 		private appService: AppService
 	) {}
 
-	@Get(ENDPOINTS.PING)
+	@Get(PING)
 	ping():Promise<string> {
 		return this.appService.ping();
 	}

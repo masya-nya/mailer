@@ -1,13 +1,14 @@
 import { Body, Controller, Get, Param, Post, Patch, HttpCode, HttpStatus } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDTO } from './DTO/create-user.dto';
-import { ENDPOINTS } from 'src/core/consts/endpoint';
 import { AddAccountDTO } from './DTO/add-account.dto';
 import { Types } from 'mongoose';
 import { UserRDO } from './RDO/user.rdo';
 import { Logger } from 'src/core/logger/Logger';
+import ENDPOINTS from 'src/core/consts/endpoint';
+const { USER: { ADD_ACCOUNT, BASE, QUERIES: { EMAIL } } } = ENDPOINTS;
 
-@Controller(ENDPOINTS.USER.BASE)
+@Controller(BASE)
 export class UserController {
 
 	constructor(
@@ -24,7 +25,7 @@ export class UserController {
 		return {...user};
 	}
 
-	@Patch(ENDPOINTS.USER.ADD_ACCOUNT)
+	@Patch(ADD_ACCOUNT)
 	@HttpCode(HttpStatus.CREATED)
 	addAccount(@Body() addAccountDTO: AddAccountDTO): Promise<UserRDO> {
 		this.logger.info('Запрос на добавление пользователю аккаунта');
@@ -35,10 +36,10 @@ export class UserController {
 		});
 	}
 
-	@Get(`:${ENDPOINTS.USER.QUERIES.EMAIL}`)
+	@Get(`:${EMAIL}`)
 	@HttpCode(HttpStatus.OK)
 	async getUser(
-		@Param(ENDPOINTS.USER.QUERIES.EMAIL) email: string
+		@Param(EMAIL) email: string
 	): Promise<UserRDO> {
 		this.logger.info('Запрос на получение пользователя');
 		const userDocument = await this.userService.findUserByEmailWithPopulate(email);

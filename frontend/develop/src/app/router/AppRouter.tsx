@@ -5,10 +5,12 @@ import { Layout } from '../../pages/layout/Layout';
 import { HomePage } from '../../pages/home-page/HomePage';
 import { SettingsPage } from '../../pages/about-page/AboutPage';
 import { observer } from 'mobx-react-lite';
-import AuthGuard from './routes/AuthGuard';
+import AuthGuard from './guards/AuthGuard';
 import { RegistrationPage } from 'src/pages/registration-page/RegistrationPage';
 import ROUTER_ROTES from 'src/app/router/config';
-const { LAYOUT: { BASE, SETTINGS }, LOGIN, REGISTRATION } = ROUTER_ROTES;
+import AccountGuard from './guards/AccountGuard';
+import { AccountPage } from 'src/pages/account-page/AccountPage';
+const { LAYOUT: { BASE, SETTINGS, ACCOUNT }, LOGIN, REGISTRATION } = ROUTER_ROTES;
 
 interface AppRouterProps {
 	className?: string
@@ -19,8 +21,9 @@ export const AppRouter:FC<AppRouterProps> = observer(() => {
 	return (
 		<Routes>
 			<Route path={BASE} element={<Layout />}>
-				<Route index element={<HomePage />} />
-				<Route path={SETTINGS} element={<SettingsPage />} />
+				<Route index element={<AccountGuard><HomePage /></AccountGuard>} />
+				<Route path={SETTINGS} element={<AccountGuard><SettingsPage /></AccountGuard>} />
+				<Route path={ACCOUNT} element={<AccountPage />} />
 			</Route>
 			<Route path={LOGIN} element={<AuthGuard><LoginPage /></AuthGuard>} />
 			<Route path={REGISTRATION} element={<AuthGuard><RegistrationPage /></AuthGuard>} />

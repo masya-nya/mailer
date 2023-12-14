@@ -9,7 +9,7 @@ export interface UserI {
 
 	isBanned:boolean;
 
-	accounts: string | AccountI[];
+	accounts: (string | AccountI)[];
 }
 
 export interface UserPopulateI {

@@ -3,11 +3,12 @@ import { CreateAccountDTO } from './DTO/create-account.dto';
 import { AccountService } from './account.service';
 import { AddUserDTO } from './DTO/add-user.dto';
 import { AccountDocument, PopulatedAccount } from './models/account.model';
-import { ENDPOINTS } from 'src/core/consts/endpoint';
 import { Types } from 'mongoose';
 import { Logger } from 'src/core/logger/Logger';
+import ENDPOINTS from 'src/core/consts/endpoint';
+const { ACCOUNT: { ADD_USER, BASE, QUERIES: { ACCOUNT_ID } } } = ENDPOINTS;
 
-@Controller(ENDPOINTS.ACCOUNT.BASE)
+@Controller(BASE)
 export class AccountController {
 
 	constructor(
@@ -24,7 +25,7 @@ export class AccountController {
 		return this.accountService.createAccount(createAccountDTO);
 	}
 
-	@Patch(ENDPOINTS.ACCOUNT.ADD_USER)
+	@Patch(ADD_USER)
 	@HttpCode(HttpStatus.CREATED)
 	addUser(@Body() addUserDTO: AddUserDTO): Promise<AccountDocument> {
 		this.logger.info('Запрос на добавление пользователя в аккаунт');
@@ -35,10 +36,10 @@ export class AccountController {
 		});
 	}
 
-	@Get(`:${ENDPOINTS.ACCOUNT.QUERIES.ACCOUNT_ID}`)
+	@Get(`:${ACCOUNT_ID}`)
 	@HttpCode(HttpStatus.OK)
 	getAccount(
-		@Param(ENDPOINTS.ACCOUNT.QUERIES.ACCOUNT_ID) accountId: string
+		@Param(ACCOUNT_ID) accountId: string
 	): Promise<PopulatedAccount> {
 		this.logger.info('Запрос на получение данных аккаунта');
 		return this.accountService.findAccountWithPopulate(accountId);

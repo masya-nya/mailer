@@ -9,7 +9,7 @@ interface AccountPageProps {
 export const AccountPage: FC<AccountPageProps> = () => {
 	return (
 		<div className={cl['account-page']}>
-
+			Выбор аккаунта
 		</div>
 	);
 };

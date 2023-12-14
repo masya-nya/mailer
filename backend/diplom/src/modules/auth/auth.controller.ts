@@ -11,7 +11,6 @@ import {
 import { AuthService } from './auth.service';
 import { CreateUserDTO } from '../user/DTO/create-user.dto';
 import { GenerateTokensT } from '../token/types/generate-tokens.type';
-import { ENDPOINTS } from 'src/core/consts/endpoint';
 import { Request, Response } from 'express';
 import { TokensExpires } from '../token/config';
 import { UserRDO } from '../user/RDO/user.rdo';
@@ -20,8 +19,10 @@ import { Logger } from 'src/core/logger/Logger';
 import { ApiError } from 'src/core/exceptions/api-error.exception';
 import { TokenService } from '../token/token.service';
 import { LoginDTO } from './DTO/login.dto';
+import ENDPOINTS from 'src/core/consts/endpoint';
+const { AUTH: { BASE, LOGIN, LOGOUT, REFRESH, REGISTRATION } } = ENDPOINTS;
 
-@Controller(ENDPOINTS.AUTH.BASE)
+@Controller(BASE)
 export class AuthController {
 	constructor(
 		private readonly authService: AuthService,
@@ -29,7 +30,7 @@ export class AuthController {
 		private readonly tokenService: TokenService
 	) {}
 
-	@Post(ENDPOINTS.AUTH.REGISTRATION)
+	@Post(REGISTRATION)
 	@HttpCode(HttpStatus.OK)
 	async registration(
 		@Body() registrationDTO: CreateUserDTO,
@@ -45,7 +46,7 @@ export class AuthController {
 		return res.send(payload);
 	}
 
-	@Post(ENDPOINTS.AUTH.LOGIN)
+	@Post(LOGIN)
 	@HttpCode(HttpStatus.OK)
 	async login(
 		@Body() loginDTO: LoginDTO,
@@ -67,7 +68,7 @@ export class AuthController {
 		
 	}
 
-	@Post(ENDPOINTS.AUTH.LOGOUT)
+	@Post(LOGOUT)
 	@HttpCode(HttpStatus.OK)
 	async logout(
 		@Req() req: Request,
@@ -85,7 +86,7 @@ export class AuthController {
 		}
 	}
 
-	@Get(ENDPOINTS.AUTH.REFRESH)
+	@Get(REFRESH)
 	@HttpCode(HttpStatus.OK)
 	async refreshToken(
 		@Req() req: Request,

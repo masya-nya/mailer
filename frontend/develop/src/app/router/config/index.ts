@@ -3,7 +3,8 @@ const ROUTER_ROTES = {
 	LOGIN: '/login',
 	LAYOUT: {
 		BASE: '/',
-		SETTINGS: '/settings'
+		SETTINGS: '/settings',
+		ACCOUNT: '/account'
 	}
 };
 

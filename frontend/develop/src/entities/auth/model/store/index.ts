@@ -10,6 +10,7 @@ import { globalShadowLoaderStore } from 'src/shared/UI';
 export class AuthStore {
 	private _isAuth:boolean = false;
 	private _isAuthInProgress:boolean = false;
+	private _user: UserI | null = null;
 
 	constructor() {
 		makeAutoObservable(this);
@@ -17,6 +18,14 @@ export class AuthStore {
 
 	get isAuthInProgress():boolean {
 		return this._isAuthInProgress;
+	}
+
+	get user():UserI | null {
+		return this._user;
+	}
+
+	set user(value: UserI) {
+		this._user = value;
 	}
 
 	get isAuth():boolean {
@@ -84,6 +93,8 @@ export class AuthStore {
 		try {
 			const { data } = await AuthService.refresh();
 			localStorage.setItem(ACCESS_TOKEN_LS_KEY, data.accessToken);
+			this._user = data.user;
+			console.log('USER', this._user);
 			this._isAuth = true;
 			return true;
 		} catch(e) {

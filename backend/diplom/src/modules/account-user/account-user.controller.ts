@@ -3,8 +3,10 @@ import { AccountUserService } from './account-user.service';
 import { Logger } from 'src/core/logger/Logger';
 import { GetAccountUserDTO } from './DTO/get-account-user.dto';
 import { AccountUserRDO } from './RDO/account-user.rdo';
+import ENDPOINTS from 'src/core/consts/endpoint';
+const { ACCOUNT_USER: { BASE } } = ENDPOINTS;
 
-@Controller('account-user')
+@Controller(BASE)
 export class AccountUserController {
 
 	constructor(

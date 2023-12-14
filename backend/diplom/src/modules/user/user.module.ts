@@ -6,9 +6,9 @@ import { User, UserSchema } from './models/user.model';
 import { UserRepository } from './user.repository';
 import { AccountModule } from '../account/account.module';
 import { AuthMiddleware } from 'src/core/middlewares/auth.middleware';
-import { ENDPOINTS } from 'src/core/consts/endpoint';
 import { TokenModule } from '../token/token.module';
 import { Logger } from 'src/core/logger/Logger';
+import ENDPOINTS from 'src/core/consts/endpoint';
 
 @Module({
 	providers: [UserService, UserRepository, Logger],
