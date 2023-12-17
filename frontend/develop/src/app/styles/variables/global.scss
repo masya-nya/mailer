@@ -1,13 +1,20 @@
 :root {
-
 	//* SMALL
-	--font-size-m: 12px;
+	--font-size-s: 12px;
 
 	//* MEDIUM
-	--font-size-m: 16px;
+	--font-size-m: 14px;
 	
 	//* LARGE
-	--font-size-l: 24px;
+	--font-size-l: 20px;
 
-	//* Размеры
+	//* РАЗМЕРЫ
+	// GLOBAL
+	--border-size: 1px;
+	// MAIN SIDEBAR
+	--main-sidebar-width: 300px;
+	--main-sidebar-padding-left: 30px;
+	--main-sidebar-padding-right: 30px;
+	// TOPBAR
+	--topbar-height: 72px;
 }

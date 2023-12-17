@@ -1,6 +1,6 @@
 import { makeAutoObservable } from 'mobx';
 import { LoginDTO } from '../DTO/login.dto';
-import { AuthService } from '../../api';
+import { AuthService } from '../../api/auth.service';
 import { ACCESS_TOKEN_LS_KEY } from '../../lib/config';
 import { RegistrationDTO } from '../DTO/registration.dto';
 import { UserI } from 'src/entities/user/model/schemas/user.schema';
@@ -94,7 +94,7 @@ export class AuthStore {
 			const { data } = await AuthService.refresh();
 			localStorage.setItem(ACCESS_TOKEN_LS_KEY, data.accessToken);
 			this._user = data.user;
-			console.log('USER', this._user);
+			console.log('REFRESH TOKEN', this._user);
 			this._isAuth = true;
 			return true;
 		} catch(e) {

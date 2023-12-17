@@ -1,19 +1,23 @@
 import { UserI } from 'src/entities/user/model/schemas/user.schema';
 
 export interface AccountI {
-	id:string;
+	_id: string;
 
-	owner:string;
-	
-	login:string;
+	owner: string;
 
-	name:string;
+	login: string;
+
+	name: string;
 
 	users: string[] | UserI[];
 }
 
 export interface AccountPopulateI {
-	owner: string,
-	login: string,
-	name: string,
+	_id: string;
+
+	owner: string;
+
+	login: string;
+
+	name: string;
 }

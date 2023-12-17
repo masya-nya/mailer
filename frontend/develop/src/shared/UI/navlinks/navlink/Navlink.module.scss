@@ -1,0 +1,7 @@
+.navlink {
+	color: var(--color-font-base-unactive);
+	text-decoration: none;
+	&__active {
+		color: var(--color-font-base);
+	}
+}

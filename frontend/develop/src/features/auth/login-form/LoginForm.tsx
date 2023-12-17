@@ -1,24 +1,30 @@
-import React, { FormEvent, useContext } from 'react';
+import React, { FormEvent, useContext, useMemo } from 'react';
 import cl from './LoginForm.module.scss';
 import { Button, Input } from 'antd';
 import { useTextInput } from 'src/shared/lib/hooks';
 import cn from 'classnames';
 import { AuthContext } from 'src/entities/auth';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
-import ROUTER_ROTES from 'src/app/router/config';
-const { LAYOUT: { BASE }, REGISTRATION} = ROUTER_ROTES;
+import { ROUTER_ROTES } from 'src/app/router/config';
+const {
+	LAYOUT: { BASE },
+	REGISTRATION,
+} = ROUTER_ROTES;
 
 export const LoginForm: React.FC = observer(() => {
+	const { store } = useContext(AuthContext);
 	const [email, setEmailHandler] = useTextInput('');
 	const [password, setPasswordHandler] = useTextInput('');
 	const navigate = useNavigate();
-	const { store } = useContext(AuthContext);
+	const location = useLocation();
+
+	const fromPage = useMemo(() => location.state?.from?.pathname || BASE, [location]);
 
 	const login = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
 		e.preventDefault();
 		const status = await store.login({ email, password });
-		status && navigate(BASE);
+		status && navigate(fromPage);
 	};
 
 	return (

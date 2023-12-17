@@ -1,4 +1,4 @@
-import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
+import { Body, Controller, HttpCode, HttpStatus, Patch, Post } from '@nestjs/common';
 import { Logger } from 'src/core/logger/Logger';
 import { RoleService } from './role.service';
 import { CreateRoleDTO } from './DTO/create-role.dto';
@@ -18,6 +18,16 @@ export class RoleController {
 	@HttpCode(HttpStatus.CREATED)
 	async create(@Body() createRoleDTO: CreateRoleDTO ):Promise<RoleRDO> {
 		this.logger.info(`Запрос на создания роли в аккаунт(${createRoleDTO.accountId})`);
+		console.log(createRoleDTO);
+		const createdUser = await this.roleService.createRole(createRoleDTO);
+		const user = new RoleRDO(createdUser);
+		return {...user};
+	}
+
+	@Patch()
+	@HttpCode(HttpStatus.CREATED)
+	async addUserToRole(@Body() createRoleDTO: CreateRoleDTO ):Promise<RoleRDO> {
+		this.logger.info(`Запрос на добавление пользователя в роль`);
 		console.log(createRoleDTO);
 		const createdUser = await this.roleService.createRole(createRoleDTO);
 		const user = new RoleRDO(createdUser);

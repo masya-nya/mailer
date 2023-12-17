@@ -1,0 +1,1 @@
+export { LogoMain } from './logo-main/LogoMain';

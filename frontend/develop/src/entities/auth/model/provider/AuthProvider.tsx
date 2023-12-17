@@ -1,6 +1,6 @@
 import { FC, ReactNode } from 'react';
 import { AuthContext } from '../..';
-import { authContextValue } from '../context/auth.context';
+import { authContextValue } from '../context/AuthContext';
 
 type AuthProviderT = {
 	children: ReactNode

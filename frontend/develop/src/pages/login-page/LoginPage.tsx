@@ -1,6 +1,6 @@
 import { CSSProperties, FC } from 'react';
 import cl from './LoginPage.module.scss';
-import { LoginForm } from 'src/features/auth/login-form';
+import { LoginForm } from 'src/features/auth';
 
 interface LoginPageProps {
 	className?: string

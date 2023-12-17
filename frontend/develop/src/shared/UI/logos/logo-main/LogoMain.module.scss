@@ -1,0 +1,12 @@
+.logo-main {
+	display: flex;
+	align-items: center;
+	gap: 0 5px;
+	&__svg {
+		fill: var(--color-logo);
+	}
+	&__name {
+		font-weight: 700;
+		font-size: 20px;
+	}
+}

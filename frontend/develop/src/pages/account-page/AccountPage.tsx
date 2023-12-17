@@ -1,5 +1,6 @@
 import { CSSProperties, FC } from 'react';
 import cl from './AccountPage.module.scss';
+import { CreateAccountForm } from 'src/features/account';
 
 interface AccountPageProps {
 	className?: string;
@@ -9,7 +10,7 @@ interface AccountPageProps {
 export const AccountPage: FC<AccountPageProps> = () => {
 	return (
 		<div className={cl['account-page']}>
-			Выбор аккаунта
+			<CreateAccountForm />
 		</div>
 	);
 };

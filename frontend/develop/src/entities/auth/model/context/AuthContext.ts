@@ -1,5 +1,5 @@
 import { createContext } from 'react';
-import { AuthStore, authStore } from '../store';
+import { AuthStore, authStore } from '../store/auth.store';
 
 interface AuthStoreI {
 	store: AuthStore

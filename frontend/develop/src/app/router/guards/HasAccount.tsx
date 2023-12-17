@@ -2,15 +2,16 @@ import { FC, useContext } from 'react';
 import { observer } from 'mobx-react-lite';
 import { Navigate } from 'react-router-dom';
 import { AuthContext } from 'src/entities/auth';
-import ROUTER_ROTES from '../config';
+import { ROUTER_ROTES } from '../config';
 const { LAYOUT: { ACCOUNT } } = ROUTER_ROTES;
 
-type AccountGuardT = {
+type HasAccountT = {
 	children: React.ReactNode
 }
 
-const AccountGuard: FC<AccountGuardT> = ({ children }) => {
+const HasAccount: FC<HasAccountT> = ({ children }) => {
 	const { store } = useContext(AuthContext);
+	console.log('AccountCheck');
 
 	if (!store.user || !Boolean(store.user?.accounts.length)) {
 		console.log('REDIRECT to ACCOUNT');
@@ -20,4 +21,4 @@ const AccountGuard: FC<AccountGuardT> = ({ children }) => {
 	return children;
 };
 
-export default observer(AccountGuard);
+export default observer(HasAccount);

@@ -6,7 +6,7 @@ import Button from 'antd/es/button';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from 'src/entities/auth';
 import { useTextInput } from 'src/shared/lib/hooks';
-import ROUTER_ROTES from 'src/app/router/config';
+import { ROUTER_ROTES } from 'src/app/router/config';
 const { LAYOUT: { BASE }, LOGIN} = ROUTER_ROTES;
 
 interface RegistrationFormProps {

@@ -23,6 +23,7 @@ export class AccountRDO {
 }
 
 export const AccountRDOForPopulate = {
+	_id: 1,
 	owner: 1,
 	login: 1,
 	name: 1,

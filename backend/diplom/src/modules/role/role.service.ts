@@ -44,4 +44,9 @@ export class RoleService {
 		return role;
 	}
 
+	async findByAccountId(accountId: Types.ObjectId | string): Promise<RoleDocument> {
+		const role = await this.roleRepository.findByAccountId(accountId);
+		return role;
+	}
+
 }

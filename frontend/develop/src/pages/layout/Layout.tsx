@@ -1,12 +1,11 @@
-import { CSSProperties, FC, useContext } from 'react';
-import { Link, Navigate, Outlet } from 'react-router-dom';
+import { CSSProperties, FC } from 'react';
+import cl from './Layout.module.scss';
+import { Outlet } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
-import { Button } from 'antd';
-import { AuthContext } from 'src/entities/auth';
+import { Sidebar } from './components/sidebar/Sidebar';
+import { Topbar } from './components/topbar/Topbar';
+import { useAccountUser } from 'src/entities/account-user';
 import { Loader } from 'src/shared/UI';
-import { Test } from 'src/features/auth/test/Test';
-import ROUTER_ROTES from 'src/app/router/config';
-const { LAYOUT: { BASE, SETTINGS, ACCOUNT } } = ROUTER_ROTES;
 
 interface LayoutProps {
 	className?: string;
@@ -14,32 +13,19 @@ interface LayoutProps {
 }
 
 export const Layout: FC<LayoutProps> = observer(() => {
-	const { store } = useContext(AuthContext);
-	
-	const logoutHandler = ():void => {
-		store.logout();
-	};
-
-	if (store.isAuthInProgress) {
+	const { data, isLoading, isValidating } = useAccountUser('anonim010899@gmail.com', '657ecd9ef4040a75eaa4473c');
+	console.log('ACCOUNT-USER', data);
+	if(isLoading || isValidating) {
 		return <Loader />;
 	}
-
-	if (!store.isAuth) {
-		return <Navigate to="/login" />;
-	}
-
 	return (
-		<div>
-			<div>
-				<Link to={BASE}>Home</Link>
-				<Link to={SETTINGS}>Settings Page</Link>
-				<Link to={ACCOUNT}>Аккаунты</Link>
-				<Button type="primary" onClick={logoutHandler}>Выход</Button>
-				<Test />
-			</div>
-
-			<main>
-				<Outlet />
+		<div className={cl['layout']}>
+			<Sidebar />
+			<main className={cl['layout__main']}>
+				<Topbar  />
+				<main className={cl['layout__section']}>
+					<Outlet />
+				</main>
 			</main>
 		</div>
 	);

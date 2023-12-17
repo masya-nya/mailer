@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { API_URL } from '../lib/config';
 import { ACCESS_TOKEN_LS_KEY } from 'src/entities/auth/lib/config';
-import { AuthService } from 'src/entities/auth/api';
+import { AuthService } from 'src/entities/auth/api/auth.service';
 
 const $api = axios.create({
 	baseURL: API_URL,

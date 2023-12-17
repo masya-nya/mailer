@@ -1,4 +1,4 @@
-import { Module, forwardRef } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule, forwardRef } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { AccountService } from './account.service';
 import { AccountController } from './account.controller';
@@ -6,6 +6,9 @@ import { Account, AccountSchema } from './models/account.model';
 import { AccountRepository } from './account.repository';
 import { UserModule } from '../user/user.module';
 import { Logger } from 'src/core/logger/Logger';
+import { AuthMiddleware } from 'src/core/middlewares/auth.middleware';
+import ENDPOINTS from 'src/core/consts/endpoint';
+import { TokenModule } from '../token/token.module';
 
 @Module({
 	providers: [AccountService, AccountRepository, Logger],
@@ -14,8 +17,15 @@ import { Logger } from 'src/core/logger/Logger';
 		MongooseModule.forFeature([
 			{ name: Account.name, schema: AccountSchema },
 		]),
-		forwardRef(() => UserModule)
+		forwardRef(() => UserModule),
+		TokenModule
 	],
 	exports: [AccountService, AccountRepository]
 })
-export class AccountModule {}
+export class AccountModule implements NestModule {
+	configure(consumer: MiddlewareConsumer):void {
+		consumer
+			.apply(AuthMiddleware)
+			.forRoutes(ENDPOINTS.ACCOUNT.BASE);
+	}
+}

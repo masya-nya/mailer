@@ -1,0 +1,5 @@
+.topbar {
+	height: var(--topbar-height);
+	flex: 0 0 var(--topbar-height);
+	border-bottom: var(--border-size) solid var(--color-border);
+}

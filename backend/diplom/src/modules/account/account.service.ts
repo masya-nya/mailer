@@ -23,8 +23,9 @@ export class AccountService {
 	async createAccount(
 		createAccountDTO: CreateAccountDTO
 	): Promise<AccountDocument> {
-		const owner = await this.userService.findUserByEmail(createAccountDTO.owner);
-		if (!owner) {
+		const { owner } = createAccountDTO;
+		const user = await this.userService.findUserByEmail(createAccountDTO.owner);
+		if (!user) {
 			this.logger.error(`Попытка создать аккаунт на несуществующего пользователя (${createAccountDTO.owner})`);
 			throw ApiError.BadRequest('Такого пользователя не существует');
 		}
@@ -41,8 +42,13 @@ export class AccountService {
 			throw ApiError.BadRequest('Лимит аккаунтов превышен');
 		}
 		const newAccount = await this.accountRepository.createAccount(createAccountDTO);
-		this.logger.log(`Аккаунт создан (${newAccount.name})`);
-		return newAccount;
+		if(newAccount) {
+			this.userService.addAccount({ email: owner, accountId: newAccount._id });
+			this.logger.log(`Аккаунт создан (${newAccount.name})`);
+			return newAccount;
+		}
+		this.logger.error('Ошибка создания аккаунта');
+		ApiError.InternalServerError('Невозможная ошибка');
 	}
 
 	async addUser(addUserDTO: AddUserDTO): Promise<AccountDocument> {

@@ -7,7 +7,6 @@ import { FC, useContext, useEffect, useMemo } from 'react';
 import { antdThemes } from './styles/antd-themes';
 import { ThemeSvg } from 'src/shared/svg';
 import { AuthContext } from 'src/entities/auth';
-import { ACCESS_TOKEN_LS_KEY } from 'src/entities/auth/lib/config';
 import { observer } from 'mobx-react-lite';
 import { GlobalShadowLoader, GlobalShadowLoaderProvider } from 'src/shared/UI';
 
@@ -23,9 +22,7 @@ const App:FC = () => {
 
 	useEffect(() => {
 		(async ():Promise<void> => {
-			if (localStorage.getItem(ACCESS_TOKEN_LS_KEY)) {
-				await store.checkAuth();
-			}
+			await store.checkAuth();
 		})();
 	}, [store]);
 

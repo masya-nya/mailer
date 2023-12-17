@@ -28,6 +28,7 @@ export class RoleRepository {
 
 	async findByEmailAndAccountId(email: string, accountId: Types.ObjectId): Promise<RoleDocument> {
 		try {
+			console.log(email, accountId);
 			const role = await this.roleModel.findOne({ users: email, accountId });
 			return role;
 		} catch (error) {
@@ -38,8 +39,18 @@ export class RoleRepository {
 
 	async createRole(createRoleDTO: CreateRoleDTO): Promise<RoleDocument> {
 		try {
-			const createdUser = await this.roleModel.create(createRoleDTO);
-			return createdUser;
+			const role = await this.roleModel.create(createRoleDTO);
+			return role;
+		} catch (error) {
+			this.logger.error(`Ошибка сервера в ${this.serviceName}`);
+			throw ApiError.InternalServerError(error.message);
+		}
+	}
+
+	async findByAccountId(accountId: Types.ObjectId | string): Promise<RoleDocument> {
+		try {
+			const role = await this.roleModel.findOne({ accountId });
+			return role;
 		} catch (error) {
 			this.logger.error(`Ошибка сервера в ${this.serviceName}`);
 			throw ApiError.InternalServerError(error.message);

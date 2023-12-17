@@ -6,6 +6,7 @@ import { AccountDocument, PopulatedAccount } from './models/account.model';
 import { Types } from 'mongoose';
 import { Logger } from 'src/core/logger/Logger';
 import ENDPOINTS from 'src/core/consts/endpoint';
+import { AccountRDO } from './RDO/account.rdo';
 const { ACCOUNT: { ADD_USER, BASE, QUERIES: { ACCOUNT_ID } } } = ENDPOINTS;
 
 @Controller(BASE)
@@ -18,11 +19,13 @@ export class AccountController {
 
 	@Post()
 	@HttpCode(HttpStatus.CREATED)
-	create(
+	async create(
 		@Body() createAccountDTO: CreateAccountDTO
-	): Promise<AccountDocument> {
+	): Promise<AccountRDO> {
 		this.logger.info('Запрос на создание аккаунта');
-		return this.accountService.createAccount(createAccountDTO);
+		const newAccount = await this.accountService.createAccount(createAccountDTO);
+		const account = new AccountRDO(newAccount);
+		return {...account};
 	}
 
 	@Patch(ADD_USER)

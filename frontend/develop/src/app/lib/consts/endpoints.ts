@@ -20,6 +20,12 @@ const ENDPOINTS = {
 		QUERIES: {
 			EMAIL: 'email'
 		}
+	},
+	ACCOUNT_USER: {
+		BASE: 'account-user'
+	},
+	ROLE: {
+		BASE: 'role'
 	}
 };
 
