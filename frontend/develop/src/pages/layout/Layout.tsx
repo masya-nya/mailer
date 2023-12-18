@@ -13,7 +13,7 @@ interface LayoutProps {
 }
 
 export const Layout: FC<LayoutProps> = observer(() => {
-	const { data, isLoading, isValidating } = useAccountUser('anonim010899@gmail.com', '657ecd9ef4040a75eaa4473c');
+	const { data, isLoading, isValidating } = useAccountUser('89185487468@gmail.com', '6580388fe1328943f1f87200');
 	console.log('ACCOUNT-USER', data);
 	if(isLoading || isValidating) {
 		return <Loader />;

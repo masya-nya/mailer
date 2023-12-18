@@ -21,11 +21,9 @@ export class AccountUserService {
 		const { email, accountId } = getAccountUserDTO;
 		const user = await this.userService.findUserByEmailWithPopulate(email);
 		const account = await this.accountService.findAccountById(accountId);
-		const role = await this.roleService.findByEmailAndAccountId(email, accountId);
+		let role = await this.roleService.findByEmailAndAccountId(email, accountId);
 		if (!role) {
-			const recruiteRole = await this.roleService.findByAccountId(RECRUITE_ROLE_ACCOUNT_ID);
-			const accountUser = new AccountUserRDO(user, account, recruiteRole);
-			return {...accountUser};
+			role = await this.roleService.findByAccountId(RECRUITE_ROLE_ACCOUNT_ID);
 		}
 		const accountUser = new AccountUserRDO(user, account, role);
 		return {...accountUser};

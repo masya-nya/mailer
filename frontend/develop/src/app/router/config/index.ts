@@ -1,10 +1,11 @@
 export const ROUTER_ROTES = {
 	REGISTRATION: '/registration',
 	LOGIN: '/login',
+	ACCOUNT: 'account',
 	LAYOUT: {
 		BASE: '/',
 		SETTINGS: 'settings',
-		ACCOUNT: 'account'
+		ACCOUNT_SELECTION: 'account-selection'
 	}
 };
 

@@ -1,0 +1,10 @@
+.account-selection {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+	width: 400px;
+	padding: 50px 40px;
+	border-radius: 30px;
+	background-color: var(--color-bg-focused);
+	box-shadow: var(--color-shadow-base) 0px 0px 24px;
+}

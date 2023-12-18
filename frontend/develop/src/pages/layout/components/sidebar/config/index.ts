@@ -1,6 +1,6 @@
 import { NavlinkI } from 'src/shared/UI/navlinks';
 import { ROUTER_ROTES } from 'src/app/router/config';
-const { LAYOUT: { BASE, SETTINGS, ACCOUNT } } = ROUTER_ROTES;
+const { LAYOUT: { BASE, SETTINGS }, ACCOUNT } = ROUTER_ROTES;
 
 interface SidebarGroupI {
 	title: string

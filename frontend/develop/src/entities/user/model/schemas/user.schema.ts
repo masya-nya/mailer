@@ -1,4 +1,4 @@
-import { AccountI } from 'src/entities/account/model/schemas/account.schema';
+import { AccountPopulateI } from 'src/entities/account/model/schemas/account.schema';
 
 export interface UserI {
 	_id:string;
@@ -9,7 +9,7 @@ export interface UserI {
 
 	isBanned:boolean;
 
-	accounts: (string | AccountI)[];
+	accounts: AccountPopulateI[];
 }
 
 export interface UserPopulateI {

@@ -3,7 +3,7 @@ import { observer } from 'mobx-react-lite';
 import { Navigate } from 'react-router-dom';
 import { AuthContext } from 'src/entities/auth';
 import { ROUTER_ROTES } from '../config';
-const { LAYOUT: { ACCOUNT } } = ROUTER_ROTES;
+const { ACCOUNT } = ROUTER_ROTES;
 
 type HasAccountT = {
 	children: React.ReactNode

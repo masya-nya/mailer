@@ -11,18 +11,20 @@ import AlreadyLogged from './guards/AlreadyLogged';
 import HasAccount from './guards/HasAccount';
 import { ROUTER_ROTES } from 'src/app/router/config';
 import NotAuthorized from './guards/NotAuthorized';
-const { LAYOUT: { BASE, SETTINGS, ACCOUNT }, LOGIN, REGISTRATION } = ROUTER_ROTES;
+import { AccountSelectionPage } from 'src/pages/account-selection-page';
+const { LAYOUT: { BASE, SETTINGS, ACCOUNT_SELECTION }, LOGIN, REGISTRATION, ACCOUNT } = ROUTER_ROTES;
 
 interface AppRouterProps {
 	className?: string
 	style?: CSSProperties
 }
 
-export const AppRouter:FC<AppRouterProps> = observer(() => {
+export const AppRouter: FC<AppRouterProps> = observer(() => {
 	return (
 		<Routes>
 			<Route path={BASE} element={<NotAuthorized><HasAccount><Layout /></HasAccount></NotAuthorized>}>
 				<Route index element={<HomePage />} />
+				<Route path={ACCOUNT_SELECTION} element={<AccountSelectionPage />} />
 				<Route path={SETTINGS} element={<SettingsPage />} />
 			</Route>
 			<Route path={ACCOUNT} element={<NotAuthorized><AccountPage /></NotAuthorized>} />
