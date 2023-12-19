@@ -16,7 +16,6 @@ import { TokensExpires } from '../token/config';
 import { UserRDO } from '../user/RDO/user.rdo';
 import { TOKENS_NAMES } from './consts';
 import { Logger } from 'src/core/logger/Logger';
-import { ApiError } from 'src/core/exceptions/api-error.exception';
 import { TokenService } from '../token/token.service';
 import { LoginDTO } from './DTO/login.dto';
 import ENDPOINTS from 'src/core/consts/endpoint';
@@ -53,18 +52,14 @@ export class AuthController {
 		@Res() res: Response
 	): Promise<Response<GenerateTokensT & { user: UserRDO }>> {
 		this.logger.info('Запрос на login');
-		try {
-			const payload = await this.authService.login(loginDTO);
-			res.cookie(TOKENS_NAMES.REFRESH, payload.refreshToken, {
-				maxAge: TokensExpires.REFRESH.milliseconds,
-				httpOnly: true,
-				secure: true,
-			});
-			this.logger.log(`Успешный login для пользователя ${payload.user.email}`);
-			return res.send(payload);
-		} catch(e) {
-			throw ApiError.InternalServerError(e.message);
-		}
+		const payload = await this.authService.login(loginDTO);
+		res.cookie(TOKENS_NAMES.REFRESH, payload.refreshToken, {
+			maxAge: TokensExpires.REFRESH.milliseconds,
+			httpOnly: true,
+			secure: true,
+		});
+		this.logger.log(`Успешный login для пользователя ${payload.user.email}`);
+		return res.send(payload);
 		
 	}
 
@@ -75,15 +70,11 @@ export class AuthController {
 		@Res() res: Response
 	): Promise<Response<any, Record<string, any>>> {
 		this.logger.info('Запрос на logout');
-		try {
-			const { refreshToken } = req.cookies;
-			const payload = await this.authService.logout(refreshToken);
-			res.clearCookie(TOKENS_NAMES.REFRESH);
-			this.logger.log(`Успешный logout для пользователя ${payload.email}`);
-			return res.json({ message: 'OK' });
-		} catch(e) {
-			throw ApiError.InternalServerError(e.message);
-		}
+		const { refreshToken } = req.cookies;
+		const payload = await this.authService.logout(refreshToken);
+		res.clearCookie(TOKENS_NAMES.REFRESH);
+		this.logger.log(`Успешный logout для пользователя ${payload.email}`);
+		return res.json({ message: 'OK' });
 	}
 
 	@Get(REFRESH)
@@ -93,19 +84,15 @@ export class AuthController {
 		@Res() res: Response
 	): Promise<Response<GenerateTokensT>> {
 		this.logger.info('Запрос на обновление токена');
-		try {
-			const { refreshToken } = req.cookies;
-			const tokens = await this.authService.refresh(refreshToken);
-			const payload = await this.tokenService.validateRefreshToken(tokens.refreshToken);
-			res.cookie(TOKENS_NAMES.REFRESH, tokens.refreshToken, {
-				maxAge: TokensExpires.REFRESH.milliseconds,
-				httpOnly: true,
-				secure: true,
-			});
-			this.logger.log(`Успешное обновление токена для пользователя ${payload.email}`);
-			return res.send(tokens);
-		} catch(e) {
-			throw ApiError.InternalServerError(e.message);
-		}
+		const { refreshToken } = req.cookies;
+		const tokens = await this.authService.refresh(refreshToken);
+		const payload = await this.tokenService.validateRefreshToken(tokens.refreshToken);
+		res.cookie(TOKENS_NAMES.REFRESH, tokens.refreshToken, {
+			maxAge: TokensExpires.REFRESH.milliseconds,
+			httpOnly: true,
+			secure: true,
+		});
+		this.logger.log(`Успешное обновление токена для пользователя ${payload.email}`);
+		return res.send(tokens);
 	}
 }

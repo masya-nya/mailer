@@ -4,13 +4,22 @@ import { AccountService } from '../../api/account.service';
 import { CreateAccountDTO } from '../DTO/create-account.dto';
 
 export class AccountStore {
+	private _accountId: string = '';
 	private _account: AccountI | null = null;
+
+	get accountId(): string {
+		return this._accountId;
+	}
+
+	set accountId(value: string) {
+		this._accountId = value;
+	}
 
 	get account(): AccountI | null {
 		return this._account;
 	}
 
-	set account(value: AccountI) {
+	set account(value: AccountI | null) {
 		this._account = value;
 	}
 

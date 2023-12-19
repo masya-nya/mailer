@@ -1,11 +1,13 @@
-import { CSSProperties, FC } from 'react';
+import { CSSProperties, FC, useContext } from 'react';
 import cl from './Layout.module.scss';
 import { Outlet } from 'react-router-dom';
-import { observer } from 'mobx-react-lite';
 import { Sidebar } from './components/sidebar/Sidebar';
 import { Topbar } from './components/topbar/Topbar';
 import { useAccountUser } from 'src/entities/account-user';
 import { Loader } from 'src/shared/UI';
+import { AuthContext } from 'src/entities/auth';
+import { AccountContext } from 'src/entities/account';
+import { observer } from 'mobx-react-lite';
 
 interface LayoutProps {
 	className?: string;
@@ -13,7 +15,10 @@ interface LayoutProps {
 }
 
 export const Layout: FC<LayoutProps> = observer(() => {
-	const { data, isLoading, isValidating } = useAccountUser('89185487468@gmail.com', '6580388fe1328943f1f87200');
+	const { store: authStore } = useContext(AuthContext);
+	const { store: accountStore } = useContext(AccountContext);
+	console.log({ userEmail: authStore.user!.email, accountid: accountStore.accountId });
+	const { data, isLoading, isValidating } = useAccountUser(authStore.user!.email, accountStore.accountId);
 	console.log('ACCOUNT-USER', data);
 	if(isLoading || isValidating) {
 		return <Loader />;

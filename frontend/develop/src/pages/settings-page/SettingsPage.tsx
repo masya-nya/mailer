@@ -5,10 +5,12 @@ interface SettingsPageProps {
 	style?: CSSProperties
 }
 
-export const SettingsPage:FC<SettingsPageProps> = () => {
+const SettingsPage:FC<SettingsPageProps> = () => {
 	return (
 		<div>
 			AboutPage
 		</div>
 	);
 };
+
+export default SettingsPage;

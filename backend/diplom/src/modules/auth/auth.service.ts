@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { TokenService } from '../token/token.service';
 import { CreateUserDTO } from '../user/DTO/create-user.dto';
 import { UserService } from '../user/user.service';
-import { UserDocument } from '../user/models/user.model';
+import { PopulatedUser } from '../user/models/user.model';
 import { GenerateTokensT } from '../token/types/generate-tokens.type';
 import { UserRDO } from '../user/RDO/user.rdo';
 import * as bcrypt from 'bcrypt';
@@ -87,6 +87,7 @@ export class AuthService {
 	async refresh(
 		refreshToken: string
 	): Promise<GenerateTokensT & { user: UserRDO }> {
+		console.log('refreshToken', refreshToken);
 		if (!refreshToken) {
 			this.logger.error(`${this.serviceName}: refreshToken отсутствует`);
 			throw ApiError.Unauthorized();
@@ -99,7 +100,7 @@ export class AuthService {
 			this.logger.error(`${this.serviceName}: Ошибка обновления токенов`);
 			throw ApiError.Unauthorized();
 		}
-		const user = await this.userService.findUserByEmail(jwtPayload.email);
+		const user = await this.userService.findUserByEmailWithPopulate(jwtPayload.email);
 		const userRDO = new UserRDO(user);
 		const tokens = await this.tokenService.generateTokens({
 			email: user.email,
@@ -115,9 +116,9 @@ export class AuthService {
 		};
 	}
 
-	async validateUser(loginDTO: LoginDTO): Promise<UserDocument> {
+	async validateUser(loginDTO: LoginDTO): Promise<PopulatedUser> {
 		const { email, password } = loginDTO;
-		const user = await this.userService.findUserByEmail(email);
+		const user = await this.userService.findUserByEmailWithPopulate(email);
 		if (!user) {
 			this.logger.error(
 				`${this.serviceName}: Ошибка валидации, пользователь с таким email уже существует (${email})`

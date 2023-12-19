@@ -26,6 +26,7 @@ export const Sidebar:FC<SidebarProps> = () => {
 				<GroupedNavlinks title={SidebarNavigationGroup.title} links={SidebarNavigationGroup.links}  />
 			</div>
 			<Button type="primary" onClick={logoutHandler}>Выход</Button>
+			<Button type="primary" onClick={() => location.reload()}>Обновить страницу</Button>
 		</div>
 	);
 };

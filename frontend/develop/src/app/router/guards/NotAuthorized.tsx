@@ -11,14 +11,15 @@ type NotAuthorizedT = {
 }
 
 const NotAuthorized: FC<NotAuthorizedT> = ({ children }) => {
-	const { store } = useContext(AuthContext);
 	console.log('NotAuthorized');
+	const { store } = useContext(AuthContext);
 
 	if (store.isAuthInProgress) {
 		return <Loader />;
 	}
  
 	if (!store.isAuth) {
+		console.log(`NAVIGATE TO ${LOGIN}`);
 		return <Navigate to={LOGIN} />;
 	}
 

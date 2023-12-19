@@ -5,6 +5,7 @@ import { ACCESS_TOKEN_LS_KEY } from '../../lib/config';
 import { RegistrationDTO } from '../DTO/registration.dto';
 import { UserI } from 'src/entities/user/model/schemas/user.schema';
 import { globalShadowLoaderStore } from 'src/shared/UI';
+import { AccountPopulateI } from 'src/entities/account';
 
 
 export class AuthStore {
@@ -14,6 +15,10 @@ export class AuthStore {
 
 	constructor() {
 		makeAutoObservable(this);
+	}
+
+	get accounts(): AccountPopulateI[] {
+		return this._user?.accounts || [];
 	}
 
 	get isAuthInProgress():boolean {
@@ -40,7 +45,8 @@ export class AuthStore {
 		globalShadowLoaderStore.isLoad = true;
 		try {
 			const { data: response } = await AuthService.login(loginDTO);
-			const { accessToken } = response;
+			const { accessToken, user } = response;
+			this._user = user;
 			console.log(response);
 			localStorage.setItem(ACCESS_TOKEN_LS_KEY, accessToken);
 			this._isAuth = true;

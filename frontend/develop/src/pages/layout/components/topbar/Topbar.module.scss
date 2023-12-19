@@ -2,4 +2,11 @@
 	height: var(--topbar-height);
 	flex: 0 0 var(--topbar-height);
 	border-bottom: var(--border-size) solid var(--color-border);
+	padding: 0 var(--topbar-padding-x);
+	display: flex;
+	align-items: center;
+	&__title {
+		font-weight: 700;
+		font-size: var(--font-size-l);
+	}
 }

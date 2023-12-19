@@ -15,6 +15,9 @@ export const Topbar:FC<TopbarProps> = ({...props }) => {
 			<div className={cl['topbar__title']}>
 				{ ROUTES_TITLE[pathname] }
 			</div>
+			<div className={cl['topbar__account-select']}>
+				
+			</div>
 		</div>
 	);
 };

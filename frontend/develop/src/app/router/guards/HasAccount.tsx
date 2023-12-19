@@ -10,11 +10,15 @@ type HasAccountT = {
 }
 
 const HasAccount: FC<HasAccountT> = ({ children }) => {
-	const { store } = useContext(AuthContext);
-	console.log('AccountCheck');
+	console.log('HasAccount');
+	const { store: authStore } = useContext(AuthContext);
+	const accounts = authStore.accounts;
 
-	if (!store.user || !Boolean(store.user?.accounts.length)) {
-		console.log('REDIRECT to ACCOUNT');
+	console.log('user', authStore.user);
+	console.log('accounts', accounts);
+
+	if (!authStore.user || !Boolean(accounts.length)) {
+		console.log(`NAVIGATE TO ${ACCOUNT}`);
 		return <Navigate to={ACCOUNT} />;
 	}
 

@@ -1,0 +1,1 @@
+export const SELECTED_ACCOUNT_ID_LS_KEY = 'ac';

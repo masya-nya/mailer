@@ -21,7 +21,7 @@ export class ApiError extends HttpException {
 
 	static InternalServerError(message:string):ApiError {
 		return new ApiError(
-			HttpStatus.BAD_REQUEST,
+			HttpStatus.INTERNAL_SERVER_ERROR,
 			message
 		);
 	}

@@ -1,0 +1,14 @@
+.account-selection-item {
+	border-radius: 10px;
+	background-color: var(--color-bg);
+	padding: 15px 25px;
+	color: var(--color-font-base-unactive);
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	cursor: pointer;
+	&:hover {
+		background-color: var(--color-hover-base);
+		color: var(--color-font-base);
+	}
+}
