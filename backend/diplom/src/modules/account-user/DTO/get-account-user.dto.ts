@@ -1,12 +1,11 @@
 import { Transform } from 'class-transformer';
-import { IsNotEmpty, IsString, IsEmail } from 'class-validator';
+import { IsNotEmpty } from 'class-validator';
 import { Types } from 'mongoose';
 
 export class GetAccountUserDTO {
+	@Transform(({ value }) => new Types.ObjectId(value))
 	@IsNotEmpty({ message: 'Не должно быть пустым' })
-	@IsString()
-	@IsEmail({}, { message: 'Должен быть email' })
-	readonly email: string;
+	readonly userId: Types.ObjectId;
 
 	@IsNotEmpty({ message: 'Не должно быть пустым' })
 	@Transform(({ value }) => new Types.ObjectId(value))

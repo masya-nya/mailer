@@ -15,6 +15,17 @@ export class RoleRepository {
 		@InjectModel(Role.name) private roleModel: Model<RoleDocument>,
 		private readonly logger: Logger
 	) {}
+
+	async insertManyRoles(insertingRoles: Role[]):Promise<void> {
+		try {
+			const response = await this.roleModel.insertMany(insertingRoles);
+			console.log(response);
+			return;
+		} catch (error) {
+			this.logger.error(`Ошибка сервера в ${this.serviceName}`);
+			throw ApiError.InternalServerError(error.message);
+		}
+	}
 	
 	async findByNameAndAccountId(name: string, accountId: Types.ObjectId): Promise<RoleDocument> {
 		try {

@@ -1,12 +1,26 @@
-.login-form {
+.login {
 	display: flex;
 	flex-direction: column;
 	gap: 20px;
 	width: 400px;
-	padding: 50px 40px;
+	padding: 30px 40px 40px 40px;
 	border-radius: 30px;
 	background-color: var(--color-bg-focused);
 	box-shadow: var(--color-shadow-base) 0px 0px 24px;
+	&__title {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		font-size: var(--font-size-g);
+		font-weight: 700;
+		letter-spacing: 1px;
+	}
+}
+.login-form {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+	
 	&__inputs {
 		display: flex;
 		flex-direction: column;

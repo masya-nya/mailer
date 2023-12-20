@@ -11,6 +11,7 @@ import { CreateUserDTO } from './DTO/create-user.dto';
 import { ApiError } from 'src/core/exceptions/api-error.exception';
 import { AccountRDOForPopulate } from '../account/RDO/account.rdo';
 import { Logger } from 'src/core/logger/Logger';
+import { ModelWithId } from 'src/core/types';
 
 @Injectable()
 export class UserRepository {
@@ -31,9 +32,9 @@ export class UserRepository {
 		}
 	}
 
-	async findByEmail(email: string): Promise<UserDocument> {
+	async find(findDTO:  Partial<ModelWithId<User>>): Promise<UserDocument> {
 		try {
-			const user = await this.userModel.findOne({ email });
+			const user = await this.userModel.findOne({ ...findDTO });
 			return user;
 		} catch (error) {
 			this.logger.error(`Ошибка сервера в ${this.serviceName}`);
@@ -41,10 +42,10 @@ export class UserRepository {
 		}
 	}
 
-	async findByEmailWithPopulate(email: string): Promise<PopulatedUser> {
+	async findWithPopulate(findDTO:  Partial<ModelWithId<User>>): Promise<PopulatedUser> {
 		try {
 			const user = await this.userModel
-				.findOne({ email })
+				.findOne({ ...findDTO })
 				.populate<PopulationAccount>('accounts', AccountRDOForPopulate)
 				.exec();
 			return user;
@@ -54,13 +55,13 @@ export class UserRepository {
 		}
 	}
 
-	async findByEmailAndAddAccount(
-		email: string,
+	async findAndAddAccount(
+		findDTO:  Partial<ModelWithId<User>>,
 		accountId: Types.ObjectId
 	): Promise<UserDocument> {
 		try {
 			const user = await this.userModel.findOneAndUpdate(
-				{ email },
+				{ ...findDTO },
 				{ $addToSet: { accounts: accountId } },
 				{ new: true }
 			);
@@ -71,7 +72,7 @@ export class UserRepository {
 		}
 	}
 
-	async findAllUsers(): Promise<UserDocument[]> {
+	async getAllUsers(): Promise<UserDocument[]> {
 		try {
 			const users = await this.userModel.find().lean();
 			return users;

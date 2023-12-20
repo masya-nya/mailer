@@ -44,7 +44,7 @@ export class AccountRepository {
 		}
 	}
 
-	async findAllByLogin(login: string): Promise<AccountDocument> {
+	async findByLogin(login: string): Promise<AccountDocument> {
 		try {
 			const account = await this.accountModel.findOne({ login });
 			return account;
@@ -54,9 +54,9 @@ export class AccountRepository {
 		}
 	}
 
-	async findAllByOwnerEmail(owner: string): Promise<AccountDocument[]> {
+	async findAllByOwnerEmail(ownerEmail: string): Promise<AccountDocument[]> {
 		try {
-			const account = await this.accountModel.find({ owner });
+			const account = await this.accountModel.find({ owner: ownerEmail });
 			return account;
 		} catch (error) {
 			this.logger.error(`Ошибка сервера в ${this.serviceName}`);

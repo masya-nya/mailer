@@ -28,57 +28,60 @@ export const RegistrationForm: FC<RegistrationFormProps> = () => {
 	};
 
 	return (
-		<form onSubmit={registration} className={cl['registration-form']}>
-			<div className={cl['registration-form__inputs']}>
-				<Input
-					className={cn(
-						cl['registration-form__name'],
-						cl['registration-form__input']
-					)}
-					placeholder="Имя"
-					value={name}
-					onChange={setNameHandler}
-					size="large"
-				/>
-				<Input
-					className={cn(
-						cl['registration-form__email'],
-						cl['registration-form__input']
-					)}
-					placeholder="Email"
-					value={email}
-					onChange={setEmailHandler}
-					size="large"
-				/>
-				<Input
-					className={cn(
-						cl['registration-form__password'],
-						cl['registration-form__input']
-					)}
-					type="password"
-					placeholder="Пароль"
-					value={password}
-					onChange={setPasswordHandler}
-					size="large"
-				/>
-			</div>
-			<div className={cl['registration-form__btns']}>
-				<span
-					onClick={() => navigate(LOGIN)}
-					className={cl['registration-form__registration-link']}
-				>
-					Войти
-				</span>
-				<Button
-					className={cl['registration-form__submit']}
-					type="primary"
-					size="large"
-					shape="round"
-					htmlType="submit"
-				>
-					Зарегистрироваться
-				</Button>
-			</div>
-		</form>
+		<div className={cl['registration']}>
+			<div className={cl['registration__title']}>Регистрация</div>
+			<form onSubmit={registration} className={cl['registration-form']}>
+				<div className={cl['registration-form__inputs']}>
+					<Input
+						className={cn(
+							cl['registration-form__name'],
+							cl['registration-form__input']
+						)}
+						placeholder="Имя"
+						value={name}
+						onChange={setNameHandler}
+						size="large"
+					/>
+					<Input
+						className={cn(
+							cl['registration-form__email'],
+							cl['registration-form__input']
+						)}
+						placeholder="Email"
+						value={email}
+						onChange={setEmailHandler}
+						size="large"
+					/>
+					<Input
+						className={cn(
+							cl['registration-form__password'],
+							cl['registration-form__input']
+						)}
+						type="password"
+						placeholder="Пароль"
+						value={password}
+						onChange={setPasswordHandler}
+						size="large"
+					/>
+				</div>
+				<div className={cl['registration-form__btns']}>
+					<span
+						onClick={() => navigate(LOGIN)}
+						className={cl['registration-form__registration-link']}
+					>
+						Войти
+					</span>
+					<Button
+						className={cl['registration-form__submit']}
+						type="primary"
+						size="large"
+						shape="round"
+						htmlType="submit"
+					>
+						Зарегистрироваться
+					</Button>
+				</div>
+			</form>
+		</div>
 	);
 };

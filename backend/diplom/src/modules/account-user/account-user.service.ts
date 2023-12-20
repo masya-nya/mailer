@@ -18,13 +18,16 @@ export class AccountUserService {
 	) {}
 
 	async getAccountUser(getAccountUserDTO: GetAccountUserDTO):Promise<AccountUserRDO> {
-		const { email, accountId } = getAccountUserDTO;
-		const user = await this.userService.findUserByEmailWithPopulate(email);
+		const { userId, accountId } = getAccountUserDTO;
+		const user = await this.userService.findWithPopulate({ _id: userId });
 		const account = await this.accountService.findAccountById(accountId);
 		let role = await this.roleService.findByEmailAndAccountId(email, accountId);
 		if (!role) {
 			role = await this.roleService.findByAccountId(RECRUITE_ROLE_ACCOUNT_ID);
 		}
+		console.log(user);
+		console.log(account);
+		console.log(role);
 		const accountUser = new AccountUserRDO(user, account, role);
 		return {...accountUser};
 	}

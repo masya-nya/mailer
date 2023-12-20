@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument, Types } from 'mongoose';
 import { User } from '../../user/models/user.model';
-import { PopulatedModel } from 'src/core/types/populated-model.type';
+import { PopulatedModel } from 'src/core/types';
 import { APP_ENTITIES_SCHEMAS } from 'src/app/consts/schemas-entities.enum';
 
 export type AccountDocument = HydratedDocument<Account>;
@@ -17,6 +17,9 @@ export class Account {
 
 	@Prop({ type: String, required: true })
 	owner: string;
+
+	@Prop({ type: Types.ObjectId, required: true })
+	ownerId: Types.ObjectId;
 	
 	@Prop({ type: String, required: true })
 	login: string;

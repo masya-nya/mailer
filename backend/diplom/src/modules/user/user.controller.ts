@@ -42,7 +42,7 @@ export class UserController {
 		@Param(EMAIL) email: string
 	): Promise<UserRDO> {
 		this.logger.info('Запрос на получение пользователя');
-		const userDocument = await this.userService.findUserByEmailWithPopulate(email);
+		const userDocument = await this.userService.findWithPopulate({ email });
 		const user = new UserRDO(userDocument);
 		return user;
 	}

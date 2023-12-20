@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable, forwardRef } from '@nestjs/common';
 import { Logger } from 'src/core/logger/Logger';
 import { RoleRepository } from './role.repository';
 import { CreateRoleDTO } from './DTO/create-role.dto';
@@ -6,14 +6,16 @@ import { RoleDocument } from './models/role.model';
 import { ApiError } from 'src/core/exceptions/api-error.exception';
 import { AccountService } from '../account/account.service';
 import { Types } from 'mongoose';
+import { getAdminRole, getRecruiteRole } from './patterns';
 
 @Injectable()
 export class RoleService {
 
 	constructor(
+		@Inject(forwardRef(() => AccountService))
+		private readonly accountService: AccountService,
 		private readonly logger: Logger,
 		private readonly roleRepository: RoleRepository,
-		private readonly accountService: AccountService
 	) {}
 
 	async createRole(createRoleDTO: CreateRoleDTO): Promise<RoleDocument> {
@@ -32,6 +34,14 @@ export class RoleService {
 		this.logger.log(`Роль создана (${role.name}) для аккаунта(${role.accountId})`);
 		
 		return role;
+	}
+
+	async addPreventRoles(accountId: Types.ObjectId, owner: Types.ObjectId):Promise<void> {
+		const preventRoles = [
+			getRecruiteRole(accountId),
+			getAdminRole(accountId, [owner])
+		];
+		this.roleRepository.insertManyRoles(preventRoles);
 	}
 
 	async findByNameAndAccountId(name: string, accountId: Types.ObjectId): Promise<RoleDocument> {

@@ -12,8 +12,6 @@ interface TopbarProps {
 export const Topbar: FC<TopbarProps> = ({ ...props }) => {
 	const { pathname } = useLocation();
 
-	
-
 	return (
 		<div {...props} className={cl['topbar']}>
 			<div className={cl['topbar__title']}>{ROUTES_TITLE[pathname]}</div>

@@ -9,12 +9,15 @@ import { UserRepository } from '../user/user.repository';
 import { ApiError } from 'src/core/exceptions/api-error.exception';
 import { MAX_ACCOUNTS_FOR_ONE_OWNER } from './config';
 import { Logger } from 'src/core/logger/Logger';
+import { RoleService } from '../role/role.service';
 
 @Injectable()
 export class AccountService {
 	constructor(
 		@Inject(forwardRef(() => UserService))
 		private readonly userService: UserService,
+		@Inject(forwardRef(() => RoleService))
+		private readonly roleService: RoleService,
 		private readonly userRepository: UserRepository,
 		private readonly accountRepository: AccountRepository,
 		private readonly logger: Logger
@@ -23,32 +26,29 @@ export class AccountService {
 	async createAccount(
 		createAccountDTO: CreateAccountDTO
 	): Promise<AccountDocument> {
-		const { owner } = createAccountDTO;
-		const user = await this.userService.findUserByEmail(createAccountDTO.owner);
+		const { owner, ownerId, login } = createAccountDTO;
+		const user = await this.userService.findUserByUserId(ownerId);
 		if (!user) {
-			this.logger.error(`Попытка создать аккаунт на несуществующего пользователя (${createAccountDTO.owner})`);
+			this.logger.error(`Попытка создать аккаунт на несуществующего пользователя (${owner})`);
 			throw ApiError.BadRequest('Такого пользователя не существует');
 		}
 
-		const sameLoginAccount = await this.accountRepository.findAllByLogin(createAccountDTO.login);
+		const sameLoginAccount = await this.accountRepository.findByLogin(login);
 		if (sameLoginAccount) {
-			this.logger.error(`Попытка создать аккаунт с уже существующим логином (${createAccountDTO.login})`);
+			this.logger.error(`Попытка создать аккаунт с уже существующим логином (${login})`);
 			throw ApiError.BadRequest('Аккаунт с таким логином уже создан');
 		}
 
-		const ownerAccounts = await this.accountRepository.findAllByOwnerEmail(createAccountDTO.owner);
+		const ownerAccounts = await this.accountRepository.findAllByOwnerEmail(owner);
 		if (ownerAccounts.length >= MAX_ACCOUNTS_FOR_ONE_OWNER) {
-			this.logger.error(`Попытка создать больше ${MAX_ACCOUNTS_FOR_ONE_OWNER} аккаунтов (${createAccountDTO.owner})`);
+			this.logger.error(`Попытка создать больше ${MAX_ACCOUNTS_FOR_ONE_OWNER} аккаунтов (${owner})`);
 			throw ApiError.BadRequest('Лимит аккаунтов превышен');
 		}
 		const newAccount = await this.accountRepository.createAccount(createAccountDTO);
-		if(newAccount) {
-			this.userService.addAccount({ email: owner, accountId: newAccount._id });
-			this.logger.log(`Аккаунт создан (${newAccount.name})`);
-			return newAccount;
-		}
-		this.logger.error('Ошибка создания аккаунта');
-		ApiError.InternalServerError('Невозможная ошибка');
+		this.userService.addAccount({ email: owner, accountId: newAccount._id });
+		this.roleService.addPreventRoles(newAccount._id, ownerId);
+		this.logger.log(`Аккаунт создан (${newAccount.name})`);
+		return newAccount;
 	}
 
 	async addUser(addUserDTO: AddUserDTO): Promise<AccountDocument> {

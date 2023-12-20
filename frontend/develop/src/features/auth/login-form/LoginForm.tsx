@@ -1,8 +1,8 @@
 import React, { FormEvent, useContext, useMemo } from 'react';
 import cl from './LoginForm.module.scss';
+import cn from 'classnames';
 import { Button, Input } from 'antd';
 import { useTextInput } from 'src/shared/lib/hooks';
-import cn from 'classnames';
 import { AuthContext } from 'src/entities/auth';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
@@ -28,47 +28,50 @@ export const LoginForm: React.FC = observer(() => {
 	};
 
 	return (
-		<form onSubmit={login} className={cl['login-form']}>
-			<div className={cl['login-form__inputs']}>
-				<Input
-					className={cn(
-						cl['login-form__email'],
-						cl['login-form__input']
-					)}
-					placeholder="Email"
-					value={email}
-					onChange={setEmailHandler}
-					size="large"
-				/>
-				<Input
-					className={cn(
-						cl['login-form__password'],
-						cl['login-form__input']
-					)}
-					type="password"
-					placeholder="Пароль"
-					value={password}
-					onChange={setPasswordHandler}
-					size="large"
-				/>
-			</div>
-			<div className={cl['login-form__btns']}>
-				<span
-					onClick={() => navigate(REGISTRATION)}
-					className={cl['login-form__registration-link']}
-				>
-					Регистрация
-				</span>
-				<Button
-					className={cl['login-form__submit']}
-					type="primary"
-					size="large"
-					shape="round"
-					htmlType="submit"
-				>
-					Войти
-				</Button>
-			</div>
-		</form>
+		<div className={cl['login']}>
+			<div className={cl['login__title']}>Вход</div>
+			<form onSubmit={login} className={cl['login-form']}>
+				<div className={cl['login-form__inputs']}>
+					<Input
+						className={cn(
+							cl['login-form__email'],
+							cl['login-form__input']
+						)}
+						placeholder="Email"
+						value={email}
+						onChange={setEmailHandler}
+						size="large"
+					/>
+					<Input
+						className={cn(
+							cl['login-form__password'],
+							cl['login-form__input']
+						)}
+						type="password"
+						placeholder="Пароль"
+						value={password}
+						onChange={setPasswordHandler}
+						size="large"
+					/>
+				</div>
+				<div className={cl['login-form__btns']}>
+					<span
+						onClick={() => navigate(REGISTRATION)}
+						className={cl['login-form__registration-link']}
+					>
+						Регистрация
+					</span>
+					<Button
+						className={cl['login-form__submit']}
+						type="primary"
+						size="large"
+						shape="round"
+						htmlType="submit"
+					>
+						Войти
+					</Button>
+				</div>
+			</form>
+		</div>
 	);
 });

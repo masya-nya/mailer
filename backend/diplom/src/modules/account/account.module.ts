@@ -9,6 +9,7 @@ import { Logger } from 'src/core/logger/Logger';
 import { AuthMiddleware } from 'src/core/middlewares/auth.middleware';
 import ENDPOINTS from 'src/core/consts/endpoint';
 import { TokenModule } from '../token/token.module';
+import { RoleModule } from '../role/role.module';
 
 @Module({
 	providers: [AccountService, AccountRepository, Logger],
@@ -18,6 +19,7 @@ import { TokenModule } from '../token/token.module';
 			{ name: Account.name, schema: AccountSchema },
 		]),
 		forwardRef(() => UserModule),
+		forwardRef(() => RoleModule),
 		TokenModule
 	],
 	exports: [AccountService, AccountRepository]
