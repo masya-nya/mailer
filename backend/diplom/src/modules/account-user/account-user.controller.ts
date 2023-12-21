@@ -17,7 +17,7 @@ export class AccountUserController {
 	@Get()
 	@HttpCode(HttpStatus.OK)
 	async getAccountUser(@Query() getAccountUserDTO: GetAccountUserDTO):Promise<AccountUserRDO> {
-		this.logger.info(`Запрос получение информации пользователя аккаунта ${getAccountUserDTO.accountId} (${getAccountUserDTO.email})`);
+		this.logger.info(`Запрос получение информации пользователя аккаунта ${getAccountUserDTO.accountId} (${getAccountUserDTO.userId})`);
 		const accountUser = await this.accountUserService.getAccountUser(getAccountUserDTO);
 		this.logger.log(`Успешный сбор данных для пользователя ${accountUser.email} в аккаунт ${accountUser.accountLogin}`);
 		return accountUser;

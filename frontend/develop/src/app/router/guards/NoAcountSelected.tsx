@@ -15,23 +15,19 @@ export const NoAccountSelected:FC<NoAccountSelectedI> = ({ children }) => {
 	const { store: authStore } = useContext(AuthContext);
 	const { store: accountStore } = useContext(AccountContext);
 	const accounts = authStore.accounts;
-	const selectedAccount = localStorage.getItem(SELECTED_ACCOUNT_ID_LS_KEY);
+	const selectedAccountId = localStorage.getItem(SELECTED_ACCOUNT_ID_LS_KEY);
+	const relevantAccount = accounts.find(account => account._id === selectedAccountId);
 
-	const relevantAccount = accounts.find(account => account._id === selectedAccount);
+	if (!Boolean(accounts.length) || !selectedAccountId) {
+		console.log(`NAVIGATE TO ${ACCOUNT_SELECTION}`);
+		return <Navigate to={ACCOUNT_SELECTION} />;
+	}
+
 
 	if (!relevantAccount) {
 		localStorage.removeItem(SELECTED_ACCOUNT_ID_LS_KEY);
 	} else {
 		accountStore.accountId = relevantAccount._id;
-	}
-
-	// if (accounts.length === 1) {
-
-	// }
-
-	if (!Boolean(accounts.length) || !selectedAccount) {
-		console.log(`NAVIGATE TO ${ACCOUNT_SELECTION}`);
-		return <Navigate to={ACCOUNT_SELECTION} />;
 	}
 
 	return children;

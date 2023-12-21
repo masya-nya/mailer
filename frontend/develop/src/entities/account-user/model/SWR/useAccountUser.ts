@@ -4,12 +4,12 @@ import { AccountUserI } from '../schemas/account-user.schema';
 import { useSWRReturnType } from 'src/shared/lib';
 
 export const useAccountUser = (
-	email: string,
+	userId: string,
 	accountId: string
 ): useSWRReturnType<AccountUserI> => {
 	const { data, error, isLoading, isValidating, mutate } = useSWRImmutable<AccountUserI>(
 		'account-user',
-		() => accountUserStore.getAccountUser(email, accountId)
+		() => accountUserStore.getAccountUser(userId, accountId)
 	);
 	return {
 		data,

@@ -5,6 +5,7 @@ import { Role, RoleDocument } from './models/role.model';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 import { ApiError } from 'src/core/exceptions/api-error.exception';
+import { ModelWithId } from 'src/core/types';
 
 
 @Injectable()
@@ -26,27 +27,6 @@ export class RoleRepository {
 			throw ApiError.InternalServerError(error.message);
 		}
 	}
-	
-	async findByNameAndAccountId(name: string, accountId: Types.ObjectId): Promise<RoleDocument> {
-		try {
-			const role = await this.roleModel.findOne({ name, accountId });
-			return role;
-		} catch (error) {
-			this.logger.error(`Ошибка сервера в ${this.serviceName}`);
-			throw ApiError.InternalServerError(error.message);
-		}
-	}
-
-	async findByEmailAndAccountId(email: string, accountId: Types.ObjectId): Promise<RoleDocument> {
-		try {
-			console.log(email, accountId);
-			const role = await this.roleModel.findOne({ users: email, accountId });
-			return role;
-		} catch (error) {
-			this.logger.error(`Ошибка сервера в ${this.serviceName}`);
-			throw ApiError.InternalServerError(error.message);
-		}
-	}
 
 	async createRole(createRoleDTO: CreateRoleDTO): Promise<RoleDocument> {
 		try {
@@ -58,9 +38,19 @@ export class RoleRepository {
 		}
 	}
 
-	async findByAccountId(accountId: Types.ObjectId | string): Promise<RoleDocument> {
+	async find(findDTO:  Partial<ModelWithId<Role>>): Promise<RoleDocument> {
 		try {
-			const role = await this.roleModel.findOne({ accountId });
+			const role = await this.roleModel.findOne({ ...findDTO });
+			return role;
+		} catch (error) {
+			this.logger.error(`Ошибка сервера в ${this.serviceName}`);
+			throw ApiError.InternalServerError(error.message);
+		}
+	}
+
+	async findByUserIdAndAccountId(userId: Types.ObjectId, accountId: Types.ObjectId): Promise<RoleDocument> {
+		try {
+			const role = await this.roleModel.findOne({ users: userId, accountId });
 			return role;
 		} catch (error) {
 			this.logger.error(`Ошибка сервера в ${this.serviceName}`);

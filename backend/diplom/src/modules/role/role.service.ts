@@ -2,11 +2,12 @@ import { Inject, Injectable, forwardRef } from '@nestjs/common';
 import { Logger } from 'src/core/logger/Logger';
 import { RoleRepository } from './role.repository';
 import { CreateRoleDTO } from './DTO/create-role.dto';
-import { RoleDocument } from './models/role.model';
+import { Role, RoleDocument } from './models/role.model';
 import { ApiError } from 'src/core/exceptions/api-error.exception';
 import { AccountService } from '../account/account.service';
 import { Types } from 'mongoose';
 import { getAdminRole, getRecruiteRole } from './patterns';
+import { ModelWithId } from 'src/core/types';
 
 @Injectable()
 export class RoleService {
@@ -20,7 +21,7 @@ export class RoleService {
 
 	async createRole(createRoleDTO: CreateRoleDTO): Promise<RoleDocument> {
 		const { accountId, name } = createRoleDTO;
-		const roleDB = await this.roleRepository.findByNameAndAccountId(name, accountId);
+		const roleDB = await this.roleRepository.find({ name, accountId });
 		if (roleDB) {
 			this.logger.error(`Попытка создания уже существующей роли (${createRoleDTO.name})`);
 			throw ApiError.BadRequest('Роль с таким названием уже существует');
@@ -44,18 +45,13 @@ export class RoleService {
 		this.roleRepository.insertManyRoles(preventRoles);
 	}
 
-	async findByNameAndAccountId(name: string, accountId: Types.ObjectId): Promise<RoleDocument> {
-		const role = await this.roleRepository.findByNameAndAccountId(name, accountId);
+	async find(findDTO:  Partial<ModelWithId<Role>>): Promise<RoleDocument> {
+		const role = await this.roleRepository.find({ ...findDTO });
 		return role;
 	}
 
-	async findByEmailAndAccountId(email: string, accountId: Types.ObjectId): Promise<RoleDocument> {
-		const role = await this.roleRepository.findByEmailAndAccountId(email, accountId);
-		return role;
-	}
-
-	async findByAccountId(accountId: Types.ObjectId | string): Promise<RoleDocument> {
-		const role = await this.roleRepository.findByAccountId(accountId);
+	async findByEmailAndAccountId(userId: Types.ObjectId, accountId: Types.ObjectId): Promise<RoleDocument> {
+		const role = await this.roleRepository.findByUserIdAndAccountId(userId, accountId);
 		return role;
 	}
 

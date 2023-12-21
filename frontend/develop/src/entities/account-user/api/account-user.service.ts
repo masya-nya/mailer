@@ -6,7 +6,7 @@ const { ACCOUNT_USER: { BASE } } = ENDPOINTS;
 
 export class AccountUserService {
 	
-	static getAccountUser(email: string, accountId: string): Promise<AxiosResponse<AccountUserI>> {
-		return $api.get(`/${BASE}`, { params: { email, accountId } });
+	static getAccountUser(userId: string, accountId: string): Promise<AxiosResponse<AccountUserI>> {
+		return $api.get(`/${BASE}`, { params: { userId, accountId } });
 	}
 }

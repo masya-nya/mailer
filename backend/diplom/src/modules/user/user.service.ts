@@ -53,8 +53,8 @@ export class UserService {
 		return {...user};
 	}
 
-	async find(email: string): Promise<UserDocument> {
-		const user = await this.userRepository.find({ email });
+	async find(findDTO:  Partial<ModelWithId<User>>): Promise<UserDocument> {
+		const user = await this.userRepository.find({ ...findDTO });
 		return user;
 	}
 

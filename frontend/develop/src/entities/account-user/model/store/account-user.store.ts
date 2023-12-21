@@ -18,8 +18,8 @@ export class AccountUserStore {
 		this._accountUser = value;
 	}
 
-	public async getAccountUser(email: string, accountId: string):Promise<AccountUserI> {
-		const { data: accountUser } = await AccountUserService.getAccountUser(email, accountId);
+	public async getAccountUser(userId: string, accountId: string):Promise<AccountUserI> {
+		const { data: accountUser } = await AccountUserService.getAccountUser(userId, accountId);
 		this._accountUser = accountUser;
 		return accountUser;
 	}

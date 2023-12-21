@@ -27,7 +27,7 @@ export class AccountService {
 		createAccountDTO: CreateAccountDTO
 	): Promise<AccountDocument> {
 		const { owner, ownerId, login } = createAccountDTO;
-		const user = await this.userService.findUserByUserId(ownerId);
+		const user = await this.userService.find({ _id: ownerId });
 		if (!user) {
 			this.logger.error(`Попытка создать аккаунт на несуществующего пользователя (${owner})`);
 			throw ApiError.BadRequest('Такого пользователя не существует');
@@ -52,21 +52,20 @@ export class AccountService {
 	}
 
 	async addUser(addUserDTO: AddUserDTO): Promise<AccountDocument> {
-		const user = await this.userService.findUserByEmail(
-			addUserDTO.userEmail
-		);
+		const { accountId, userEmail } = addUserDTO;
+		const user = await this.userService.find({ email: userEmail });
 		if (!user) {
-			this.logger.error(`Попытка добавление в аккаунт несуществующего пользователя (${addUserDTO.userEmail})`);
+			this.logger.error(`Попытка добавление в аккаунт несуществующего пользователя (${userEmail})`);
 			throw ApiError.BadRequest('Такого пользователя не существует');
 		}
 
 		const account = await this.accountRepository.findByIdAndAddUser(
-			addUserDTO.accountId,
+			accountId,
 			user._id
 		);
 
-		await this.userRepository.findByEmailAndAddAccount(
-			user.email,
+		await this.userRepository.findAndAddAccount(
+			{ email: userEmail },
 			account._id
 		);
 		this.logger.log(`Пользователь ${user.email} был добавлен в аккаунт ${account.login}`);

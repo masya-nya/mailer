@@ -24,7 +24,7 @@ export class AuthService {
 
 	async registration(createUserDTO: CreateUserDTO): Promise<GenerateTokensT & { user: UserRDO }> {
 		const { email, name, password } = createUserDTO;
-		const candidate = await this.userService.findUserByEmail(email);
+		const candidate = await this.userService.find({ email });
 		if (candidate) {
 			this.logger.error(
 				`${this.serviceName}: Попытка регистрации с уже существующим email ${email}`
@@ -100,7 +100,7 @@ export class AuthService {
 			this.logger.error(`${this.serviceName}: Ошибка обновления токенов`);
 			throw ApiError.Unauthorized();
 		}
-		const user = await this.userService.findUserByEmailWithPopulate(jwtPayload.email);
+		const user = await this.userService.findWithPopulate({ email: jwtPayload.email });
 		const userRDO = new UserRDO(user);
 		const tokens = await this.tokenService.generateTokens({
 			email: user.email,
@@ -118,7 +118,7 @@ export class AuthService {
 
 	async validateUser(loginDTO: LoginDTO): Promise<PopulatedUser> {
 		const { email, password } = loginDTO;
-		const user = await this.userService.findUserByEmailWithPopulate(email);
+		const user = await this.userService.findWithPopulate({ email });
 		if (!user) {
 			this.logger.error(
 				`${this.serviceName}: Ошибка валидации, пользователь с таким email уже существует (${email})`
