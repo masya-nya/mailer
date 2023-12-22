@@ -93,7 +93,7 @@ export class AuthService {
 			throw ApiError.Unauthorized();
 		}
 		const jwtPayload = await this.tokenService.validateRefreshToken(refreshToken);
-		const tokenFromDB = await this.tokenService.findByToken(refreshToken);
+		const tokenFromDB = await this.tokenService.find({ refreshToken });
 		if (!jwtPayload || !tokenFromDB) {
 			console.log(jwtPayload);
 			console.log(tokenFromDB);

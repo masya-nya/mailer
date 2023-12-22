@@ -27,10 +27,10 @@ export class AccountStore {
 		makeAutoObservable(this);
 	}
 
-	public async createAccount(createAccountDTO: CreateAccountDTO): Promise<boolean> {
+	public async createAccount(createAccountDTO: CreateAccountDTO): Promise<AccountI> {
 		const { data: account } = await AccountService.create(createAccountDTO);
-		console.log(account);
-		return true;
+		console.log('ACCOUNT', account);
+		return account;
 	}
 }
 

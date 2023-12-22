@@ -28,7 +28,7 @@ export class UserService {
 			throw ApiError.BadRequest('Такой пользователь уже существует');
 		}
 		const user = await this.userRepository.createUser(createUserDTO);
-		this.logger.log(`Пользователь создан (${user.email})`);
+		this.logger.log(`Пользователь создан (${email})`);
 		
 		return user;
 	}
@@ -36,9 +36,7 @@ export class UserService {
 	
 	async addAccount(addAccountDTO: AddAccountDTO): Promise<UserRDO> {
 		const { accountId, email } = addAccountDTO;
-		const account = await this.accountService.findAccountById(
-			accountId
-		);
+		const account = await this.accountService.find({ _id: accountId });
 		if (!account) {
 			this.logger.error(`Попытка добавления несуществующего аккаунта пользователю (${accountId})`);
 			throw ApiError.BadRequest('Ошибка добавления, такого аккаунта не существует');
@@ -47,7 +45,7 @@ export class UserService {
 			{ email },
 			account._id
 		);
-		await this.accountRepository.findByIdAndAddUser(account._id, userDB._id);
+		await this.accountRepository.findAndAddUser({ _id: accountId }, userDB._id);
 		const user = new UserRDO(userDB);
 		this.logger.log(`Аккаунт ${account.login} добавлен пользователю (${user.email})`);
 		return {...user};

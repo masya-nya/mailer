@@ -17,12 +17,11 @@ const NotAuthorized: FC<NotAuthorizedT> = ({ children }) => {
 	if (store.isAuthInProgress) {
 		return <Loader />;
 	}
- 
+
 	if (!store.isAuth) {
 		console.log(`NAVIGATE TO ${LOGIN}`);
 		return <Navigate to={LOGIN} />;
 	}
-
 	return children;
 };
 

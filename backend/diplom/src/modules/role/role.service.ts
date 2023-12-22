@@ -26,7 +26,7 @@ export class RoleService {
 			this.logger.error(`Попытка создания уже существующей роли (${createRoleDTO.name})`);
 			throw ApiError.BadRequest('Роль с таким названием уже существует');
 		}
-		const account = await this.accountService.findAccountById(accountId);
+		const account = await this.accountService.find({ _id: accountId });
 		if (!account) {
 			this.logger.error(`Попытка создания роли для несуществующего аккаунта (${accountId})`);
 			throw ApiError.BadRequest('Такого аккаунта не сущесвует');

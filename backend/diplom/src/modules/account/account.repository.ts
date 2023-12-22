@@ -11,6 +11,7 @@ import { CreateAccountDTO } from './DTO/create-account.dto';
 import { ApiError } from 'src/core/exceptions/api-error.exception';
 import { UserRDOForPopulate } from '../user/RDO/user.rdo';
 import { Logger } from 'src/core/logger/Logger';
+import { ModelWithId } from 'src/core/types';
 
 @Injectable()
 export class AccountRepository {
@@ -34,9 +35,9 @@ export class AccountRepository {
 		}
 	}
 
-	async findById(accountId: Types.ObjectId): Promise<AccountDocument> {
+	async find(findDTO:  Partial<ModelWithId<Account>>): Promise<AccountDocument> {
 		try {
-			const account = await this.accountModel.findById(accountId);
+			const account = await this.accountModel.findOne({ ...findDTO });
 			return account;
 		} catch (error) {
 			this.logger.error(`Ошибка сервера в ${this.serviceName}`);
@@ -44,9 +45,9 @@ export class AccountRepository {
 		}
 	}
 
-	async findByLogin(login: string): Promise<AccountDocument> {
+	async findAll(findDTO:  Partial<ModelWithId<Account>>): Promise<AccountDocument[]> {
 		try {
-			const account = await this.accountModel.findOne({ login });
+			const account = await this.accountModel.find({ ...findDTO });
 			return account;
 		} catch (error) {
 			this.logger.error(`Ошибка сервера в ${this.serviceName}`);
@@ -54,22 +55,12 @@ export class AccountRepository {
 		}
 	}
 
-	async findAllByOwnerEmail(ownerEmail: string): Promise<AccountDocument[]> {
-		try {
-			const account = await this.accountModel.find({ owner: ownerEmail });
-			return account;
-		} catch (error) {
-			this.logger.error(`Ошибка сервера в ${this.serviceName}`);
-			throw ApiError.InternalServerError(error.message);
-		}
-	}
-
-	async findByIdWithPopulateUsers(
-		accountId: string
+	async findWithPopulate(
+		findDTO:  Partial<ModelWithId<Account>>
 	): Promise<PopulatedAccount> {
 		try {
 			const account = await this.accountModel
-				.findById(accountId)
+				.findOne({ ...findDTO })
 				.populate<PopulationUser>('users', UserRDOForPopulate)
 				.exec();
 			return account;
@@ -79,13 +70,13 @@ export class AccountRepository {
 		}
 	}
 
-	async findByIdAndAddUser(
-		accountId: Types.ObjectId,
+	async findAndAddUser(
+		findDTO: Partial<ModelWithId<Account>>,
 		userID: Types.ObjectId
 	): Promise<AccountDocument> {
 		try {
 			const account = await this.accountModel.findByIdAndUpdate(
-				accountId,
+				{ ...findDTO },
 				{ $addToSet: { users: userID } },
 				{ new: true }
 			);

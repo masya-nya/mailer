@@ -8,6 +8,7 @@ import { AccountContext } from 'src/entities/account/model/context/AccountContex
 import { ROUTER_ROTES } from 'src/app/router/config';
 import { observer } from 'mobx-react-lite';
 import { AuthContext } from 'src/entities/auth';
+import { SELECTED_ACCOUNT_ID_LS_KEY } from 'src/entities/account';
 const { LAYOUT: { BASE } } = ROUTER_ROTES;
 
 interface CreateAccountFormProps {
@@ -23,12 +24,14 @@ export const CreateAccountForm:FC<CreateAccountFormProps> = observer(() => {
 	const navigate = useNavigate();
 
 	const create = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
+		e.preventDefault();
 		if (authStore.user) {
 			const { _id, email } = authStore.user;
-			e.preventDefault();
-			const status = await accountStore.createAccount({ ownerId: _id, owner: email, name, login });
-			const status2 = await authStore.checkAuth();
-			status && status2 && navigate(BASE);
+			const newAccount = await accountStore.createAccount({ ownerId: _id, owner: email, name, login });
+			const status = await authStore.checkAuth();
+			localStorage.setItem(SELECTED_ACCOUNT_ID_LS_KEY, newAccount._id);
+			accountStore.accountId = newAccount._id;
+			newAccount && status && navigate(BASE);
 		}
 	};
 

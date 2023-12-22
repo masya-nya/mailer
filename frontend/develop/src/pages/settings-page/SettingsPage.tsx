@@ -1,4 +1,5 @@
 import { CSSProperties, FC } from 'react';
+import cl from './SettingsPage.module.scss';
 
 interface SettingsPageProps {
 	className?: string
@@ -7,7 +8,7 @@ interface SettingsPageProps {
 
 const SettingsPage:FC<SettingsPageProps> = () => {
 	return (
-		<div>
+		<div className={cl['settings-page']}>
 			AboutPage
 		</div>
 	);

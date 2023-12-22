@@ -1,14 +1,14 @@
+import { FC, useContext, useEffect, useMemo } from 'react';
 import './styles/index.scss';
 import cn from 'classnames';
-import { AppRouter } from './router/AppRouter';
 import { useTheme } from './providers/theme-provider';
 import { ConfigProvider, FloatButton } from 'antd';
-import { FC, useContext, useEffect, useMemo } from 'react';
 import { antdThemes } from './styles/antd-themes';
 import { ThemeSvg } from 'src/shared/svg';
 import { AuthContext } from 'src/entities/auth';
 import { observer } from 'mobx-react-lite';
 import { GlobalShadowLoader, GlobalShadowLoaderProvider } from 'src/shared/UI';
+import Routes from './router/AppRouter';
 
 
 
@@ -30,7 +30,7 @@ const App:FC = () => {
 		<ConfigProvider theme={antdTheme}>
 			<GlobalShadowLoaderProvider>
 				<div className={cn('app', theme)}>
-					<AppRouter />
+					<Routes />
 					<FloatButton icon={<ThemeSvg height='18px' width='18px' color='#000' />} onClick={toggleTheme} />
 					<GlobalShadowLoader />
 				</div>

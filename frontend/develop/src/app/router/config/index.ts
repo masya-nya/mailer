@@ -1,16 +1,15 @@
 export const ROUTER_ROTES = {
 	REGISTRATION: '/registration',
 	LOGIN: '/login',
-	ACCOUNT: 'account',
+	ACCOUNT_CREATE: 'account',
+	ACCOUNT_SELECTION: 'account-selection',
 	LAYOUT: {
 		BASE: '/',
-		SETTINGS: 'settings',
-		ACCOUNT_SELECTION: 'account-selection'
+		SETTINGS: 'settings'
 	}
 };
 
 export const ROUTES_TITLE:Record<string, string> = {
 	'/': 'Домашняя страница',
-	'/settings': 'Настройки',
-	'/account': 'Создание аккаунта',
+	'/settings': 'Настройки'
 };

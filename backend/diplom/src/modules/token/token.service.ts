@@ -4,8 +4,9 @@ import { GenerateTokensT } from './types/generate-tokens.type';
 import { JwtCreateDTO } from './DTO/jwt-create.dto';
 import { AddTokenDTO } from './DTO/add-token.dto';
 import { TokenRepository } from './token.repository';
-import { TokenDocument } from './models/token.model';
+import { Token, TokenDocument } from './models/token.model';
 import { TokensExpires } from './config';
+import { ModelWithId } from 'src/core/types';
 
 @Injectable()
 export class TokenService {
@@ -30,7 +31,7 @@ export class TokenService {
 	}
 
 	async saveToken({ userId, refreshToken }: AddTokenDTO):Promise<TokenDocument> {
-		const tokenData = await this.tokenRepository.findByUserId(userId);
+		const tokenData = await this.tokenRepository.find({ userId });
 		if (tokenData) {
 			tokenData.refreshToken = refreshToken;
 			return await tokenData.save();
@@ -39,8 +40,8 @@ export class TokenService {
 		return token;
 	}
 
-	async findByToken(refreshToken: string):Promise<TokenDocument> {
-		const token = await this.tokenRepository.findByToken(refreshToken);
+	async find(findDTO:  Partial<ModelWithId<Token>>):Promise<TokenDocument> {
+		const token = await this.tokenRepository.find({ ...findDTO });
 		return token;
 	}
 

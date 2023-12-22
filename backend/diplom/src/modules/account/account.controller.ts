@@ -42,9 +42,9 @@ export class AccountController {
 	@Get(`:${ACCOUNT_ID}`)
 	@HttpCode(HttpStatus.OK)
 	getAccount(
-		@Param(ACCOUNT_ID) accountId: string
+		@Param(ACCOUNT_ID) accountId: Types.ObjectId
 	): Promise<PopulatedAccount> {
 		this.logger.info('Запрос на получение данных аккаунта');
-		return this.accountService.findAccountWithPopulate(accountId);
+		return this.accountService.findWithPopulate({ _id: accountId });
 	}
 }

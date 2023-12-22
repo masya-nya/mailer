@@ -7,10 +7,14 @@ export const useAccountUser = (
 	userId: string,
 	accountId: string
 ): useSWRReturnType<AccountUserI> => {
-	const { data, error, isLoading, isValidating, mutate } = useSWRImmutable<AccountUserI>(
-		'account-user',
-		() => accountUserStore.getAccountUser(userId, accountId)
-	);
+	const { data, error, isLoading, isValidating, mutate } =
+		useSWRImmutable(
+			['account-user', userId, accountId],
+			([_, userId, accountId]) => {
+				console.log(userId, accountId);
+				return accountUserStore.getAccountUser(userId, accountId);
+			}
+		);
 	return {
 		data,
 		error,

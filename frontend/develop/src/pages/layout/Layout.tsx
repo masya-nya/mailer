@@ -17,9 +17,9 @@ interface LayoutProps {
 export const Layout: FC<LayoutProps> = observer(() => {
 	const { store: authStore } = useContext(AuthContext);
 	const { store: accountStore } = useContext(AccountContext);
-	console.log({ userId: authStore.user!._id, accountid: accountStore.accountId });
+	console.log({ userId: authStore.user!._id, accountId: accountStore.accountId });
 	const { data, isLoading, isValidating } = useAccountUser(authStore.user!._id, accountStore.accountId);
-	console.log('ACCOUNT-USER', data);
+	console.log('ACCOUNT-USER', data?.accountLogin);
 	if(isLoading || isValidating) {
 		return <Loader />;
 	}

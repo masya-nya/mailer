@@ -5,9 +5,11 @@ import { GetAccountUserDTO } from './DTO/get-account-user.dto';
 import { AccountService } from '../account/account.service';
 import { RoleService } from '../role/role.service';
 import { AccountUserRDO } from './RDO/account-user.rdo';
+import { ApiError } from 'src/core/exceptions/api-error.exception';
 
 @Injectable()
 export class AccountUserService {
+	private serviceName = 'AccountUserService';
 
 	constructor(
 		private readonly logger: Logger,
@@ -19,11 +21,12 @@ export class AccountUserService {
 	async getAccountUser(getAccountUserDTO: GetAccountUserDTO):Promise<AccountUserRDO> {
 		const { userId, accountId } = getAccountUserDTO;
 		const user = await this.userService.findWithPopulate({ _id: userId });
-		const account = await this.accountService.findAccountById(accountId);
+		const account = await this.accountService.find({ _id: accountId });
 		const role = await this.roleService.findByEmailAndAccountId(userId, accountId);
-		console.log(user);
-		console.log(account);
-		console.log(role);
+		if (!user || !account || !role) {
+			this.logger.error(`Ошибка сбора данных в ${this.serviceName}`);
+			throw ApiError.InternalServerError('Ошибка сбора данных для аккаунта');
+		}
 		const accountUser = new AccountUserRDO(user, account, role);
 		return {...accountUser};
 	}
