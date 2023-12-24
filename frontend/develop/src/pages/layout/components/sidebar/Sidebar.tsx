@@ -4,7 +4,7 @@ import { AuthContext } from 'src/entities/auth';
 import { Button } from 'antd';
 import { LogoMain } from 'src/shared/UI';
 import { GroupedNavlinks } from 'src/shared/UI/navlinks';
-import { SidebarNavigationGroup } from './config';
+import { SidebarNavigationGroups } from './config';
 
 interface SidebarProps {
 	className?: string
@@ -23,7 +23,11 @@ export const Sidebar:FC<SidebarProps> = () => {
 				<LogoMain/>
 			</div>
 			<div className={cl['sidebar__body']}>
-				<GroupedNavlinks title={SidebarNavigationGroup.title} links={SidebarNavigationGroup.links}  />
+				{
+					SidebarNavigationGroups.map(sidebarGroup => (
+						<GroupedNavlinks title={sidebarGroup.title} links={sidebarGroup.links} key={sidebarGroup.title} />
+					))
+				}
 			</div>
 			<Button type="primary" onClick={logoutHandler}>Выход</Button>
 			<Button type="primary" onClick={() => location.reload()}>Обновить страницу</Button>

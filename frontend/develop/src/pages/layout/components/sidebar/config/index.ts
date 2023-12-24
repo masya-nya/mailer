@@ -7,16 +7,18 @@ interface SidebarGroupI {
 	links: NavlinkI[]
 }
 
-export const SidebarNavigationGroup: SidebarGroupI  = {
-	title: 'Навигация',
-	links: [
-		{
-			to: BASE,
-			title: 'Домашняя страница'
-		},
-		{
-			to: SETTINGS,
-			title: 'Настройки'
-		}
-	]
-};
+export const SidebarNavigationGroups: SidebarGroupI[]  = [
+	{
+		title: 'Навигация',
+		links: [
+			{
+				to: BASE,
+				title: 'Домашняя страница'
+			},
+			{
+				to: SETTINGS,
+				title: 'Настройки'
+			}
+		]
+	}
+];

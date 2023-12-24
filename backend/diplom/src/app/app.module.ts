@@ -9,6 +9,9 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { RoleModule } from 'src/modules/role/role.module';
 import { AccountUserModule } from 'src/modules/account-user/account-user.module';
+import { MailAuthModule } from 'src/modules/mail-auth/mail-auth.module';
+import { EmailModule } from 'src/modules/email/email.module';
+import { MailsModule } from 'src/modules/mails/mails.module';
 
 @Module({
 	controllers: [AppController],
@@ -23,7 +26,10 @@ import { AccountUserModule } from 'src/modules/account-user/account-user.module'
 		AuthModule,
 		TokenModule,
 		RoleModule,
-		AccountUserModule
+		AccountUserModule,
+		MailAuthModule,
+		EmailModule,
+		MailsModule
 
 	],
 })
