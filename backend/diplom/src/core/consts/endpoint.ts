@@ -44,7 +44,10 @@ const ENDPOINTS = {
 	},
 	MAILS: {
 		BASE: 'mails',
-		COUNT_IN_BOXES: 'count-in-boxes'
+		COUNT_IN_BOXES: 'count-in-boxes',
+		ADD_FLAG: 'add-flag',
+		REMOVE_FLAG: 'remove-flag',
+		MOVE_MESSAGE: 'move-message'
 	}
 };
 

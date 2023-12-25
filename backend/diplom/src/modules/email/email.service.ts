@@ -64,6 +64,7 @@ export class EmailService {
 					Authorization: `OAuth ${accessToken}`,
 				},
 			});
+			this.logger.log('Проверка валидности токена Yandex прошла успешно');
 			console.log('response.data', response.data);
 
 			return true;

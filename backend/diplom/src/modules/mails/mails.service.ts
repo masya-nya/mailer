@@ -8,7 +8,12 @@ import { ApiError } from 'src/core/exceptions/api-error.exception';
 import { ImapService } from 'src/core/services/imap/imap.service';
 import MailsInfo from 'src/core/consts/mailsinfo';
 import { ServiceFolders } from './consts/serviceFolders';
-import { GetMailRDO, GetMailsPageRDO, MailCountInBoxesRDO, MailRDO } from './types/mails.rdo';
+import {
+	GetMailRDO,
+	GetMailsPageRDO,
+	MailCountInBoxesRDO,
+	MailRDO,
+} from './types/mails.rdo';
 import { GetPageOfMailsDTO } from './DTO/get-page-of-mails.dto';
 import {
 	SmtpService,
@@ -21,6 +26,8 @@ import { Attachment } from 'nodemailer/lib/mailer';
 import * as dayjs from 'dayjs';
 import { setTimeout } from 'node:timers/promises';
 import { GetMailsCountDTO } from './DTO/get-mails-count.dto';
+import { MailsSetFlagDTO } from './DTO/mails-set-flag.dto';
+import { MailsMoveMessageDTO } from './DTO/mails-move-message.dto';
 
 @Injectable()
 export class MailsService {
@@ -35,6 +42,7 @@ export class MailsService {
 		accountId: Types.ObjectId,
 		userEmail: string
 	): Promise<[ImapFlow, EmailDocument]> {
+		const loggerContext = `${MailsService.name}/${this.getMailCountInBoxes.name}`;
 		try {
 			const emailInstance = await this.emailService.find({
 				accountId,
@@ -61,7 +69,7 @@ export class MailsService {
 
 			return [imap, emailInstance];
 		} catch (error) {
-			this.logger.error(error);
+			this.logger.error(error, loggerContext);
 			ApiError.InternalServerError(error.message);
 		}
 	}
@@ -70,6 +78,7 @@ export class MailsService {
 		accountId: Types.ObjectId,
 		userEmail: string
 	): Promise<[SmtpTransporterType, EmailDocument]> {
+		const loggerContext = `${MailsService.name}/${this.getMailCountInBoxes.name}`;
 		try {
 			const emailInstance = await this.emailService.find({
 				accountId,
@@ -78,6 +87,17 @@ export class MailsService {
 			if (!emailInstance) {
 				ApiError.NotFound('Такой Email не был найден');
 			}
+
+			const isValidate = await this.emailService.checkYandexTokenValidity(
+				emailInstance.accessToken
+			);
+			if (!isValidate) {
+				await this.emailService.updateYandexToken(
+					accountId,
+					emailInstance
+				);
+			}
+
 			const { email, serviceName, accessToken } = emailInstance;
 
 			const transporter = this.smtpService.create(
@@ -88,7 +108,7 @@ export class MailsService {
 
 			return [transporter, emailInstance];
 		} catch (error) {
-			this.logger.error(error);
+			this.logger.error(error, loggerContext);
 			ApiError.InternalServerError(error.messages);
 		}
 	}
@@ -148,6 +168,7 @@ export class MailsService {
 	public async getPageByDateAndQuery(
 		getPageOfMailsDTO: GetPageOfMailsDTO
 	): Promise<GetMailsPageRDO> {
+		const loggerContext = `${MailsService.name}/${this.getMailCountInBoxes.name}`;
 		const { accountId, email, limit, mailboxPath, page } =
 			getPageOfMailsDTO;
 		try {
@@ -194,7 +215,7 @@ export class MailsService {
 
 			return this.adapterMailsRdo(page, limit, mails, foundMailsCount);
 		} catch (error) {
-			this.logger.error(error);
+			this.logger.error(error, loggerContext);
 			ApiError.InternalServerError(error.message);
 		}
 	}
@@ -280,6 +301,129 @@ export class MailsService {
 			}
 
 			return mailCountInBoxes;
+		} catch (error) {
+			this.logger.error(error, loggerContext);
+			ApiError.InternalServerError(error.message);
+		}
+	}
+
+	public async addFlag({
+		accountId,
+		email,
+		mailboxPath,
+		flag,
+		msgIds,
+	}: MailsSetFlagDTO): Promise<boolean> {
+		const loggerContext = `${MailsService.name}/${this.addFlag.name}`;
+		try {
+			const [imap, { serviceName }] = await this.initImap(
+				accountId,
+				email
+			);
+			await imap.connect();
+			const lock = await imap.getMailboxLock(
+				mailboxPath in ServiceFolders[serviceName]
+					? ServiceFolders[serviceName][mailboxPath]
+					: mailboxPath
+			);
+
+			const msgSeqsQuery = msgIds.map(id => id.msgSeq).join(',');
+			const flags = await imap.messageFlagsAdd({ seq: msgSeqsQuery }, [
+				flag,
+			]);
+
+			lock.release();
+			await imap.logout();
+
+			return flags;
+		} catch (error) {
+			this.logger.error(error, loggerContext);
+			ApiError.InternalServerError(error.message);
+		}
+	}
+
+	public async removeFlag({
+		accountId,
+		email,
+		mailboxPath,
+		flag,
+		msgIds,
+	}: MailsSetFlagDTO): Promise<boolean> {
+		const loggerContext = `${MailsService.name}/${this.removeFlag.name}`;
+		try {
+			const [imap, { serviceName }] = await this.initImap(
+				accountId,
+				email
+			);
+			await imap.connect();
+			const lock = await imap.getMailboxLock(
+				mailboxPath in ServiceFolders[serviceName]
+					? ServiceFolders[serviceName][mailboxPath]
+					: mailboxPath
+			);
+
+			const msgSeqsQuery = msgIds.map(id => id.msgSeq).join(',');
+
+			const flags = await imap.messageFlagsRemove({ seq: msgSeqsQuery }, [
+				flag,
+			]);
+
+			lock.release();
+			await imap.logout();
+
+			return flags;
+		} catch (error) {
+			this.logger.error(error, loggerContext);
+			ApiError.InternalServerError(error.message);
+		}
+	}
+
+	public async moveMessage({
+		accountId,
+		email,
+		mailboxPath,
+		mailboxDestinationPath,
+		msgIds,
+	}: MailsMoveMessageDTO): Promise<boolean> {
+		const loggerContext = `${MailsService.name}/${this.moveMessage.name}`;
+
+		try {
+			const [imap, { serviceName }] = await this.initImap(
+				accountId,
+				email
+			);
+			await imap.connect();
+			const lock = await imap.getMailboxLock(
+				mailboxPath in ServiceFolders[serviceName]
+					? ServiceFolders[serviceName][mailboxPath]
+					: mailboxPath
+			);
+
+			const msgSeqsQuery = msgIds.map(id => id.msgSeq).join(',');
+
+			let res = false;
+			if (
+				ServiceFolders[serviceName][mailboxPath] ===
+					ServiceFolders[serviceName].deleted &&
+				mailboxDestinationPath === mailboxPath
+			) {
+				res = await imap.messageDelete({ seq: msgSeqsQuery });
+			} else {
+				const treatedDestinationPath: string =
+					mailboxDestinationPath in ServiceFolders[serviceName]
+						? ServiceFolders[serviceName][mailboxDestinationPath]
+						: mailboxDestinationPath;
+				res = (await imap.messageMove(
+					{ seq: msgSeqsQuery },
+					treatedDestinationPath
+				))
+					? true
+					: false;
+			}
+
+			lock.release();
+			await imap.logout();
+			return res;
 		} catch (error) {
 			this.logger.error(error, loggerContext);
 			ApiError.InternalServerError(error.message);
