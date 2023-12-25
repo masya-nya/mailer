@@ -5,6 +5,13 @@ export class ApiError extends HttpException {
 		super(response, status);
 	}
 
+	static PayloadTooLarge(message?:string):ApiError {
+		return new ApiError(
+			HttpStatus.PAYLOAD_TOO_LARGE,
+			message || 'Размер контента превышает лимит'
+		);
+	}
+
 	static Unauthorized(message?:string):ApiError {
 		return new ApiError(
 			HttpStatus.UNAUTHORIZED,

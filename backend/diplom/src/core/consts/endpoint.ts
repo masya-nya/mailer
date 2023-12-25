@@ -43,7 +43,8 @@ const ENDPOINTS = {
 		},
 	},
 	MAILS: {
-		BASE: 'mails'
+		BASE: 'mails',
+		COUNT_IN_BOXES: 'count-in-boxes'
 	}
 };
 
