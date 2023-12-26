@@ -23,6 +23,7 @@ export class UserRDO {
 }
 
 export const UserRDOForPopulate = {
+	name: 1,
 	email: 1,
 	isActivate: 1,
 	banned: 1,

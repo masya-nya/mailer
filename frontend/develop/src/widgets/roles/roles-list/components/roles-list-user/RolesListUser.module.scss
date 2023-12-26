@@ -1,0 +1,10 @@
+.roles-list-user {
+	border-radius: var(--border-radius-l);
+	padding: 10px;
+	background-color: var(--color-bg);
+	border-radius: var(--border-radius-l);
+	cursor: pointer;
+	&:hover {
+		background-color: var(--color-background-hover);
+	}
+}

@@ -2,7 +2,7 @@ import { Inject, Injectable, forwardRef } from '@nestjs/common';
 import { Logger } from 'src/core/logger/Logger';
 import { RoleRepository } from './role.repository';
 import { CreateRoleDTO } from './DTO/create-role.dto';
-import { Role, RoleDocument } from './models/role.model';
+import { PopulatedRole, Role, RoleDocument } from './models/role.model';
 import { ApiError } from 'src/core/exceptions/api-error.exception';
 import { AccountService } from '../account/account.service';
 import { Types } from 'mongoose';
@@ -50,9 +50,14 @@ export class RoleService {
 		return role;
 	}
 
-	async findByEmailAndAccountId(userId: Types.ObjectId, accountId: Types.ObjectId): Promise<RoleDocument> {
+	async findByUserIdAndAccountId(userId: Types.ObjectId, accountId: Types.ObjectId): Promise<RoleDocument> {
 		const role = await this.roleRepository.findByUserIdAndAccountId(userId, accountId);
 		return role;
+	}
+
+	async findAll(findDTO:  Partial<ModelWithId<Role>>): Promise<PopulatedRole[]> {
+		const roles = await this.roleRepository.findAll({ ...findDTO });
+		return roles;
 	}
 
 }

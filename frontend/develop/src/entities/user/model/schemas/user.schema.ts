@@ -13,7 +13,8 @@ export interface UserI {
 }
 
 export interface UserPopulateI {
-	email: string,
-	isActivate: boolean,
-	banned: boolean,
+	name: string
+	email: string
+	isActivate: boolean
+	banned: boolean
 }

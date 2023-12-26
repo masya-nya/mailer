@@ -1,11 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { Logger } from 'src/core/logger/Logger';
 import { CreateRoleDTO } from './DTO/create-role.dto';
-import { Role, RoleDocument } from './models/role.model';
+import { PopulatedRole, PopulationUser, Role, RoleDocument } from './models/role.model';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 import { ApiError } from 'src/core/exceptions/api-error.exception';
 import { ModelWithId } from 'src/core/types';
+import { UserRDOForPopulate } from '../user/RDO/user.rdo';
 
 
 @Injectable()
@@ -52,6 +53,16 @@ export class RoleRepository {
 		try {
 			const role = await this.roleModel.findOne({ users: userId, accountId });
 			return role;
+		} catch (error) {
+			this.logger.error(`Ошибка сервера в ${this.serviceName}`);
+			throw ApiError.InternalServerError(error.message);
+		}
+	}
+
+	async findAll(findDTO:  Partial<ModelWithId<Role>>): Promise<PopulatedRole[]> {
+		try {
+			const roles = await this.roleModel.find({ ...findDTO }).populate<PopulationUser>('users', UserRDOForPopulate).exec();;
+			return roles;
 		} catch (error) {
 			this.logger.error(`Ошибка сервера в ${this.serviceName}`);
 			throw ApiError.InternalServerError(error.message);

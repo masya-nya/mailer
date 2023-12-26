@@ -22,7 +22,7 @@ export class AccountUserService {
 		const { userId, accountId } = getAccountUserDTO;
 		const user = await this.userService.findWithPopulate({ _id: userId });
 		const account = await this.accountService.find({ _id: accountId });
-		const role = await this.roleService.findByEmailAndAccountId(userId, accountId);
+		const role = await this.roleService.findByUserIdAndAccountId(userId, accountId);
 		if (!user || !account || !role) {
 			this.logger.error(`Ошибка сбора данных в ${this.serviceName}`);
 			throw ApiError.InternalServerError('Ошибка сбора данных для аккаунта');

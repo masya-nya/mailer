@@ -1,0 +1,9 @@
+.roles-list-role {
+	padding: 20px;
+	border: var(--border-size) solid var(--color-border);
+	border-radius: var(--border-radius-m);
+	&__title {
+		font-size: var(--font-size-m);
+		margin: 0 0 10px 0;
+	}
+}

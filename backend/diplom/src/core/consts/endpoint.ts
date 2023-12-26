@@ -26,6 +26,12 @@ const ENDPOINTS = {
 	},
 	ROLE: {
 		BASE: 'role',
+		ACCOUNT_ROLES: {
+			BASE: 'account-roles',
+			PARAMS: {
+				ACCOUNT_ID: 'accountId'
+			}
+		}
 	},
 	MAIL_AUTH: {
 		BASE: 'mail-auth',

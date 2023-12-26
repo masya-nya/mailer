@@ -1,5 +1,6 @@
 import { CSSProperties, FC } from 'react';
 import cl from './SettingsPage.module.scss';
+import { RolesList } from 'src/widgets/roles/roles-list';
 
 interface SettingsPageProps {
 	className?: string
@@ -9,7 +10,7 @@ interface SettingsPageProps {
 const SettingsPage:FC<SettingsPageProps> = () => {
 	return (
 		<div className={cl['settings-page']}>
-			AboutPage
+			<RolesList />
 		</div>
 	);
 };

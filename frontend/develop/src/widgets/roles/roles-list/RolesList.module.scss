@@ -1,0 +1,16 @@
+.roles-list {
+	background-color: var(--color-bg-focused);
+	width: 80%;
+	height: 80%;
+	border-radius: var(--border-radius-m);
+	padding: 40px;
+	&__title {
+		font-size: var(--font-size-l);
+		margin: 0 0 30px 0;
+	}
+	&__body {
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+	}
+}

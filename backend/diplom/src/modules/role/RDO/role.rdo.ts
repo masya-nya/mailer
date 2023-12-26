@@ -23,7 +23,7 @@ export class RoleRDO {
 }
 
 export const RoleRDOForPopulate = {
-	email: 1,
-	isActivate: 1,
-	banned: 1,
+	name: 1,
+	accountId: 1,
+	rights: 1,
 };
