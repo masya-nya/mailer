@@ -25,6 +25,7 @@ export const CreateAccountForm:FC<CreateAccountFormProps> = observer(() => {
 
 	const create = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
 		e.preventDefault();
+		console.log(authStore.user);
 		if (authStore.user) {
 			const { _id, email } = authStore.user;
 			const newAccount = await accountStore.createAccount({ ownerId: _id, owner: email, name, login });

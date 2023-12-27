@@ -3,7 +3,7 @@
 	padding: 10px;
 	background-color: var(--color-bg);
 	border-radius: var(--border-radius-l);
-	cursor: pointer;
+	cursor: grab;
 	&:hover {
 		background-color: var(--color-background-hover);
 	}

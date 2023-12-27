@@ -3,6 +3,7 @@ import { HydratedDocument, Types } from 'mongoose';
 import { APP_ENTITIES_SCHEMAS } from 'src/app/consts/schemas-entities.enum';
 import { PopulatedModel } from 'src/core/types';
 import { User } from 'src/modules/user/models/user.model';
+import { RolesSystemNames } from '../patterns';
 
 export type RoleDocument = HydratedDocument<Role>;
 
@@ -26,5 +27,8 @@ export class Role {
 
 	@Prop({ type: [Types.ObjectId], default: [], ref: APP_ENTITIES_SCHEMAS.USER })
 	users: Types.ObjectId[];
+
+	@Prop({ type: String })
+	systemName: RolesSystemNames;
 }
 export const RoleSchema = SchemaFactory.createForClass(Role);

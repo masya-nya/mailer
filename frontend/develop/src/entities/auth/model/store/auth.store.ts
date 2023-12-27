@@ -64,7 +64,8 @@ export class AuthStore {
 		globalShadowLoaderStore.isLoad = true;
 		try {
 			const { data: response } = await AuthService.registration(registrationDTO);
-			const { accessToken } = response;
+			const { accessToken, user } = response;
+			this._user = user;
 			console.log(response);
 			localStorage.setItem(ACCESS_TOKEN_LS_KEY, accessToken);
 			this._isAuth = true;

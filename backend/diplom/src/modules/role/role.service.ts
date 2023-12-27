@@ -45,6 +45,14 @@ export class RoleService {
 		this.roleRepository.insertManyRoles(preventRoles);
 	}
 
+	async findAndAddUser(
+		findDTO:  Partial<ModelWithId<Role>>,
+		userId: Types.ObjectId
+	): Promise<RoleDocument> {
+		const role = await this.roleRepository.findAndAddUser({ ...findDTO }, userId);
+		return role;
+	}
+
 	async find(findDTO:  Partial<ModelWithId<Role>>): Promise<RoleDocument> {
 		const role = await this.roleRepository.find({ ...findDTO });
 		return role;

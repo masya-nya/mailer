@@ -5,6 +5,8 @@ import { Types } from 'mongoose';
 export class UserRDO {
 	readonly _id:string;
 
+	readonly name:string;
+
 	readonly email:string;
 	
 	readonly isActivate:boolean;
@@ -16,6 +18,7 @@ export class UserRDO {
 	constructor(userDTO: UserDocument | PopulatedUser) {
 		this._id = userDTO._id.toString();
 		this.email = userDTO.email;
+		this.name = userDTO.name;
 		this.isActivate = userDTO.isActivate;
 		this.isBanned = userDTO.banned;
 		this.accounts = userDTO.accounts;

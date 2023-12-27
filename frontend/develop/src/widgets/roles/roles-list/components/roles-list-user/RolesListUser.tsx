@@ -15,31 +15,30 @@ export const RolesListUser = ({ user, ...props }: RolesListUserProps): React.JSX
 		event.preventDefault();
 	}
 
-	function dragOverLeave(event: DragEvent<HTMLDivElement>): void {
-		throw new Error('Function not implemented.');
+	function dragLeaveHandler(event: DragEvent<HTMLDivElement>): void {
 	}
 
-	function dragOverStart(event: DragEvent<HTMLDivElement>): void {
-		throw new Error('Function not implemented.');
+	function dragStartHandler(event: DragEvent<HTMLDivElement>, user: UserPopulateI): void {
+		console.log('dragStart', user);
 	}
 
-	function dragOverEnd(event: DragEvent<HTMLDivElement>): void {
-		throw new Error('Function not implemented.');
+	function dragEndHandler(event: DragEvent<HTMLDivElement>): void {
 	}
 
-	function dropHandler(event: DragEvent<HTMLDivElement>): void {
+	function dropHandler(event: DragEvent<HTMLDivElement>, user: UserPopulateI): void {
 		event.preventDefault();
+		console.log('drop', user);
 	}
 
 	return (
 		<div
 			{...props}
 			draggable
+			onDragStart={(e) => dragStartHandler(e, user)}
 			onDragOver={dragOverHandler}
-			onDragLeave={dragOverLeave}
-			onDragStart={dragOverStart}
-			onDragEnd={dragOverEnd}
-			onDrop={dropHandler}
+			onDragLeave={dragLeaveHandler}
+			onDragEnd={dragEndHandler}
+			onDrop={(e) => dropHandler(e, user)}
 			className={cl['roles-list-user']}
 		>
 			{user.name}({user.email})

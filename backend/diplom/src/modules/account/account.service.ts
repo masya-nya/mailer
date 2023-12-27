@@ -10,6 +10,7 @@ import { MAX_ACCOUNTS_FOR_ONE_OWNER } from './config';
 import { Logger } from 'src/core/logger/Logger';
 import { RoleService } from '../role/role.service';
 import { ModelWithId } from 'src/core/types';
+import { RolesSystemNames } from '../role/patterns';
 
 @Injectable()
 export class AccountService {
@@ -43,6 +44,7 @@ export class AccountService {
 		if (ownerAccounts.length >= MAX_ACCOUNTS_FOR_ONE_OWNER) {
 			this.logger.error(`Попытка создать больше ${MAX_ACCOUNTS_FOR_ONE_OWNER} аккаунтов (${owner})`);
 			throw ApiError.BadRequest('Лимит аккаунтов превышен');
+		
 		}
 		const newAccount = await this.accountRepository.createAccount(createAccountDTO);
 		this.userService.addAccount({ email: owner, accountId: newAccount._id });
@@ -68,6 +70,15 @@ export class AccountService {
 			{ email: userEmail },
 			account._id
 		);
+
+		await this.roleService.findAndAddUser(
+			{
+				accountId: account._id,
+				systemName: RolesSystemNames.RECRUITE
+			},
+			user._id
+		);
+
 		this.logger.log(`Пользователь ${user.email} был добавлен в аккаунт ${account.login}`);
 		return account;
 	}

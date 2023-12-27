@@ -61,12 +61,38 @@ export class RoleRepository {
 
 	async findAll(findDTO:  Partial<ModelWithId<Role>>): Promise<PopulatedRole[]> {
 		try {
-			const roles = await this.roleModel.find({ ...findDTO }).populate<PopulationUser>('users', UserRDOForPopulate).exec();;
+			const roles = await this.roleModel.find({ ...findDTO }).populate<PopulationUser>('users', UserRDOForPopulate).exec();
 			return roles;
 		} catch (error) {
 			this.logger.error(`Ошибка сервера в ${this.serviceName}`);
 			throw ApiError.InternalServerError(error.message);
 		}
 	}
+
+	async findAndAddUser(
+		findDTO:  Partial<ModelWithId<Role>>,
+		userId: Types.ObjectId
+	): Promise<RoleDocument> {
+		try {
+			const user = await this.roleModel.findOneAndUpdate(
+				{ ...findDTO },
+				{ $addToSet: { users: userId } },
+				{ new: true }
+			);
+			return user;
+		} catch (error) {
+			this.logger.error(`Ошибка сервера в ${this.serviceName}`);
+			throw ApiError.InternalServerError(error.message);
+		}
+	}
+
+	// async updateMany(): Promise<void> {
+	// 	try {
+	// 		const roles = await this.roleModel.updateMany();
+	// 	} catch (error) {
+	// 		this.logger.error(`Ошибка сервера в ${this.serviceName}`);
+	// 		throw ApiError.InternalServerError(error.message);
+	// 	}
+	// }
 
 }

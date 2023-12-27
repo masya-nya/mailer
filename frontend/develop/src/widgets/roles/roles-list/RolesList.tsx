@@ -17,6 +17,7 @@ export const RolesList = observer(({ ...props }: RolesListProps): React.JSX.Elem
 	const { store: accountStore } = useContext(AccountContext);
 	const { data, isLoading, isValidating } = useAccountRoles(accountStore.accountId);
 	const [roles, setRoles] = useState<RoleI<UserPopulateI>[]>([]);
+	const [currentRole, setCurrentRole] = useState<RoleI<UserPopulateI> | null>(null);
 
 	console.log('ROLES', data);
 	useEffect(() => {
