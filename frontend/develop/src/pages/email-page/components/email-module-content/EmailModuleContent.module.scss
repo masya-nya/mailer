@@ -1,0 +1,19 @@
+.email-module-content {
+	flex-grow: 1;
+	overflow-y: auto;
+    margin-right: 3px;
+    margin-bottom: 2px;
+	scrollbar-width: thin;
+	scrollbar-color:  var(--color-border);
+	&::-webkit-scrollbar {
+		width: 5px;
+		height: 5px;
+	}
+	&::-webkit-scrollbar-track {
+		background: transparent;
+	}
+	&::-webkit-scrollbar-thumb {
+		border-radius: 3px;
+		background: var(--yamailer-border-base-color);
+	}
+}

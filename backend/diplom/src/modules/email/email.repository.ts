@@ -36,6 +36,16 @@ export class EmailRepository {
 		}
 	}
 
+	async findAll(findDTO:  Partial<ModelWithId<Email>>): Promise<EmailDocument[]> {
+		try {
+			const email = await this.emailModel.find({ ...findDTO });
+			return email;
+		} catch (error) {
+			this.logger.error(`Ошибка сервера в ${this.serviceName}`);
+			throw ApiError.InternalServerError(error.message);
+		}
+	}
+
 	async updateEmail(findDTO:  Partial<ModelWithId<Email>>, updateDTO: Partial<Email>):Promise<EmailDocument> {
 		const updatedEmail = await this.emailModel.findOneAndUpdate(
 			{ ...findDTO },

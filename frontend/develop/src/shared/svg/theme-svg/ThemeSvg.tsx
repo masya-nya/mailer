@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { SvgProps } from '../types';
 
-export const ThemeSvg: FC<SvgProps<SVGSVGElement>> = ({
+export const ThemeSvg: FC<SvgProps> = ({
 	width,
 	height,
 	color,

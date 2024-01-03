@@ -1,0 +1,10 @@
+.context-select-wrapper {
+	position: absolute;
+	background-color: var(--color-bg);
+	border-radius: var(--border-radius-m);
+	box-shadow: var(--shadow--base);
+	left: 0;
+	right: 0;
+	padding: 10px;
+	z-index: 12;
+}

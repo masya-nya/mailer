@@ -10,5 +10,8 @@
 	}
 	&__body {
 		padding: 10px var(--main-sidebar-padding-right) 10px var(--main-sidebar-padding-left);
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
 	}
 }

@@ -1,13 +1,13 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument, Types } from 'mongoose';
-import { User } from '../../user/models/user.model';
 import { PopulatedModel } from 'src/core/types';
 import { APP_ENTITIES_SCHEMAS } from 'src/app/consts/schemas-entities.enum';
+import { UserPopulateRDO } from 'src/modules/user/RDO/user.rdo';
 
 export type AccountDocument = HydratedDocument<Account>;
 
 export type PopulationUser = {
-	users: User[]
+	users: UserPopulateRDO<Types.ObjectId>[]
 }
 
 export type PopulatedAccount = PopulatedModel<AccountDocument, PopulationUser>

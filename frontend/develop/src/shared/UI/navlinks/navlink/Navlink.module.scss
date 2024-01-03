@@ -1,7 +1,17 @@
 .navlink {
+	display: flex;
+	align-items: center;
+	gap: 5px;
 	color: var(--color-font-base-unactive);
 	text-decoration: none;
+	padding: 10px;
+	border: 1px solid rgba(0, 0, 0, 0);
 	&__active {
+		color: var(--color-font-base);
+		border-color: var(--color-border);
+		border-radius: var(--border-radius-l);
+	}
+	&:hover {
 		color: var(--color-font-base);
 	}
 }

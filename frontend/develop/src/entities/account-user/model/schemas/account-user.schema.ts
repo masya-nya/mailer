@@ -1,4 +1,5 @@
 import { AccountPopulateI } from 'src/entities/account/model/schemas/account.schema';
+import { EmailI } from 'src/entities/email';
 
 export interface AccountUserI {
 	userId: string
@@ -10,4 +11,5 @@ export interface AccountUserI {
 	accountId: string
 	roleName: string
 	roleRights: string[]
+	emails: EmailI[];
 }

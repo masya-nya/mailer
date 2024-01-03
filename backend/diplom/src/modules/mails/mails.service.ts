@@ -42,7 +42,7 @@ export class MailsService {
 		accountId: Types.ObjectId,
 		userEmail: string
 	): Promise<[ImapFlow, EmailDocument]> {
-		const loggerContext = `${MailsService.name}/${this.getMailCountInBoxes.name}`;
+		const loggerContext = `${MailsService.name}/${this.initImap.name}`;
 		try {
 			const emailInstance = await this.emailService.find({
 				accountId,
@@ -51,15 +51,7 @@ export class MailsService {
 			if (!emailInstance) {
 				ApiError.NotFound('Такой Email не был найден');
 			}
-			const isValidate = await this.emailService.checkYandexTokenValidity(
-				emailInstance.accessToken
-			);
-			if (!isValidate) {
-				await this.emailService.updateYandexToken(
-					accountId,
-					emailInstance
-				);
-			}
+			await this.emailService.updateToken(accountId, emailInstance);
 
 			const imap = this.imapService.create(
 				emailInstance.email,
@@ -78,7 +70,7 @@ export class MailsService {
 		accountId: Types.ObjectId,
 		userEmail: string
 	): Promise<[SmtpTransporterType, EmailDocument]> {
-		const loggerContext = `${MailsService.name}/${this.getMailCountInBoxes.name}`;
+		const loggerContext = `${MailsService.name}/${this.initSmtp.name}`;
 		try {
 			const emailInstance = await this.emailService.find({
 				accountId,
@@ -88,15 +80,7 @@ export class MailsService {
 				ApiError.NotFound('Такой Email не был найден');
 			}
 
-			const isValidate = await this.emailService.checkYandexTokenValidity(
-				emailInstance.accessToken
-			);
-			if (!isValidate) {
-				await this.emailService.updateYandexToken(
-					accountId,
-					emailInstance
-				);
-			}
+			await this.emailService.updateToken(accountId, emailInstance);
 
 			const { email, serviceName, accessToken } = emailInstance;
 
@@ -168,7 +152,7 @@ export class MailsService {
 	public async getPageByDateAndQuery(
 		getPageOfMailsDTO: GetPageOfMailsDTO
 	): Promise<GetMailsPageRDO> {
-		const loggerContext = `${MailsService.name}/${this.getMailCountInBoxes.name}`;
+		const loggerContext = `${MailsService.name}/${this.getPageByDateAndQuery.name}`;
 		const { accountId, email, limit, mailboxPath, page } =
 			getPageOfMailsDTO;
 		try {

@@ -1,0 +1,12 @@
+.label-top {
+	display: flex;
+	flex-direction: column;
+	&__label {
+		font-size: 12px;
+		text-transform: uppercase;
+		color: var(--yamailer-font-lighter-color);
+		margin: 0 0 4px 5px;
+		display: inline-block;
+		white-space: nowrap
+	}
+}

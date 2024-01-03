@@ -1,0 +1,40 @@
+.home-page {
+	display: flex;
+	height: 100%;
+	align-items: center;
+	justify-content: center;
+	&__info {
+		max-width: 900px;
+		border: 2px solid var(--color-border);
+		padding: 40px;
+		border-radius: var(--border-radius-g);
+		box-shadow: var(--shadow--base);
+	}
+	&__title {
+		margin: 0 0 25px 0;
+	}
+	&__subtitle {
+		margin: 0 0 15px 0;
+	}
+	&__b {
+		font-weight: 700;
+		font-size: 20px;
+	}
+	&__p {
+		line-height: 1.5;
+	}
+	&__list {
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+		font-size: 18px;
+		& > * {
+			text-indent: 30px;
+		}
+	}
+	&__footer {
+		font-size: 24px;
+		margin: 30px 0 0 0;
+		font-weight: 700;
+	}
+}

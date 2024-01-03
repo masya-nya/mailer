@@ -1,0 +1,14 @@
+.role-create {
+	cursor: pointer;
+	color: var(--color-font-base-unactive);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 20px;
+	border: var(--border-size) solid var(--color-border);
+	border-radius: var(--border-radius-m);
+	&:hover {
+		color: var(--color-font-base);
+		background-color: var(--color-background-hover);
+	}
+}

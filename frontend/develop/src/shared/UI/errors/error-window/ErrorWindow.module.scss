@@ -1,0 +1,30 @@
+.error-window {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	&__body	{
+		border-radius: var(--yamailer-border-radius-larger);
+		box-shadow: var(--yamailer-shadow-base);
+		padding: 15px 25px;
+		max-width: 800px;
+		& >:not(:last-child) {
+			margin: 0 0 5px 0;
+		}
+	}
+	&__title {
+		color: var(--yamailer-red-base-color);
+		font-size: 20px;
+	}
+	&__messages {
+		font-size: 14px;
+		& >:not(:last-child) {
+			margin: 0 0 2px 0;
+		}
+	}
+	&__message {
+		text-decoration: underline;
+		overflow: hidden;
+	}
+}

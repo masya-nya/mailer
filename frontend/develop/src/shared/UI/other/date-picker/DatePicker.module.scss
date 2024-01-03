@@ -1,0 +1,11 @@
+.date-picker {
+	display: block;
+	border: var(--yamailer-border-base);
+	border-radius: var(--yamailer-border-radius-less);
+	padding: 5px;
+	font-size: 16px;
+	color: var(--yamailer-font-base-color);
+	&:focus-visible {
+		outline: 2px solid var(--yamailer-font-darker-color);
+	}
+}

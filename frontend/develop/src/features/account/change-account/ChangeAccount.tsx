@@ -1,5 +1,5 @@
 import { CSSProperties, FC, useCallback } from 'react';
-// import cl from './ChangeAccount.module.scss';
+import cl from './ChangeAccount.module.scss';
 import { Button } from 'antd';
 // import { AuthContext } from 'src/entities/auth';
 import { observer } from 'mobx-react-lite';
@@ -36,9 +36,9 @@ export const ChangeAccount: FC<ChangeAccountProps> = observer(() => {
 		// <Dropdown className={cl['account-change']} menu={{ items: adaptedAccounts }} trigger={['click']} placement="bottomRight">
 		// 	<Button className={cl['account-change__btn']}>{selectedAccount?.name}({ selectedAccount?.login })</Button>
 		// </Dropdown>
-		<>
-			<Button onClick={changeAccount}>Сменить аккаунт</Button>
-			<Button onClick={createAccount}>Создать аккаунт</Button>
-		</>
+		<div className={cl['change-account']}>
+			<Button type='primary' onClick={changeAccount}>Сменить аккаунт</Button>
+			<Button type='primary' onClick={createAccount}>Создать аккаунт</Button>
+		</div>
 	);
 });

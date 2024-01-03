@@ -1,0 +1,14 @@
+.forward-action {
+	display: flex;
+	align-items: center;
+	gap: 5px;
+	cursor: pointer;
+	padding: 5px 7px;
+	border-radius: var(--border-radius-l);
+	&:hover {
+		background-color: var(--color-background-hover);
+	}
+	&__text {
+		white-space: nowrap;
+	}
+}

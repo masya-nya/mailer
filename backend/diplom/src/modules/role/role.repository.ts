@@ -1,13 +1,17 @@
 import { Injectable } from '@nestjs/common';
 import { Logger } from 'src/core/logger/Logger';
 import { CreateRoleDTO } from './DTO/create-role.dto';
-import { PopulatedRole, PopulationUser, Role, RoleDocument } from './models/role.model';
+import {
+	PopulatedRole,
+	PopulationUser,
+	Role,
+	RoleDocument,
+} from './models/role.model';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model, Types } from 'mongoose';
+import { Model, Types, UpdateWriteOpResult } from 'mongoose';
 import { ApiError } from 'src/core/exceptions/api-error.exception';
 import { ModelWithId } from 'src/core/types';
 import { UserRDOForPopulate } from '../user/RDO/user.rdo';
-
 
 @Injectable()
 export class RoleRepository {
@@ -18,7 +22,7 @@ export class RoleRepository {
 		private readonly logger: Logger
 	) {}
 
-	async insertManyRoles(insertingRoles: Role[]):Promise<void> {
+	async insertManyRoles(insertingRoles: Role[]): Promise<void> {
 		try {
 			const response = await this.roleModel.insertMany(insertingRoles);
 			console.log(response);
@@ -39,7 +43,32 @@ export class RoleRepository {
 		}
 	}
 
-	async find(findDTO:  Partial<ModelWithId<Role>>): Promise<RoleDocument> {
+	async deleteRole(deleteRoleDTO: Partial<ModelWithId<Role>>): Promise<void> {
+		try {
+			await this.roleModel.deleteOne({ ...deleteRoleDTO });
+		} catch (error) {
+			this.logger.error(`Ошибка сервера в ${this.serviceName}`);
+			throw ApiError.InternalServerError(error.message);
+		}
+	}
+
+	async updateRole(
+		searchDTO: Partial<ModelWithId<Role>>,
+		updateDTO: Partial<ModelWithId<Role>>
+	): Promise<UpdateWriteOpResult> {
+		try {
+			const role = await this.roleModel.updateOne(
+				{ ...searchDTO },
+				updateDTO
+			);
+			return role;
+		} catch (error) {
+			this.logger.error(`Ошибка сервера в ${this.serviceName}`);
+			throw ApiError.InternalServerError(error.message);
+		}
+	}
+
+	async find(findDTO: Partial<ModelWithId<Role>>): Promise<RoleDocument> {
 		try {
 			const role = await this.roleModel.findOne({ ...findDTO });
 			return role;
@@ -49,9 +78,15 @@ export class RoleRepository {
 		}
 	}
 
-	async findByUserIdAndAccountId(userId: Types.ObjectId, accountId: Types.ObjectId): Promise<RoleDocument> {
+	async findByUserIdAndAccountId(
+		userId: Types.ObjectId,
+		accountId: Types.ObjectId
+	): Promise<RoleDocument> {
 		try {
-			const role = await this.roleModel.findOne({ users: userId, accountId });
+			const role = await this.roleModel.findOne({
+				users: userId,
+				accountId,
+			});
 			return role;
 		} catch (error) {
 			this.logger.error(`Ошибка сервера в ${this.serviceName}`);
@@ -59,9 +94,14 @@ export class RoleRepository {
 		}
 	}
 
-	async findAll(findDTO:  Partial<ModelWithId<Role>>): Promise<PopulatedRole[]> {
+	async findAll(
+		findDTO: Partial<ModelWithId<Role>>
+	): Promise<PopulatedRole[]> {
 		try {
-			const roles = await this.roleModel.find({ ...findDTO }).populate<PopulationUser>('users', UserRDOForPopulate).exec();
+			const roles = await this.roleModel
+				.find({ ...findDTO })
+				.populate<PopulationUser>('users', UserRDOForPopulate)
+				.exec();
 			return roles;
 		} catch (error) {
 			this.logger.error(`Ошибка сервера в ${this.serviceName}`);
@@ -70,7 +110,7 @@ export class RoleRepository {
 	}
 
 	async findAndAddUser(
-		findDTO:  Partial<ModelWithId<Role>>,
+		findDTO: Partial<ModelWithId<Role>>,
 		userId: Types.ObjectId
 	): Promise<RoleDocument> {
 		try {
@@ -94,5 +134,4 @@ export class RoleRepository {
 	// 		throw ApiError.InternalServerError(error.message);
 	// 	}
 	// }
-
 }

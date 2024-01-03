@@ -5,7 +5,7 @@ import { Navlink } from '../navlink/Navlink';
 
 interface GroupedNavlinksProps {
 	title: string;
-	links: NavlinkI[]
+	links: NavlinkI[];
 	className?: string;
 	style?: CSSProperties;
 }
@@ -17,17 +17,19 @@ export const GroupedNavlinks: FC<GroupedNavlinksProps> = ({
 }) => {
 	return (
 		<div {...props} className={cl['grouped-navlink']}>
-			<div className={cl['grouped-navlink__title']}>
-				{title}
-			</div>
+			<div className={cl['grouped-navlink__title']}>{title}</div>
 			<div className={cl['grouped-navlink__links']}>
-				{
-					links.map(({ to, title }) =>
-						(
-							<Navlink key={to} to={to} >{ title }</Navlink>
-						)
-					)
-				}
+				{links.map(({ to, title, icon }) => (
+					<Navlink key={to} to={to}>
+						{icon || null}
+						<span style={{
+							overflow: 'hidden',
+							textOverflow: 'ellipsis'
+						}} >
+							{title}
+						</span>
+					</Navlink>
+				))}
 			</div>
 		</div>
 	);

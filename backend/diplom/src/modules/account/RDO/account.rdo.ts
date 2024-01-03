@@ -1,6 +1,6 @@
 import { Types } from 'mongoose';
-import { User } from 'src/modules/user/models/user.model';
 import { AccountDocument, PopulatedAccount } from '../models/account.model';
+import { UserPopulateRDO } from 'src/modules/user/RDO/user.rdo';
 
 export class AccountRDO {
 	readonly _id:string;
@@ -11,7 +11,7 @@ export class AccountRDO {
 
 	readonly name:string;
 
-	readonly users: Types.ObjectId[] | User[];
+	readonly users: (Types.ObjectId | UserPopulateRDO<Types.ObjectId>)[];
 
 	constructor(AccountDTO: AccountDocument | PopulatedAccount) {
 		this._id = AccountDTO._id.toString();
@@ -20,6 +20,16 @@ export class AccountRDO {
 		this.name = AccountDTO.name;
 		this.users = AccountDTO.users;
 	}
+}
+
+export class AccountPopulateRDO<T = string> {
+	readonly _id: T;
+
+	readonly name: string;
+
+	readonly accountId: string;
+
+	readonly rights: string[];
 }
 
 export const AccountRDOForPopulate = {

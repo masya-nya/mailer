@@ -1,12 +1,15 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, CSSProperties, useState } from 'react';
 import cl from './RolesList.module.scss';
-import { CSSProperties, useState } from 'react';
+import { Button } from 'antd';
 import { observer } from 'mobx-react-lite';
 import { AccountContext } from 'src/entities/account';
-import { RoleI, useAccountRoles } from 'src/entities/roles';
+import { RolesContext, getNewRolePattern } from 'src/entities/roles';
 import { Loader } from 'src/shared/UI';
 import { RolesListRole } from './components/roles-list-role/RolesListRole';
-import { UserPopulateI } from 'src/entities/user';
+import { RoleCreate } from './components/role-create/RoleCreate';
+import { mutate } from 'swr';
+import { SWRKeys } from 'src/shared/lib';
+import { accountRolesStore } from 'src/entities/roles/model/store/roles.store';
 
 type RolesListProps = {
 	className?: string
@@ -14,31 +17,49 @@ type RolesListProps = {
 }
 
 export const RolesList = observer(({ ...props }: RolesListProps): React.JSX.Element => {
+	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const { store: accountStore } = useContext(AccountContext);
-	const { data, isLoading, isValidating } = useAccountRoles(accountStore.accountId);
-	const [roles, setRoles] = useState<RoleI<UserPopulateI>[]>([]);
-	const [currentRole, setCurrentRole] = useState<RoleI<UserPopulateI> | null>(null);
+	const { store: rolesStore } = useContext(RolesContext);
 
-	console.log('ROLES', data);
+	const saveHandler = async ():Promise<void> => {
+		console.log(rolesStore.roles);
+		await rolesStore.sendUpdateRoles(accountStore.accountId);
+		await mutate(SWRKeys.account_user);
+	};
+
+	const addNewRole = ():void => {
+		const newRole = getNewRolePattern(accountStore.accountId);
+		rolesStore.addRole(newRole);
+	};
+
 	useEffect(() => {
-		if (data) {
-			setRoles(data);
-		}
-	}, [data]);
+		(async () => {
+			setIsLoading(true);
+			const roles = await accountRolesStore.getAccountRoles(accountStore.accountId);
+			rolesStore.roles = roles;
+			setIsLoading(false);
+		})();
+	}, [accountStore.accountId, rolesStore]);
 
-	if(isLoading || isValidating || !roles) {
+	if(isLoading || !rolesStore.roles) {
 		return <Loader />;
 	}
 
 	return (
 		<div {...props} className={cl['roles-list']}>
-			<div className={cl['roles-list__title']}>Настройка ролей</div>
+			<div className={cl['roles-list__heading']}>
+				<div className={cl['roles-list__title']}>Настройка ролей</div>
+			</div>
 			<div className={cl['roles-list__body']}>
 				{
-					roles.map(role => (
+					rolesStore.roles.map(role => (
 						<RolesListRole role={role} key={role._id} />
 					))
 				}
+				<RoleCreate clickHandler={addNewRole} />
+			</div>
+			<div className={cl['roles-list__btns']}>
+				<Button className={cl['roles-list__save-btn']} size='large' onClick={saveHandler} type='primary'>Сохранить</Button>
 			</div>
 		</div>
 	);

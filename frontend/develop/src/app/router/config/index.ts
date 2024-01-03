@@ -5,7 +5,14 @@ export const ROUTER_ROTES = {
 	ACCOUNT_SELECTION: 'account-selection',
 	LAYOUT: {
 		BASE: '/',
-		SETTINGS: 'settings'
+		SETTINGS: 'settings',
+		EMAIL: {
+			BASE: 'email',
+			ADD: 'add',
+			PARAMS: {
+				EMAIL: 'email'
+			}
+		}
 	}
 };
 

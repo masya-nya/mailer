@@ -3,7 +3,7 @@
 	--font-size-s: 12px;
 
 	//* MEDIUM
-	--font-size-m: 14px;
+	--font-size-m: 16px;
 	--border-radius-m: 5px;
 	
 	//* LARGE
@@ -12,6 +12,7 @@
 
 	//* GREAT
 	--font-size-g: 26px;
+	--border-radius-g: 20px;
 
 	//* РАЗМЕРЫ
 	// GLOBAL
@@ -23,4 +24,25 @@
 	// TOPBAR
 	--topbar-height: 72px;
 	--topbar-padding-x: 60px;
+	// EMAIL-SIDEBAR
+	--email-sidebar-width: 300px;
+	// MAIL_PAGINATION-MODULE
+	--mail-pagination-module-height: 80px;
+
+	//* ТЕНИ
+	--shadow-bg-base: rgba(100, 100, 100, 0.3);
+	--shadow--base: var(--color-bg-base) 0px 0px 24px;
+
+	//* Z-INDEX
+	--global-loader-z-index: 100;
+	--modal-z-index: 20;
+	--notidication-z-index: 15;
+
+	//* COLORS
+	--mailru-color: #168de2;
+	--google-color: #EA4335;
+	--yandex-color: #FC3F1D;
+
+	//* TRANSITIONS 
+	--transition-base: all .15s ease;
 }

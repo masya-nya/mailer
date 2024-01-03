@@ -1,0 +1,22 @@
+.unread-mail-checked {
+	height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	&__svg {
+		cursor: default;
+		transition: var(--transition-base);
+		&--unactive:not(.unread-mail-checked__svg--active) {
+			fill: var(--color-border);
+			&:hover {
+				fill: var(--color-font-base);
+			}
+		}
+		&--active {
+			fill: var(--color-orange-base);
+		}
+		&--loading {
+			cursor: progress;
+		}
+	}
+}

@@ -5,6 +5,7 @@ import { UserModule } from '../user/user.module';
 import { AccountModule } from '../account/account.module';
 import { RoleModule } from '../role/role.module';
 import { Logger } from 'src/core/logger/Logger';
+import { EmailModule } from '../email/email.module';
 
 @Module({
 	controllers: [AccountUserController],
@@ -12,7 +13,8 @@ import { Logger } from 'src/core/logger/Logger';
 	imports: [
 		UserModule,
 		AccountModule,
-		RoleModule
+		RoleModule,
+		EmailModule
 	]
 })
 export class AccountUserModule {}

@@ -10,9 +10,7 @@ export const useAccountRoles = (
 	const { data, error, isLoading, isValidating, mutate } =
 		useSWRImmutable(
 			[SWRKeys.account_roles, accountId],
-			([_, accountId]) => {
-				return accountRolesStore.getAccountRoles(accountId);
-			}
+			([_, accountId]) => accountRolesStore.getAccountRoles(accountId)
 		);
 	return {
 		data,

@@ -1,27 +1,30 @@
 import { Account, AccountDocument } from 'src/modules/account/models/account.model';
+import { EmailRDO } from 'src/modules/email/RDO/email.rdo';
 import { RoleDocument } from 'src/modules/role/models/role.model';
 import { PopulatedUser } from 'src/modules/user/models/user.model';
 
 export class AccountUserRDO {
-	userId: string;
+	readonly userId: string;
 
-	email: string;
+	readonly email: string;
 
-	accounts: Account[];
+	readonly accounts: Account[];
 
-	isActivate: boolean;
+	readonly isActivate: boolean;
 
-	accountName: string;
+	readonly accountName: string;
 
-	accountLogin: string;
+	readonly accountLogin: string;
 
-	accountId: string;
+	readonly accountId: string;
 
-	roleName: string;
+	readonly roleName: string;
 
-	roleRights: string[];
+	readonly roleRights: string[];
 
-	constructor(user: PopulatedUser, account: AccountDocument, role: RoleDocument) {
+	readonly emails: EmailRDO[];
+
+	constructor(user: PopulatedUser, account: AccountDocument, role: RoleDocument, emails: EmailRDO[]) {
 		this.userId = user._id.toString();
 		this.email = user.email;
 		this.accounts = user.accounts;
@@ -31,5 +34,6 @@ export class AccountUserRDO {
 		this.accountId = account._id.toString();
 		this.roleName = role.name;
 		this.roleRights = role.rights;
+		this.emails = emails;
 	}
 }

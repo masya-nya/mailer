@@ -1,0 +1,47 @@
+.notification {
+	position: relative;
+	right: -310px;
+	padding: 10px;
+	width: 49%;
+	box-shadow: var(--shadow--base);
+	border-radius: var(--border-radius-l);
+	background: var(--color-bg-focused);
+	&__title {
+		font-weight: 500;
+		margin: 0 0 5px 0;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		line-height: 20px;
+	}
+	&__text {
+		font-size: 13px;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		line-height: 16px;
+		display: flex;
+		flex-direction: column;
+	}
+	&--primary {
+		& .notification__title {
+			color: var(--color-green-base)
+		}
+	}
+	&--warning {
+		& .notification__title {
+			color: var(--color-orange-base)
+		}
+	}
+	&--danger {
+		& .notification__title {
+			color: var(--color-red-base)
+		}
+	}
+	&--slide {
+		right: 0px;
+	}
+	&--unslide {
+		right: -310px;
+	}
+}

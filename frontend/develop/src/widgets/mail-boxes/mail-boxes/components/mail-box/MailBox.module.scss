@@ -1,0 +1,26 @@
+.mail-box {
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	border-radius: var(--border-radius-m);
+	transition: var(--transition-base);
+	color: var(--color-font-base-unactive);
+	gap: 5px;
+	cursor: pointer;
+	width: 100%;
+	padding: 10px 15px;
+	font-size: var(--font-size-m);
+	&:hover {
+		background-color: var(--color-background-hover);
+		color: var(--color-font-base);
+	}
+	&--active {
+		background-color: var(--color-bg-focused);
+		color: var(--color-font-base);
+	}
+	&__svg {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+}

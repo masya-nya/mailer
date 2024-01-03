@@ -3,15 +3,15 @@ import { PopulatedUser, UserDocument } from '../models/user.model';
 import { Types } from 'mongoose';
 
 export class UserRDO {
-	readonly _id:string;
+	readonly _id: string;
 
-	readonly name:string;
+	readonly name: string;
 
-	readonly email:string;
-	
-	readonly isActivate:boolean;
+	readonly email: string;
 
-	readonly isBanned:boolean;
+	readonly isActivate: boolean;
+
+	readonly isBanned: boolean;
 
 	readonly accounts: Types.ObjectId[] | Account[];
 
@@ -25,7 +25,20 @@ export class UserRDO {
 	}
 }
 
+export class UserPopulateRDO<T = string> {
+	readonly _id: T;
+
+	readonly name: string;
+
+	readonly email: string;
+
+	readonly isActivate: boolean;
+
+	readonly banned: boolean;
+}
+
 export const UserRDOForPopulate = {
+	_id: 1,
 	name: 1,
 	email: 1,
 	isActivate: 1,

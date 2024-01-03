@@ -18,9 +18,17 @@ export const antdThemes = {
 		components: {
 			Button: {
 				colorPrimary: '#444db0',
+				color: '#444db0',
 				algorithm: true,
 			},
 			Input: {
+				colorPrimary: '#25292b',
+				colorBgBase: '#25292b',
+				colorTextBase: '#EBF1F1',
+				colorBorder: '#313538',
+				algorithm: true,
+			},
+			Select: {
 				colorPrimary: '#25292b',
 				colorBgBase: '#25292b',
 				colorTextBase: '#EBF1F1',

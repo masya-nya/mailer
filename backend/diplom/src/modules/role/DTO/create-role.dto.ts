@@ -14,5 +14,7 @@ export class CreateRoleDTO {
 
 	@IsNotEmpty({ message: 'Не должно быть пустым' })
 	@IsString({ each: true })
-	readonly rights: string;
+	readonly rights: string[];
+
+	readonly users?: Types.ObjectId[];
 }

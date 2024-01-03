@@ -1,0 +1,14 @@
+.mails-manager {
+	&__actions {
+		display: flex;
+		align-items: center;
+		gap: 3px;
+		& >* {
+			height: 30px;
+		}
+		&--untouchable {
+			opacity: 0.5;
+			pointer-events: none;
+		}
+	}
+}

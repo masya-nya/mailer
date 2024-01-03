@@ -27,13 +27,17 @@ import { ApiError } from 'src/core/exceptions/api-error.exception';
 import { GetMailsCountDTO } from './DTO/get-mails-count.dto';
 import { MailsMoveMessageDTO } from './DTO/mails-move-message.dto';
 import { MailsSetFlagDTO } from './DTO/mails-set-flag.dto';
+import { Logger } from 'src/core/logger/Logger';
 const {
 	MAILS: { BASE, COUNT_IN_BOXES, ADD_FLAG, MOVE_MESSAGE, REMOVE_FLAG },
 } = ENDPOINTS;
 
 @Controller(BASE)
 export class MailsController {
-	constructor(private readonly mailsService: MailsService) {}
+	constructor(
+		private readonly logger: Logger,
+		private readonly mailsService: MailsService
+	) {}
 
 	@Post()
 	@HttpCode(HttpStatus.OK)
@@ -42,6 +46,7 @@ export class MailsController {
 		@Body() mailerInfo: SendMessasgeDTO,
 		@UploadedFiles() files: Express.Multer.File[]
 	): Promise<boolean> {
+		this.logger.info('Запрос на отправку сообщения');
 		if (files && !validateFilesMaxSize(files)) {
 			ApiError.PayloadTooLarge();
 		}
@@ -53,6 +58,7 @@ export class MailsController {
 	public async getMessages(
 		@Query() getPageOfMailsDTO: GetPageOfMailsDTO
 	): Promise<GetMailsPageRDO> {
+		this.logger.info('Запрос на получение сообщений');
 		return await this.mailsService.getPageByDateAndQuery(getPageOfMailsDTO);
 	}
 
@@ -61,6 +67,7 @@ export class MailsController {
 	public async getMailCountInBoxes(
 		@Query() mailerInfo: GetMailsCountDTO
 	): Promise<MailCountInBoxesRDO> {
+		this.logger.info('Запрос на кол-во сообщений в ящиках');
 		return await this.mailsService.getMailCountInBoxes(mailerInfo);
 	}
 
@@ -70,6 +77,7 @@ export class MailsController {
 		@Query() mailerInfo: GetOneMailDTO,
 		@Param('id') msgSeq: string
 	): Promise<GetMailRDO> {
+		this.logger.info('Запрос на получение одного сообщения');
 		return await this.mailsService.getMessageById(mailerInfo, msgSeq);
 	}
 
@@ -78,6 +86,7 @@ export class MailsController {
 	public async mailMove(
 		@Body() mailerInfo: MailsMoveMessageDTO
 	): Promise<boolean> {
+		this.logger.info('Запрос на перемещение собщений');
 		return await this.mailsService.moveMessage(mailerInfo);
 	}
 
@@ -86,6 +95,7 @@ export class MailsController {
 	public async addFlag(
 		@Body() mailerInfo: MailsSetFlagDTO
 	): Promise<boolean> {
+		this.logger.info('Запрос на добавление флага');
 		return await this.mailsService.addFlag(mailerInfo);
 	}
 
@@ -94,6 +104,7 @@ export class MailsController {
 	public async removeFlag(
 		@Body() mailerInfo: MailsSetFlagDTO
 	): Promise<boolean> {
+		this.logger.info('Запрос на удаление флага');
 		return await this.mailsService.removeFlag(mailerInfo);
 	}
 }

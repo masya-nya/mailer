@@ -1,0 +1,16 @@
+.context-menu-item {
+	padding: 7px;
+	display: flex;
+	align-items: center;
+	gap: 5px;
+	cursor: pointer;
+	font-size: 15px;
+	color: var(--color-font-base);
+	border-radius: var(--border-radius-m);
+	&:hover {
+		background-color: var(--color-background-hover);
+	}
+	&--danger {
+		color: var(--color-red-base)
+	}
+}

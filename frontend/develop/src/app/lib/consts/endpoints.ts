@@ -31,7 +31,9 @@ const ENDPOINTS = {
 			PARAMS: {
 				ACCOUNT_ID: 'accountId'
 			}
-		}
+		},
+		ADD_USER_TO_ROLE: 'add-user-to-role',
+		DELETE_ROLE: 'delete-role'
 	},
 	MAIL_AUTH: {
 		BASE: 'mail-auth',

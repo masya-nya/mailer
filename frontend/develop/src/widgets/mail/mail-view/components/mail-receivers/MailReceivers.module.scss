@@ -1,0 +1,38 @@
+@mixin sub-info {
+    color: var(--yamailer-font-lighter-color);
+    font-size: 13px;
+}
+
+.mail-receivers {
+    &__count {
+        cursor: pointer;
+        @include sub-info;
+
+        &:hover {
+            color: var(--yamailer-font-base-color);
+        }
+    }
+
+    &__arrow {
+        margin-left: 5px;
+    }
+
+    &__list {
+        display: none;
+        flex-direction: column;
+        margin-top: 6px;
+        row-gap: 4px;
+
+        &._active {
+            display: flex;
+        }
+
+        &-item {
+            cursor: default;
+            @include sub-info;
+            display: flex;
+            align-items: center;
+            column-gap: 5px;
+        }
+    }
+}

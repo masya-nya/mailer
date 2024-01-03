@@ -1,0 +1,17 @@
+.emailmodule-sidebar {
+	background-color: var(--yamailer-background-darker-color);
+	height: 100%;
+	width: var(--email-sidebar-width);
+	flex: 0 0 var(--email-sidebar-width);
+	border-radius: var(--border-radius-l) 0 0 var(--border-radius-l);
+	padding: 15px;
+	border-right: 1px solid var(--color-border);
+	& >:not(:last-child) {
+		margin: 0 0 10px 0;
+	}
+	&__write {
+		&-btn {
+			width: 100%;
+		}
+	}
+}

@@ -1,0 +1,14 @@
+.checkbox-label {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	padding: 5px;
+	border-radius: var(--yamailer-border-radius-base);
+	&:hover {
+		background-color: var(--yamailer-background-darker-color);
+	}
+	&__label {
+		font-size: 15px;
+		cursor: default;
+	}
+}

@@ -1,0 +1,23 @@
+.plus-squared {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 100%;
+	aspect-ratio: 1/1;
+	border: 1px solid var(--yamailer-border-base-color);
+	border-radius: 10px;
+	cursor: pointer;
+	transition: var(--yamailer-transition-base);
+	&:hover {
+		box-shadow: 0 0 5px rgba(0, 0, 0, .1);
+	}
+	&:hover .plus-squared__plus > path{
+		stroke: var(--yamailer-font-base-color);
+	}
+	&__plus {
+		& > path {
+			transition: var(--yamailer-transition-base);
+			stroke: var(--yamailer-font-lighter-color);
+		}
+	}
+}

@@ -7,10 +7,13 @@ import { antdThemes } from './styles/antd-themes';
 import { ThemeSvg } from 'src/shared/svg';
 import { AuthContext } from 'src/entities/auth';
 import { observer } from 'mobx-react-lite';
-import { GlobalShadowLoader, GlobalShadowLoaderProvider } from 'src/shared/UI';
+import { GlobalShadowLoader, GlobalShadowLoaderProvider, ModalWrapper } from 'src/shared/UI';
 import Routes from './router/AppRouter';
-
-
+import { ModalProvider } from 'src/entities/modal';
+import { NotificationProvider } from 'src/entities/notification';
+import { NotificationsWrapper } from 'src/widgets/notification';
+import { SWGColors } from 'src/shared/lib';
+import { EmailProvider } from 'src/entities/email';
 
 const App:FC = () => {
 	const { store } = useContext(AuthContext);
@@ -28,13 +31,21 @@ const App:FC = () => {
 
 	return (
 		<ConfigProvider theme={antdTheme}>
-			<GlobalShadowLoaderProvider>
-				<div className={cn('app', theme)}>
-					<Routes />
-					<FloatButton icon={<ThemeSvg height='18px' width='18px' color='#000' />} onClick={toggleTheme} />
-					<GlobalShadowLoader />
-				</div>
-			</GlobalShadowLoaderProvider>
+			<ModalProvider>
+				<NotificationProvider>
+					<GlobalShadowLoaderProvider>
+						<EmailProvider>
+							<div className={cn('app', theme)}>
+								<Routes />
+								<FloatButton icon={<ThemeSvg height='18px' width='18px' color={SWGColors.black} />} onClick={toggleTheme} />
+								<GlobalShadowLoader />
+								<ModalWrapper />
+								<NotificationsWrapper />
+							</div>
+						</EmailProvider>
+					</GlobalShadowLoaderProvider>
+				</NotificationProvider>
+			</ModalProvider>
 		</ConfigProvider>
 	);
 };

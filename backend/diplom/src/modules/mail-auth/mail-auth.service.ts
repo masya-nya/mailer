@@ -7,6 +7,7 @@ import { EmailService } from '../email/email.service';
 import MailsInfo from 'src/core/consts/mailsinfo';
 import { EmailDocument } from '../email/models/email.model';
 import { Types } from 'mongoose';
+import { GoogleAuthDTO } from './dto/google-auth.dto';
 
 @Injectable()
 export class MailAuthService {
@@ -15,7 +16,7 @@ export class MailAuthService {
 		private readonly logger: Logger
 	) {}
 
-	public async authRedirect(
+	public async yandexAuthRedirect(
 		yandexUser: YandexAuthDTO,
 		accountId: Types.ObjectId
 	): Promise<EmailDocument> {
@@ -34,6 +35,33 @@ export class MailAuthService {
 				photo: yandexUser.photo,
 				accessToken: yandexUser.accessToken,
 				refreshToken: yandexUser.refreshToken,
+			});
+			return newEmailInstance;
+		} catch (error) {
+			this.logger.error(error);
+			ApiError.InternalServerError(error.message);
+		}
+	}
+
+	public async googleAuthRedirect(
+		googleUser: GoogleAuthDTO,
+		accountId: Types.ObjectId
+	): Promise<EmailDocument> {
+		try {
+			if (!googleUser) {
+				ApiError.InternalServerError(
+					'Не удалось получить пользтователя от GOOGLE'
+				);
+			}
+
+			const newEmailInstance = await this.emailService.createEmail({
+				accountId,
+				email: googleUser.email,
+				emailUserId: googleUser.id,
+				serviceName: MailsInfo.Google.Service,
+				photo: googleUser.photo,
+				accessToken: googleUser.accessToken,
+				refreshToken: googleUser.refreshToken,
 			});
 			return newEmailInstance;
 		} catch (error) {

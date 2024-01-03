@@ -37,6 +37,15 @@ export class RoleService {
 		return role;
 	}
 
+	async updateRole(updatingRole: ModelWithId<Role>):Promise<void> {
+		const { _id, accountId, name, rights, users } = updatingRole;
+		await this.roleRepository.updateRole({ _id, accountId }, { name, rights, users });
+	}
+
+	async deleteRole(deleteRoleDTO:  Partial<ModelWithId<Role>>):Promise<void> {
+		await this.roleRepository.deleteRole(deleteRoleDTO);
+	}
+
 	async addPreventRoles(accountId: Types.ObjectId, owner: Types.ObjectId):Promise<void> {
 		const preventRoles = [
 			getRecruiteRole(accountId),
