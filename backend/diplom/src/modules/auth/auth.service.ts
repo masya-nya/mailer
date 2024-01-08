@@ -87,7 +87,6 @@ export class AuthService {
 	async refresh(
 		refreshToken: string
 	): Promise<GenerateTokensT & { user: UserRDO }> {
-		console.log('refreshToken', refreshToken);
 		if (!refreshToken) {
 			this.logger.error(`${this.serviceName}: refreshToken отсутствует`);
 			throw ApiError.Unauthorized();
@@ -95,8 +94,6 @@ export class AuthService {
 		const jwtPayload = await this.tokenService.validateRefreshToken(refreshToken);
 		const tokenFromDB = await this.tokenService.find({ refreshToken });
 		if (!jwtPayload || !tokenFromDB) {
-			console.log(jwtPayload);
-			console.log(tokenFromDB);
 			this.logger.error(`${this.serviceName}: Ошибка обновления токенов`);
 			throw ApiError.Unauthorized();
 		}

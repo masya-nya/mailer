@@ -21,7 +21,6 @@ export class ImapService {
 		imapHost: string,
 		accessToken: string
 	): ImapFlow {
-		console.log({ email, imapHost, accessToken });
 		try {
 			return new ImapFlow({
 				auth: {

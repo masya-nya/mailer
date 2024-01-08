@@ -39,7 +39,6 @@ export class RoleController {
 		this.logger.info(
 			`Запрос на создания роли в аккаунт(${createRoleDTO.accountId})`
 		);
-		console.log(createRoleDTO);
 		const createdUser = await this.roleService.createRole(createRoleDTO);
 		const user = new RoleRDO(createdUser);
 		return { ...user };
@@ -72,19 +71,16 @@ export class RoleController {
 			}
 		});
 
-		console.log('deletedRolesIds', deletedRolesIds);
 		deletedRolesIds.forEach(async (deleteRoleId) => {
 			await this.roleService.deleteRole({ _id: deleteRoleId });
 		});
 
 		const formatedRolesForUpdate = formatingRoleForUpdate(updatedRoles);
-		console.log('formatedRolesForUpdate', formatedRolesForUpdate);
 		formatedRolesForUpdate.forEach(async (roleForUpdate) => {
 			await this.roleService.updateRole(roleForUpdate);
 		});
 
 		const formatedRolesForCreate = formatingRoleForCreate(newRoles);
-		console.log('formatedRolesForCreate', formatedRolesForCreate);
 		formatedRolesForCreate.forEach(async (roleForCreate) => {
 			const { accountId, name, rights, users } = roleForCreate;
 			await this.roleService.createRole({ accountId, name, rights, users });

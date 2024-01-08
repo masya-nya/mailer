@@ -23,7 +23,6 @@ export const formatingRoleForUpdate = (roles: UpdateRoleDTO[]):ModelWithId<Role>
 
 export const formatingRoleForCreate = (roles: UpdateRoleDTO[]):CreateRoleDTO[] => {
 	return roles.map(role => {
-		console.log(role);
 		const usersObjectIds = formatingUserRDOArrayToObjectIdArray(role.users);
 		return {
 			...role,

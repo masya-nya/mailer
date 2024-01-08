@@ -27,7 +27,6 @@ export class MailAuthController {
 		const redirectClientUri = request.session['redirectClientUri'];
 		const accountId = new Types.ObjectId(request.session['accountId']);
 		const user: YandexAuthDTO = request.user;
-		console.log({ redirectClientUri, accountId, user });
 
 		const mailer = await this.mailAuthService.yandexAuthRedirect(
 			user,
@@ -55,7 +54,6 @@ export class MailAuthController {
 		const redirectClientUri = request.session['redirectClientUri'];
 		const accountId = new Types.ObjectId(request.session['accountId']);
 		const user: GoogleAuthDTO = request.user;
-		console.log({ redirectClientUri, accountId, user });
 
 		const mailer = await this.mailAuthService.googleAuthRedirect(
 			user,

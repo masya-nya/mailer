@@ -151,7 +151,6 @@ export class EmailService {
 
 	async checkGoogleTokenValidity(accessToken: string): Promise<boolean> {
 		try {
-			console.log(accessToken);
 			const response = await axios.post(
 				'https://www.googleapis.com/oauth2/v1/tokeninfo',
 				{
@@ -161,7 +160,6 @@ export class EmailService {
 
 			const tokenInfo = response.data;
 
-			console.log('checkGoogleTokenValidity', tokenInfo);
 
 			if (
 				!tokenInfo.aud ||
@@ -182,7 +180,6 @@ export class EmailService {
 
 	async createEmail(createEmailDTO: CreateEmailDTO): Promise<EmailDocument> {
 		const { email } = createEmailDTO;
-		console.log('createEmailDTO', createEmailDTO);
 		const emailDB = await this.emailRepository.find({ email });
 		if (emailDB) {
 			this.logger.error(

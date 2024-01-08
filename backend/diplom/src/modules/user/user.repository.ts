@@ -24,7 +24,6 @@ export class UserRepository {
 
 	async createUser(createUserDTO: CreateUserDTO): Promise<UserDocument> {
 		try {
-			console.log('createUserDTO', createUserDTO);
 			const createdUser = await this.userModel.create(createUserDTO);
 			return createdUser;
 		} catch (error) {

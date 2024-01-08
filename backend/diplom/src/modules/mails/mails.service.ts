@@ -209,9 +209,6 @@ export class MailsService {
 		msgSeq: string
 	): Promise<GetMailRDO> {
 		const { accountId, email, mailboxPath } = getOneMailDTO;
-
-		console.log({ msgSeq, getOneMailDTO });
-
 		try {
 			const [imap, { serviceName }] = await this.initImap(
 				accountId,

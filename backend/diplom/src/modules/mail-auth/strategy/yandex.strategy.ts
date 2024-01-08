@@ -27,9 +27,6 @@ export class YandexStrategy extends PassportStrategy(
 		profile: YandexProfile,
 		done: (error: string | null, user: YandexAuthDTO) => void
 	): Promise<void> {
-		console.log('profile', profile);
-		console.log('accessToken', accessToken);
-		console.log('refreshToken', refreshToken);
 		const {
 			id,
 			username,

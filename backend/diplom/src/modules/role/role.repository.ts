@@ -24,8 +24,7 @@ export class RoleRepository {
 
 	async insertManyRoles(insertingRoles: Role[]): Promise<void> {
 		try {
-			const response = await this.roleModel.insertMany(insertingRoles);
-			console.log(response);
+			await this.roleModel.insertMany(insertingRoles);
 			return;
 		} catch (error) {
 			this.logger.error(`Ошибка сервера в ${this.serviceName}`);
