@@ -11,7 +11,7 @@ export const LogoMain: FC<LogoMainProps> = ({ ...props }) => {
 	return (
 		<div {...props} className={cl['logo-main']}>
 			<LogoSvg height='36px' width='36px' className={cl['logo-main__svg']} />
-			<span className={cl['logo-main__name']}>TeamTeam</span>
+			<span className={cl['logo-main__name']}>Mailer</span>
 		</div>
 	);
 };

@@ -37,46 +37,49 @@ export const CreateAccountForm:FC<CreateAccountFormProps> = observer(() => {
 	};
 
 	return (
-		<form onSubmit={create} className={cl['create-account-form']}>
-			<div className={cl['create-account-form__inputs']}>
-				<Input
-					className={cn(
-						cl['create-account-form__email'],
-						cl['create-account-form__input']
-					)}
-					placeholder="Имя"
-					value={name}
-					onChange={setNameHandler}
-					size="large"
-				/>
-				<Input
-					className={cn(
-						cl['create-account-form__password'],
-						cl['create-account-form__input']
-					)}
-					placeholder="Логин"
-					value={login}
-					onChange={setLoginHandler}
-					size="large"
-				/>
-			</div>
-			<div className={cl['create-account-form__btns']}>
-				{/* <span
-					onClick={() => navigate(REGISTRATION)}
-					className={cl['create-account-form__registration-link']}
-				>
-					Регистрация
-				</span> */}
-				<Button
-					className={cl['create-account-form__submit']}
-					type="primary"
-					size="large"
-					shape="round"
-					htmlType="submit"
-				>
-					Создать
-				</Button>
-			</div>
-		</form>
+		<div className={cl['create-account-form']}>
+			<div className={cl['create-account-form__title']}>Создание аккаунта</div>
+			<form onSubmit={create} className={cl['create-account-form__form']}>
+				<div className={cl['create-account-form__inputs']}>
+					<Input
+						className={cn(
+							cl['create-account-form__email'],
+							cl['create-account-form__input']
+						)}
+						placeholder="Имя"
+						value={name}
+						onChange={setNameHandler}
+						size="large"
+					/>
+					<Input
+						className={cn(
+							cl['create-account-form__password'],
+							cl['create-account-form__input']
+						)}
+						placeholder="Логин"
+						value={login}
+						onChange={setLoginHandler}
+						size="large"
+					/>
+				</div>
+				<div className={cl['create-account-form__btns']}>
+					{/* <span
+						onClick={() => navigate(REGISTRATION)}
+						className={cl['create-account-form__registration-link']}
+					>
+						Регистрация
+					</span> */}
+					<Button
+						className={cl['create-account-form__submit']}
+						type="primary"
+						size="large"
+						shape="round"
+						htmlType="submit"
+					>
+						Создать
+					</Button>
+				</div>
+			</form>
+		</div>
 	);
 });

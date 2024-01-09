@@ -1,1 +1,0 @@
-export { MainPageAsync } from './components/MainPage.async';
