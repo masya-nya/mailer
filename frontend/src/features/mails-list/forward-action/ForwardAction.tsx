@@ -1,16 +1,13 @@
 import React from 'react';
 import cl from './ForwardAction.module.scss';
-import { sendMailStore } from '../../../entities/mail-send';
-import { SelectedMailT, ServerMailT, useMails } from '../../../entities/mails-list';
-import { mailStore, MailContentRoutes } from '../../../modules/mail-module';
 import { ForwardSvg } from '../../../shared/svg';
 import { SWGColors } from 'src/shared/lib';
 
-type ForwardActionProps = {
-	selectedMails: SelectedMailT[]
-}
+// type ForwardActionProps = {
+// 	selectedMails: SelectedMailT[]
+// }
 
-export const ForwardAction = ({ selectedMails }:ForwardActionProps):React.JSX.Element => {
+export const ForwardAction = ():React.JSX.Element => {
 	// const { data: mails } = useMails();
 	const forwardMsgsHandler = ():void => {
 		// const references:ServerMailT[] = [];

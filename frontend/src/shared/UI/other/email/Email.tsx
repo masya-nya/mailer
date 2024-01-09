@@ -17,11 +17,11 @@ export const Email = ({ mail, removeEmailsHandler }:EmailProps):React.JSX.Elemen
 	return (
 		<div onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)} className={cl['email']}>
 			<div className={cl['email__icon']}>
-				<EmailSvg width='70' height='70' color={COLORS.font_base_color} />
+				<EmailSvg width='70px' height='70px' color={COLORS.font_base_color} />
 				{
 					hovered &&
 					<span className={cl['email__remove']}>
-						<CrossSvg clickHandler={() => removeEmailsHandler({ msgId: mail.msgId, msgSeq: mail.msgSeq })} width='25' height='25' style={{ cursor: 'pointer' }} color={COLORS.red_color} />
+						<CrossSvg clickHandler={() => removeEmailsHandler({ msgId: mail.msgId, msgSeq: mail.msgSeq })} width='25px' height='25px' style={{ cursor: 'pointer' }} color={COLORS.red_color} />
 					</span>
 				}
 			</div>

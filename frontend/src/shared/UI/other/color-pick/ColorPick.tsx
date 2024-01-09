@@ -1,10 +1,10 @@
 import React from 'react';
 import cl from './ColorPick.module.scss';
-import { HEX } from '../../../lib/types';
+import { HexArgument } from 'src/shared/svg';
 
 type ColorPickProps = {
-	color: HEX,
-	colorHandler: (color: HEX) => void
+	color: HexArgument,
+	colorHandler: (color: HexArgument) => void
 }
 
 export const ColorPick = ({ color, colorHandler }:ColorPickProps):React.JSX.Element => {

@@ -19,7 +19,7 @@ export class AccountRolesStore {
 		return this._currentDragRole;
 	}
 
-	set currentDragRole(value: RoleI<UserPopulateI>) {
+	set currentDragRole(value: RoleI<UserPopulateI> | null) {
 		this._currentDragRole = value;
 	}
 
@@ -27,7 +27,7 @@ export class AccountRolesStore {
 		return this._currentDragUser;
 	}
 
-	set currentDragUser(value: UserPopulateI) {
+	set currentDragUser(value: UserPopulateI | null) {
 		this._currentDragUser = value;
 	}
 
@@ -35,7 +35,7 @@ export class AccountRolesStore {
 		return this._roles;
 	}
 
-	set roles(value: RoleI<UserPopulateI>[]) {
+	set roles(value: RoleI<UserPopulateI>[] | null) {
 		this._roles = value;
 	}
 

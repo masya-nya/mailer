@@ -24,7 +24,7 @@ export const Attachment = ({ attachment }:AttachmentProps):React.JSX.Element => 
 				{
 					isImage
 						? <img className={cl['attachment__img']} src={attachment.content} />
-						: <FileSvg width='80' height='80' color={COLORS.font_base_color} />
+						: <FileSvg width='80px' height='80px' color={COLORS.font_base_color} />
 				}
 				<span className={cl['attachment__extension']}>
 					{

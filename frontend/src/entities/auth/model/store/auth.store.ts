@@ -29,7 +29,7 @@ export class AuthStore {
 		return this._user;
 	}
 
-	set user(value: UserI) {
+	set user(value: UserI | null) {
 		this._user = value;
 	}
 

@@ -1,4 +1,4 @@
-import { FC, useContext } from 'react';
+import { FC, PropsWithChildren, useContext } from 'react';
 import { observer } from 'mobx-react-lite';
 import { Navigate } from 'react-router-dom';
 import { AuthContext } from 'src/entities/auth';
@@ -6,11 +6,8 @@ import { Loader } from 'src/shared/UI';
 import { ROUTER_ROTES } from '../config';
 const { LAYOUT: { BASE } } = ROUTER_ROTES;
 
-type AlreadyLoggedT = {
-	children: React.ReactNode
-}
 
-const AlreadyLogged: FC<AlreadyLoggedT> = ({ children }) => {
+const AlreadyLogged: FC<PropsWithChildren> = ({ children }) => {
 	console.log('AlreadyLogged');
 	const { store } = useContext(AuthContext);
 
@@ -23,7 +20,7 @@ const AlreadyLogged: FC<AlreadyLoggedT> = ({ children }) => {
 		return <Navigate to={BASE} />;
 	}
 
-	return children;
+	return <>{ children }</>;
 };
 
 export default observer(AlreadyLogged);

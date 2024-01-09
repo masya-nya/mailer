@@ -19,7 +19,7 @@ export class AccountUserStore {
 		return this._accountUser;
 	}
 
-	set accountUser(value: AccountUserI) {
+	set accountUser(value: AccountUserI | null) {
 		this._accountUser = value;
 	}
 

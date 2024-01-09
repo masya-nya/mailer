@@ -19,7 +19,7 @@ export const File = memo(({ file, removeFilesHandler }:FileProps):React.JSX.Elem
 				{
 					isImage
 						? <img className={cl['file__img']} src={URL.createObjectURL(file)} alt={file.name} />
-						: <FileSvg width='80' height='80' color={COLORS.font_base_color} />
+						: <FileSvg width='80px' height='80px' color={COLORS.font_base_color} />
 				}
 				<span className={cl['file__extension']}>
 					{
@@ -27,7 +27,7 @@ export const File = memo(({ file, removeFilesHandler }:FileProps):React.JSX.Elem
 					}
 				</span>
 				<span className={cl['file__remove']}>
-					<CrossSvg clickHandler={() => removeFilesHandler(file.name, file.size)} width='25' height='25' style={{ cursor: 'pointer' }} color={COLORS.red_color} />
+					<CrossSvg clickHandler={() => removeFilesHandler(file.name, file.size)} width='25px' height='25px' style={{ cursor: 'pointer' }} color={COLORS.red_color} />
 				</span>
 			</div>
 			<div className={cl['file__name']}>

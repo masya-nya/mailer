@@ -22,8 +22,8 @@ const MailReceivers = ({ receivers }: MailReceiversProps): React.JSX.Element => 
 				<span className={cl['mail-receivers__arrow']}>
 					{
 						isReceiversListActive
-							? <ArrowUpSvg height='10' width='10'/>
-							: <ArrowDownSvg height='10' width='10'/>
+							? <ArrowUpSvg height='10px' width='10px'/>
+							: <ArrowDownSvg height='10px' width='10px'/>
 					}
 				</span>
 			</span>

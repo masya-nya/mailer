@@ -10,7 +10,7 @@ export interface RoleI<T = string> {
 	
 	readonly rights: RolesRightsT[];
 
-	readonly systemName: RolesSystemNames | null;
+	readonly systemName?: RolesSystemNames | null;
 
 	readonly users: T[];
 }

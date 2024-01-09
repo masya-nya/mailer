@@ -1,10 +1,10 @@
 import React from 'react';
 import cl from './Mark.module.scss';
-import { HEX } from '../../../lib/types';
+import { HexArgument } from 'src/shared/svg';
 
 type MarkProps = {
 	title: string,
-	color: HEX
+	color: HexArgument
 }
 
 export const Mark = ({ title, color }:MarkProps):React.JSX.Element => {

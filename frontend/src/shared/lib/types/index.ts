@@ -16,6 +16,11 @@ export type useSWRReturnType<T> = {
     mutate: KeyedMutator<T>
 };
 
+export type BaseOptionType<T> = {
+	value: T
+	label: string
+}
+
 export type SelectOptionsT<T = string, U = string> = {
     value: T
     label: U
