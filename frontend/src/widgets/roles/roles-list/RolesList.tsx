@@ -10,6 +10,7 @@ import { RoleCreate } from './components/role-create/RoleCreate';
 import { mutate } from 'swr';
 import { SWRKeys } from 'src/shared/lib';
 import { accountRolesStore } from 'src/entities/roles/model/store/roles.store';
+import { AuthContext } from 'src/entities/auth';
 
 type RolesListProps = {
 	className?: string
@@ -20,11 +21,12 @@ export const RolesList = observer(({ ...props }: RolesListProps): React.JSX.Elem
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const { store: accountStore } = useContext(AccountContext);
 	const { store: rolesStore } = useContext(RolesContext);
+	const { store: authStore } = useContext(AuthContext);
 
 	const saveHandler = async ():Promise<void> => {
 		console.log(rolesStore.roles);
 		await rolesStore.sendUpdateRoles(accountStore.accountId);
-		await mutate(SWRKeys.account_user);
+		await mutate([SWRKeys.account_user, authStore.user!._id, accountStore.accountId]);
 	};
 
 	const addNewRole = ():void => {
