@@ -18,8 +18,7 @@ export const Layout: FC<LayoutProps> = observer(() => {
 	const { store: authStore } = useContext(AuthContext);
 	const { store: accountStore } = useContext(AccountContext);
 	console.log({ userId: authStore.user!._id, accountId: accountStore.accountId });
-	const { data, isLoading } = useAccountUser(authStore.user!._id, accountStore.accountId);
-	console.log('ACCOUNT-USER', data);
+	const { isLoading } = useAccountUser(authStore.user!._id, accountStore.accountId);
 	if(isLoading) {
 		return <Loader />;
 	}

@@ -1,4 +1,4 @@
-import { CSSProperties, FC, useContext } from 'react';
+import { CSSProperties, FC, useContext, useCallback, useState, useMemo } from 'react';
 import cl from './RegistrationForm.module.scss';
 import Input from 'antd/es/input';
 import cn from 'classnames';
@@ -7,7 +7,8 @@ import { useNavigate } from 'react-router-dom';
 import { AuthContext } from 'src/entities/auth';
 import { useTextInput } from 'src/shared/lib/hooks';
 import { ROUTER_ROTES } from 'src/app/router/config';
-const { LAYOUT: { BASE }, LOGIN} = ROUTER_ROTES;
+import { EmailRegValidation } from 'src/shared/lib';
+const { LAYOUT: { BASE }, LOGIN } = ROUTER_ROTES;
 
 interface RegistrationFormProps {
 	className?: string;
@@ -16,16 +17,46 @@ interface RegistrationFormProps {
 
 export const RegistrationForm: FC<RegistrationFormProps> = () => {
 	const [name, setNameHandler] = useTextInput('');
+	const [isValidName, setValidName] = useState(true);
 	const [email, setEmailHandler] = useTextInput('');
+	const [isValidEmail, setValidEmail] = useState(true);
 	const [password, setPasswordHandler] = useTextInput('');
+	const [isValidPassword, setValidPassword] = useState(true);
 	const navigate = useNavigate();
 	const { store: AuthStore } = useContext(AuthContext);
 
-	const registration = async (e: React.BaseSyntheticEvent):Promise<void> => {
+	const registration = async (e: React.BaseSyntheticEvent): Promise<void> => {
 		e.preventDefault();
 		const status = await AuthStore.registration({ name, email, password });
 		status && navigate(BASE);
 	};
+
+	const validateName = useCallback(():void => {
+		const length = name.length;
+		if (+length < 2) {
+			setValidName(false);
+		} else {
+			setValidName(true);
+		}
+	}, [name]);
+
+	const validateEmail = useCallback(():void => {
+		const isValid = EmailRegValidation.test(email);
+		setValidEmail(isValid);
+	}, [email]);
+
+	const validatePassword = useCallback(():void => {
+		const length = password.length;
+		if (+length < 6) {
+			setValidPassword(false);
+		} else {
+			setValidPassword(true);
+		}
+	}, [password]);
+
+	const buttonValidate = useMemo(() => {
+		return !(isValidEmail && isValidPassword && isValidName);
+	}, [isValidEmail, isValidPassword, isValidName]);
 
 	return (
 		<div className={cl['registration']}>
@@ -41,6 +72,8 @@ export const RegistrationForm: FC<RegistrationFormProps> = () => {
 						value={name}
 						onChange={setNameHandler}
 						size="large"
+						onBlur={validateName}
+						status={!isValidName ? 'error' : ''}
 					/>
 					<Input
 						className={cn(
@@ -51,6 +84,8 @@ export const RegistrationForm: FC<RegistrationFormProps> = () => {
 						value={email}
 						onChange={setEmailHandler}
 						size="large"
+						onBlur={validateEmail}
+						status={!isValidEmail ? 'error' : ''}
 					/>
 					<Input
 						className={cn(
@@ -62,6 +97,8 @@ export const RegistrationForm: FC<RegistrationFormProps> = () => {
 						value={password}
 						onChange={setPasswordHandler}
 						size="large"
+						onBlur={validatePassword}
+						status={!isValidPassword ? 'error' : ''}
 					/>
 				</div>
 				<div className={cl['registration-form__btns']}>
@@ -77,6 +114,7 @@ export const RegistrationForm: FC<RegistrationFormProps> = () => {
 						size="large"
 						shape="round"
 						htmlType="submit"
+						disabled={buttonValidate}
 					>
 						Зарегистрироваться
 					</Button>

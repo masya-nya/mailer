@@ -25,6 +25,7 @@ export class AccountUserStore {
 
 	public async getAccountUser(userId: string, accountId: string):Promise<AccountUserI> {
 		const { data: accountUser } = await AccountUserService.getAccountUser(userId, accountId);
+		console.log('ACCOUNT-USER', accountUser);
 		this._accountUser = accountUser;
 		return accountUser;
 	}
